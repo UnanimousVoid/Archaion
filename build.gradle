@@ -20,6 +20,9 @@ sourceSets.main.resources {
 }
 
 repositories {
+    maven {
+        url "https://cursemaven.com"
+    }
 }
 
 base {
@@ -75,6 +78,8 @@ configurations {
 }
 
 dependencies {
+    // Required
+    implementation "curse.maven:aaa-particles-979809:8402890"
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {

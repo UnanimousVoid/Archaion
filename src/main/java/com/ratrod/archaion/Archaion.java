@@ -1,6 +1,9 @@
 package com.ratrod.archaion;
 
 import com.mojang.logging.LogUtils;
+import com.ratrod.archaion.registry.ACBlocks;
+import com.ratrod.archaion.registry.ACEntityTypes;
+import com.ratrod.archaion.registry.ACItems;
 import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -18,6 +21,10 @@ public class Archaion {
 
     public Archaion(IEventBus modEventBus, ModContainer modContainer) {
         modEventBus.addListener(this::commonSetup);
+
+        ACBlocks.BLOCK.register(modEventBus);
+        ACItems.ITEM.register(modEventBus);
+        ACEntityTypes.ENTITY_TYPE.register(modEventBus);
 
     }
 
