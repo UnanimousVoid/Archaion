@@ -1,6 +1,8 @@
 package com.ratrod.archaion;
 
+
 import com.mojang.logging.LogUtils;
+import com.ratrod.archaion.network.ACNetwork;
 import com.ratrod.archaion.registry.ACBlocks;
 import com.ratrod.archaion.registry.ACEntityTypes;
 import com.ratrod.archaion.registry.ACItems;
@@ -21,6 +23,7 @@ public class Archaion {
 
     public Archaion(IEventBus modEventBus, ModContainer modContainer) {
         modEventBus.addListener(this::commonSetup);
+        modEventBus.addListener(ACNetwork::register);
 
         ACBlocks.BLOCK.register(modEventBus);
         ACItems.ITEM.register(modEventBus);
@@ -31,6 +34,7 @@ public class Archaion {
     private void commonSetup(FMLCommonSetupEvent event) {
 
     }
+
 
     public static Identifier prefix(String path) {
         return Identifier.fromNamespaceAndPath(MODID, path.toLowerCase(Locale.ROOT));

@@ -21,5 +21,6 @@ public class ACDataGenerators {
         generator.addProvider(true, new ACLanguageProvider(packOutput, "en_us"));
         generator.addProvider(true, new ACSoundDefinitionsProvider(packOutput));
         generator.addProvider(true, new ACTagProvider.EntityTypesProvider(packOutput, lookupProvider));
+        generator.addProvider(true, new ACLootTableProvider(packOutput, lookupProvider));
     }
 }

@@ -1,5 +1,8 @@
 package com.ratrod.archaion;
 
+import com.ratrod.archaion.network.s2c.CameraShakePacket;
+import com.ratrod.archaion.network.s2c.RemoveBossBarDataPacket;
+import com.ratrod.archaion.network.s2c.SyncBossBarDataPacket;
 import net.minecraft.client.Minecraft;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -9,6 +12,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+import net.neoforged.neoforge.client.network.event.RegisterClientPayloadHandlersEvent;
 
 @Mod(value = Archaion.MODID, dist = Dist.CLIENT)
 @EventBusSubscriber(modid = Archaion.MODID, value = Dist.CLIENT)
@@ -19,7 +23,6 @@ public class ArchaionClient {
 
     @SubscribeEvent
     static void onClientSetup(FMLClientSetupEvent event) {
-        Archaion.LOGGER.info("HELLO FROM CLIENT SETUP");
-        Archaion.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+
     }
 }
