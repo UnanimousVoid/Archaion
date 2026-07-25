@@ -2,10 +2,11 @@ package com.ratrod.archaion.entities.ai;
 
 import com.ratrod.archaion.api.client.animation.EntityAnimationManager;
 import com.ratrod.archaion.api.entity.ActionManager;
-import com.ratrod.archaion.client.clientdata.ClientBossBarData;
+import com.ratrod.archaion.misc.mixinhelpers.IMixinMob;
 import com.ratrod.archaion.network.ACNetwork;
 import com.ratrod.archaion.network.s2c.RemoveBossBarDataPacket;
 import com.ratrod.archaion.network.s2c.SyncBossBarDataPacket;
+import it.unimi.dsi.fastutil.Pair;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -29,18 +30,14 @@ public interface ACEntity {
 
     default boolean attackTarget(ServerLevel level, Entity target, float damageModifier, Operation operation) {
         boolean flag = false;
-        if (target != null) {
-            return this.acSelf().doHurtTarget(level, target);
+        if (this.acSelf() instanceof IMixinMob mm) {
+            mm.ac$setDamageModifier(Pair.of(damageModifier, operation));
+            if (target != null) {
+                return this.acSelf().doHurtTarget(level, target);
+            }
+            mm.ac$setDamageModifier(null);
         }
         return flag;
-    }
-
-    default boolean attackTargetAddition(ServerLevel level, Entity target, float damageModifier) {
-        return this.attackTarget(level, target, damageModifier, Operation.ADD);
-    }
-
-    default boolean attackTargetMultiplication(ServerLevel level, Entity target, float damageModifier) {
-        return this.attackTarget(level, target, damageModifier, Operation.MULTIPLY);
     }
 
     default void addBossBarPlayer(ServerBossEvent bossEvent, ServerPlayer player, int bossIdx) {
