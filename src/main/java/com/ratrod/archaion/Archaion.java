@@ -10,7 +10,6 @@ import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import org.slf4j.Logger;
 
 import java.util.Locale;
@@ -20,18 +19,13 @@ public class Archaion {
     public static final String MODID = "archaion";
     public static final Logger LOGGER = LogUtils.getLogger();
 
-
     public Archaion(IEventBus modEventBus, ModContainer modContainer) {
-        modEventBus.addListener(this::commonSetup);
+
         modEventBus.addListener(ACNetwork::register);
 
         ACBlocks.BLOCK.register(modEventBus);
         ACItems.ITEM.register(modEventBus);
         ACEntityTypes.ENTITY_TYPE.register(modEventBus);
-
-    }
-
-    private void commonSetup(FMLCommonSetupEvent event) {
 
     }
 
