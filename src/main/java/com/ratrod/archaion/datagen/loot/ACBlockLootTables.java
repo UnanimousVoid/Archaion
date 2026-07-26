@@ -30,8 +30,17 @@ public class ACBlockLootTables extends BlockLootSubProvider {
                 ACBlocks.REINFORCED_DEEPSLATE_TILES.get(),
                 ACBlocks.REINFORCED_DEEPSLATE_PILLAR.get(),
                 ACBlocks.DEEPSLATE_PILLAR.get(),
-                ACBlocks.REINFORCED_BARS.get()
-                );
+                ACBlocks.REINFORCED_BARS.get(),
+                ACBlocks.REINFORCED_DEEPSLATE_BRICK_STAIRS.get(),
+                ACBlocks.REINFORCED_DEEPSLATE_TILE_STAIRS.get(),
+                ACBlocks.REINFORCED_POLISHED_DEEPSLATE_STAIRS.get(),
+                ACBlocks.REINFORCED_DEEPSLATE_BRICK_SLAB.get(),
+                ACBlocks.REINFORCED_DEEPSLATE_TILE_SLAB.get(),
+                ACBlocks.REINFORCED_POLISHED_DEEPSLATE_SLAB.get(),
+                ACBlocks.REINFORCED_DEEPSLATE_BRICK_WALL.get(),
+                ACBlocks.REINFORCED_DEEPSLATE_TILE_WALL.get(),
+                ACBlocks.REINFORCED_POLISHED_DEEPSLATE_WALL.get()
+        );
 
         return ACLootTableProvider.knownSet(BuiltInRegistries.BLOCK).stream()
                 .filter(block -> !excluded.contains(block))

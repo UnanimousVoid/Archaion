@@ -19,10 +19,13 @@ public class ACDataGenerators {
         PackOutput packOutput = generator.getPackOutput();
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
+        ACTagProvider.BlocksProvider blockTagsProvider = new ACTagProvider.BlocksProvider(packOutput, lookupProvider);
+        generator.addProvider(true, blockTagsProvider);
         generator.addProvider(true, new ACLanguageProvider(packOutput, "en_us"));
         generator.addProvider(true, new ACSoundDefinitionsProvider(packOutput));
         generator.addProvider(true, new ACTagProvider.EntityTypesProvider(packOutput, lookupProvider));
         generator.addProvider(true, new ACLootTableProvider(packOutput, lookupProvider));
+        generator.addProvider(true, new ACTagProvider.ItemsProvider(packOutput, lookupProvider, blockTagsProvider));
         generator.addProvider(true, new ACModelProvider(packOutput));
 
     }

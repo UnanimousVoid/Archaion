@@ -1,10 +1,19 @@
 {
   "block.archaion.deepslate_pillar": "Deepslate Pillar",
   "block.archaion.reinforced_bars": "Reinforced Bars",
+  "block.archaion.reinforced_deepslate_brick_slab": "Reinforced Deepslate Brick Slab",
+  "block.archaion.reinforced_deepslate_brick_stairs": "Reinforced Deepslate Brick Stairs",
+  "block.archaion.reinforced_deepslate_brick_wall": "Reinforced Deepslate Brick Wall",
   "block.archaion.reinforced_deepslate_bricks": "Reinforced Deepslate Bricks",
   "block.archaion.reinforced_deepslate_pillar": "Reinforced Deepslate Pillar",
+  "block.archaion.reinforced_deepslate_tile_slab": "Reinforced Deepslate Tile Slab",
+  "block.archaion.reinforced_deepslate_tile_stairs": "Reinforced Deepslate Tile Stairs",
+  "block.archaion.reinforced_deepslate_tile_wall": "Reinforced Deepslate Tile Wall",
   "block.archaion.reinforced_deepslate_tiles": "Reinforced Deepslate Tiles",
   "block.archaion.reinforced_polished_deepslate": "Reinforced Polished Deepslate",
+  "block.archaion.reinforced_polished_deepslate_slab": "Reinforced Polished Deepslate Slab",
+  "block.archaion.reinforced_polished_deepslate_stairs": "Reinforced Polished Deepslate Stairs",
+  "block.archaion.reinforced_polished_deepslate_wall": "Reinforced Polished Deepslate Wall",
   "creativetab.archaion_tab": "Archaion",
   "entity.archaion.last_of_deepslate": "Last Of Deepslate"
 }

@@ -6,6 +6,7 @@ import com.ratrod.archaion.registry.ACBlocks;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
+import net.minecraft.client.data.models.MultiVariant;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.core.Direction;
@@ -21,9 +22,9 @@ public class ACModelProvider extends ModelProvider {
 
     @Override
     protected void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
-        blockModels.createTrivialCube(ACBlocks.REINFORCED_POLISHED_DEEPSLATE.get());
-        blockModels.createTrivialCube(ACBlocks.REINFORCED_DEEPSLATE_BRICKS.get());
-        blockModels.createTrivialCube(ACBlocks.REINFORCED_DEEPSLATE_TILES.get());
+//        blockModels.createTrivialCube(ACBlocks.REINFORCED_POLISHED_DEEPSLATE.get());
+//        blockModels.createTrivialCube(ACBlocks.REINFORCED_DEEPSLATE_BRICKS.get());
+//        blockModels.createTrivialCube(ACBlocks.REINFORCED_DEEPSLATE_TILES.get());
         blockModels.createAxisAlignedPillarBlock(ACBlocks.REINFORCED_DEEPSLATE_PILLAR.get(), TexturedModel.COLUMN);
         blockModels.createAxisAlignedPillarBlock(ACBlocks.DEEPSLATE_PILLAR.get(), TexturedModel.COLUMN);
         itemModels.generateFlatItem(ACBlocks.REINFORCED_BARS.get().asItem(), ModelTemplates.FLAT_ITEM);
@@ -38,5 +39,9 @@ public class ACModelProvider extends ModelProvider {
                                 .select(true, Direction.SOUTH, BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(ACBlocks.REINFORCED_BARS.get(), "_spiky")).with(BlockModelGenerators.Y_ROT_180))
                                 .select(true, Direction.WEST, BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(ACBlocks.REINFORCED_BARS.get(), "_spiky")).with(BlockModelGenerators.Y_ROT_270)))
         );
+        blockModels.family(ACBlocks.REINFORCED_POLISHED_DEEPSLATE.get()).stairs(ACBlocks.REINFORCED_POLISHED_DEEPSLATE_STAIRS.get()).slab(ACBlocks.REINFORCED_POLISHED_DEEPSLATE_SLAB.get()).wall(ACBlocks.REINFORCED_POLISHED_DEEPSLATE_WALL.get());
+        blockModels.family(ACBlocks.REINFORCED_DEEPSLATE_BRICKS.get()).stairs(ACBlocks.REINFORCED_DEEPSLATE_BRICK_STAIRS.get()).slab(ACBlocks.REINFORCED_DEEPSLATE_BRICK_SLAB.get()).wall(ACBlocks.REINFORCED_DEEPSLATE_BRICK_WALL.get());
+        blockModels.family(ACBlocks.REINFORCED_DEEPSLATE_TILES.get()).stairs(ACBlocks.REINFORCED_DEEPSLATE_TILE_STAIRS.get()).slab(ACBlocks.REINFORCED_DEEPSLATE_TILE_SLAB.get()).wall(ACBlocks.REINFORCED_DEEPSLATE_TILE_WALL.get());
+
     }
 }
