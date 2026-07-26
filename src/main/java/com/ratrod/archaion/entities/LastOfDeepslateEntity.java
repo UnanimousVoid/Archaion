@@ -1,41 +1,51 @@
 package com.ratrod.archaion.entities;
 
+import com.ratrod.archaion.api.client.animation.ACAnimation;
 import com.ratrod.archaion.api.client.animation.EntityAnimationManager;
 import com.ratrod.archaion.api.entity.ActionManager;
 import com.ratrod.archaion.entities.ai.ACEntity;
+import com.ratrod.archaion.entities.ai.actions.SmashGroundAction;
 import com.ratrod.archaion.entities.ai.controls.move.ACMoveControl;
+import com.ratrod.archaion.entities.ai.controls.pathnav.LargeEntityPathNavigation;
+import com.ratrod.archaion.entities.ai.goals.GoToTargetGoal;
+import com.ratrod.archaion.entities.ai.goals.LastOfDeepslateAnimations;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.animal.golem.IronGolem;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
 
-public class LastOfDeepslateEntity extends Monster implements ACEntity {
+public class LastOfDeepslateEntity extends Monster implements ACEntity<LastOfDeepslateEntity> {
 
     private final EntityAnimationManager animationManager = new EntityAnimationManager(this);
-
     private final ActionManager<LastOfDeepslateEntity> attackManager = new ActionManager<>(this);
+
+    public final ACAnimation smashAnimation = new ACAnimation(this, () -> LastOfDeepslateAnimations.SMASH_GROUND);
 
     public LastOfDeepslateEntity(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
         this.moveControl = new ACMoveControl<>(this);
+        this.navigation = new LargeEntityPathNavigation(this, level);
+
+        this.attackManager.addAction(new SmashGroundAction(this));
     }
 
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, true));
-        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));
-        this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0F));
-        this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(2, new GoToTargetGoal(this, 1.2F, this.getBbWidth() * 1.5F));
+        this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 0.0F));
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -46,6 +56,7 @@ public class LastOfDeepslateEntity extends Monster implements ACEntity {
                 .add(Attributes.FOLLOW_RANGE, 40.0D)
                 .add(Attributes.ARMOR, 10.0D)
                 .add(Attributes.ARMOR_TOUGHNESS, 8.0D)
+                .add(Attributes.STEP_HEIGHT, 1.5D)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 1.0D);
     }
 
@@ -55,20 +66,26 @@ public class LastOfDeepslateEntity extends Monster implements ACEntity {
     }
 
     @Override
-    public List<ActionManager> getActionManagers() {
+    public List<ActionManager<LastOfDeepslateEntity>> getActionManagers() {
         return List.of(attackManager);
     }
 
     @Override
+    public boolean isPushable() {
+        return false;
+    }
+
+    @Override
+    protected void pushEntities() {
+    }
+
+    @Override
     public float getRotationFreedom() {
-        return 0.1F;
+        return 0.15F;
     }
 
     @Override
     public void tick() {
         super.tick();
-        if (level().isClientSide()) {
-            getAnimationManager().getAnimationStateMap().values().forEach(pair -> pair.first().animateWhen(true, this.tickCount));
-        }
     }
 }

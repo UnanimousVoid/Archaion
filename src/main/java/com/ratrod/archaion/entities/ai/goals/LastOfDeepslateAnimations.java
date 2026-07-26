@@ -1,4 +1,4 @@
-package com.ratrod.archaion.client.animations;// Save this class in your mod and generate all required imports
+package com.ratrod.archaion.entities.ai.goals;// Save this class in your mod and generate all required imports
 
 import net.minecraft.client.animation.AnimationChannel;
 import net.minecraft.client.animation.AnimationDefinition;
@@ -160,7 +160,9 @@ public class LastOfDeepslateAnimations {
 			new Keyframe(0.0833F, KeyframeAnimations.degreeVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.CATMULLROM),
 			new Keyframe(0.4583F, KeyframeAnimations.degreeVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.CATMULLROM),
 			new Keyframe(0.75F, KeyframeAnimations.degreeVec(-170.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.CATMULLROM),
-			new Keyframe(1.0F, KeyframeAnimations.degreeVec(-110.0175F, 2.3491F, -0.8555F), AnimationChannel.Interpolations.CATMULLROM),
+			new Keyframe(1.0F, KeyframeAnimations.degreeVec(-110.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.CATMULLROM),
+			new Keyframe(1.125F, KeyframeAnimations.degreeVec(-120.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),
+			new Keyframe(1.25F, KeyframeAnimations.degreeVec(-110.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),
 			new Keyframe(1.5F, KeyframeAnimations.degreeVec(-110.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.CATMULLROM),
 			new Keyframe(1.9167F, KeyframeAnimations.degreeVec(45.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.CATMULLROM),
 			new Keyframe(2.5F, KeyframeAnimations.degreeVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.CATMULLROM)
@@ -169,7 +171,7 @@ public class LastOfDeepslateAnimations {
 			new Keyframe(0.0F, KeyframeAnimations.degreeVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.CATMULLROM),
 			new Keyframe(0.375F, KeyframeAnimations.degreeVec(26.3923F, -18.0578F, -8.7447F), AnimationChannel.Interpolations.CATMULLROM),
 			new Keyframe(0.75F, KeyframeAnimations.degreeVec(-9.9161F, -1.2988F, -7.3873F), AnimationChannel.Interpolations.CATMULLROM),
-			new Keyframe(0.9583F, KeyframeAnimations.degreeVec(63.073F, 13.0267F, 29.6534F), AnimationChannel.Interpolations.CATMULLROM),
+			new Keyframe(0.9583F, KeyframeAnimations.degreeVec(57.6383F, 1.1592F, 7.4511F), AnimationChannel.Interpolations.CATMULLROM),
 			new Keyframe(1.5F, KeyframeAnimations.degreeVec(62.7357F, -3.3023F, -1.4918F), AnimationChannel.Interpolations.CATMULLROM),
 			new Keyframe(1.9167F, KeyframeAnimations.degreeVec(-20.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.CATMULLROM),
 			new Keyframe(2.375F, KeyframeAnimations.degreeVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.CATMULLROM)

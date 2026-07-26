@@ -7,8 +7,6 @@ import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 
-import java.util.function.Supplier;
-
 public abstract class ACAnimatedModel<S extends ACLivingEntityRenderState> extends EntityModel<S> {
 
     protected ACAnimatedModel(ModelPart root) {
@@ -17,10 +15,10 @@ public abstract class ACAnimatedModel<S extends ACLivingEntityRenderState> exten
 
     public void animateManager(S state, float ageInTicks) {
         if (state.animationManager != null) {
-            state.animationManager.getAnimationStateMap().forEach((_, pair) -> {
-                Supplier<?> second = pair.second();
-                if (second.get() instanceof AnimationDefinition definition) {
-                    definition.bake(this.root()).apply(pair.first(), ageInTicks);
+            state.animationManager.getAnimationMap().forEach((id, animation) -> {
+                AnimationDefinition definition = animation.getDefinition();
+                if (definition != null) {
+                    definition.bake(this.root()).apply(animation.getState(), ageInTicks);
                 }
             });
         }

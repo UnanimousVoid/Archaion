@@ -1,7 +1,7 @@
 package com.ratrod.archaion.network.s2c;
 
 import com.ratrod.archaion.Archaion;
-import com.ratrod.archaion.client.clientdata.ClientBossBarData;
+import com.ratrod.archaion.client.misc.ClientBossBarData;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;

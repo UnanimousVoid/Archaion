@@ -71,5 +71,6 @@ public class LastOfDeepslateModel<S extends ACLivingEntityRenderState> extends A
         super.setupAnim(state);
         walkUpperAnimation.applyWalk(state.walkAnimationPos, state.walkAnimationSpeed, 2.0F, 2.5F);
         walkLowerAnimation.applyWalk(state.walkAnimationPos, state.walkAnimationSpeed, 2.0F, 2.5F);
+        this.animateManager(state, state.ageInTicks);
     }
 }

@@ -40,7 +40,10 @@ neoForge {
     runs {
         client {
             client()
-
+            programArgument('--username')
+            programArgument("ManMeme####")
+            jvmArgument("-XX:+AllowEnhancedClassRedefinition")
+            jvmArgument("-XX:HotswapAgent=fatjar")
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
 

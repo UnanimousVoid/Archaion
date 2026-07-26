@@ -11,11 +11,12 @@ import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 
 import java.util.List;
 
-public interface ACEntity {
+public interface ACEntity<L extends LivingEntity> {
     default float getRotationFreedom() {
         return 1.0F;
     }
@@ -24,7 +25,7 @@ public interface ACEntity {
         return null;
     }
 
-    default List<ActionManager> getActionManagers() {
+    default List<ActionManager<L>> getActionManagers() {
         return List.of();
     }
 

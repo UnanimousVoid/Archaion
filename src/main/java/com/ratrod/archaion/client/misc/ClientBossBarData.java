@@ -1,4 +1,4 @@
-package com.ratrod.archaion.client.clientdata;
+package com.ratrod.archaion.client.misc;
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 

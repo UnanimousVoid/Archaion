@@ -14,7 +14,7 @@ public abstract class LivingEntityMixin {
     @Inject(method = "aiStep", at = @At("TAIL"))
     private void ac$tickActionManagers(CallbackInfo ci) {
         LivingEntity self = (LivingEntity) (Object) this;
-        if (self instanceof ACEntity acEntity) {
+        if (self instanceof ACEntity<?> acEntity) {
             if (!self.level().isClientSide()) {
                 acEntity.getActionManagers().forEach(ActionManager::tick);
             }
