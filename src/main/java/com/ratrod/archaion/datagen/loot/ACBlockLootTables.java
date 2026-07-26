@@ -1,6 +1,7 @@
 package com.ratrod.archaion.datagen.loot;
 
 import com.ratrod.archaion.datagen.ACLootTableProvider;
+import com.ratrod.archaion.registry.ACBlocks;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.loot.BlockLootSubProvider;
@@ -24,8 +25,13 @@ public class ACBlockLootTables extends BlockLootSubProvider {
     @Override
     protected Iterable<Block> getKnownBlocks() {
         Set<Block> excluded = Set.of(
-
-        );
+                ACBlocks.REINFORCED_POLISHED_DEEPSLATE.get(),
+                ACBlocks.REINFORCED_DEEPSLATE_BRICKS.get(),
+                ACBlocks.REINFORCED_DEEPSLATE_TILES.get(),
+                ACBlocks.REINFORCED_DEEPSLATE_PILLAR.get(),
+                ACBlocks.DEEPSLATE_PILLAR.get(),
+                ACBlocks.REINFORCED_BARS.get()
+                );
 
         return ACLootTableProvider.knownSet(BuiltInRegistries.BLOCK).stream()
                 .filter(block -> !excluded.contains(block))

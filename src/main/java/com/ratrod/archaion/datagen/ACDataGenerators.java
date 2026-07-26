@@ -1,6 +1,7 @@
 package com.ratrod.archaion.datagen;
 
 import com.ratrod.archaion.Archaion;
+import net.minecraft.client.data.models.ModelProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
@@ -22,5 +23,7 @@ public class ACDataGenerators {
         generator.addProvider(true, new ACSoundDefinitionsProvider(packOutput));
         generator.addProvider(true, new ACTagProvider.EntityTypesProvider(packOutput, lookupProvider));
         generator.addProvider(true, new ACLootTableProvider(packOutput, lookupProvider));
+        generator.addProvider(true, new ACModelProvider(packOutput));
+
     }
 }

@@ -21,6 +21,8 @@ public class ACLanguageProvider extends LanguageProvider {
 
     @Override
     protected void addTranslations() {
+        this.add("creativetab.archaion_tab", "Archaion");
+
 
         for (DeferredHolder<Item, ? extends Item> item : ACItems.ITEM.getEntries()) {
             if (!(item.get() instanceof BlockItem) && !(item.get() instanceof SmithingTemplateItem)) {
