@@ -3,12 +3,13 @@ package com.ratrod.archaion.entities;
 import com.ratrod.archaion.api.client.animation.ACAnimation;
 import com.ratrod.archaion.api.client.animation.EntityAnimationManager;
 import com.ratrod.archaion.api.entity.ActionManager;
+import com.ratrod.archaion.client.animations.LastOfDeepslateAnimations;
 import com.ratrod.archaion.entities.ai.ACEntity;
 import com.ratrod.archaion.entities.ai.actions.SmashGroundAction;
+import com.ratrod.archaion.entities.ai.actions.SwingSpinAction;
 import com.ratrod.archaion.entities.ai.controls.move.ACMoveControl;
 import com.ratrod.archaion.entities.ai.controls.pathnav.LargeEntityPathNavigation;
 import com.ratrod.archaion.entities.ai.goals.GoToTargetGoal;
-import com.ratrod.archaion.entities.ai.goals.LastOfDeepslateAnimations;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -28,7 +29,8 @@ public class LastOfDeepslateEntity extends Monster implements ACEntity<LastOfDee
     private final EntityAnimationManager animationManager = new EntityAnimationManager(this);
     private final ActionManager<LastOfDeepslateEntity> attackManager = new ActionManager<>(this);
 
-    public final ACAnimation smashAnimation = new ACAnimation(this, () -> LastOfDeepslateAnimations.SMASH_GROUND);
+    public final ACAnimation smashGroundAnim = new ACAnimation(this, () -> LastOfDeepslateAnimations.SMASH_GROUND);
+    public final ACAnimation swingSpinAnim = new ACAnimation(this, () -> LastOfDeepslateAnimations.SPIN_SWING);
 
     public LastOfDeepslateEntity(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
@@ -36,6 +38,7 @@ public class LastOfDeepslateEntity extends Monster implements ACEntity<LastOfDee
         this.navigation = new LargeEntityPathNavigation(this, level);
 
         this.attackManager.addAction(new SmashGroundAction(this));
+        this.attackManager.addAction(new SwingSpinAction(this));
     }
 
     @Override

@@ -23,7 +23,6 @@ public class ACLanguageProvider extends LanguageProvider {
     protected void addTranslations() {
         this.add("creativetab.archaion_tab", "Archaion");
 
-
         for (DeferredHolder<Item, ? extends Item> item : ACItems.ITEM.getEntries()) {
             if (!(item.get() instanceof BlockItem) && !(item.get() instanceof SmithingTemplateItem)) {
                 this.addItem(item, WordUtils.capitalize(item.getId().getPath().replace("_", " ")));
