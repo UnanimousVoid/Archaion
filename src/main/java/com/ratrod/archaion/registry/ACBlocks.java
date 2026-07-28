@@ -21,6 +21,7 @@ public class ACBlocks {
     public static final DeferredBlock<Block> REINFORCED_DEEPSLATE_TILES = registerBlock("reinforced_deepslate_tiles", Block::new, properties -> properties.mapColor(MapColor.DEEPSLATE).instrument(NoteBlockInstrument.BASEDRUM).sound(SoundType.DEEPSLATE).strength(55.0F, 1200.0F));
     public static final DeferredBlock<Block> REINFORCED_DEEPSLATE_PILLAR = registerBlock("reinforced_deepslate_pillar", RotatedPillarBlock::new, properties -> properties.mapColor(MapColor.DEEPSLATE).instrument(NoteBlockInstrument.BASEDRUM).sound(SoundType.DEEPSLATE).strength(55.0F, 1200.0F));
     public static final DeferredBlock<Block> DEEPSLATE_PILLAR = registerBlock("deepslate_pillar", RotatedPillarBlock::new, properties -> properties.mapColor(MapColor.DEEPSLATE).instrument(NoteBlockInstrument.BASEDRUM).sound(SoundType.DEEPSLATE).strength(55.0F, 1200.0F));
+    public static final DeferredBlock<Block> SOUL_LAMP = registerBlock("soul_lamp", Block::new, properties -> properties.mapColor(MapColor.QUARTZ).instrument(NoteBlockInstrument.HAT).strength(0.3F).sound(SoundType.GLASS).lightLevel((statex) -> 15));
 
     public static final DeferredBlock<StairBlock> REINFORCED_POLISHED_DEEPSLATE_STAIRS = registerStairs("reinforced_polished_deepslate_stairs", REINFORCED_POLISHED_DEEPSLATE);
     public static final DeferredBlock<StairBlock> REINFORCED_DEEPSLATE_BRICK_STAIRS = registerStairs("reinforced_deepslate_brick_stairs", REINFORCED_DEEPSLATE_BRICKS);
