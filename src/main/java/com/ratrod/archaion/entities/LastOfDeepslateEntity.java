@@ -5,6 +5,7 @@ import com.ratrod.archaion.api.client.animation.EntityAnimationManager;
 import com.ratrod.archaion.api.entity.ActionManager;
 import com.ratrod.archaion.client.animations.LastOfDeepslateAnimations;
 import com.ratrod.archaion.entities.ai.ACEntity;
+import com.ratrod.archaion.entities.ai.actions.ShootAction;
 import com.ratrod.archaion.entities.ai.actions.SmashGroundAction;
 import com.ratrod.archaion.entities.ai.actions.SwingSpinAction;
 import com.ratrod.archaion.entities.ai.controls.move.ACMoveControl;
@@ -29,6 +30,7 @@ public class LastOfDeepslateEntity extends Monster implements ACEntity<LastOfDee
     private final EntityAnimationManager animationManager = new EntityAnimationManager(this);
     private final ActionManager<LastOfDeepslateEntity> attackManager = new ActionManager<>(this);
 
+    public final ACAnimation shootAnim = new ACAnimation(this, () -> LastOfDeepslateAnimations.SHOOT_LAND);
     public final ACAnimation smashGroundAnim = new ACAnimation(this, () -> LastOfDeepslateAnimations.SMASH_GROUND);
     public final ACAnimation swingSpinAnim = new ACAnimation(this, () -> LastOfDeepslateAnimations.SPIN_SWING);
 
@@ -39,6 +41,7 @@ public class LastOfDeepslateEntity extends Monster implements ACEntity<LastOfDee
 
         this.attackManager.addAction(new SmashGroundAction(this));
         this.attackManager.addAction(new SwingSpinAction(this));
+        this.attackManager.addAction(new ShootAction(this));
     }
 
     @Override
@@ -56,11 +59,16 @@ public class LastOfDeepslateEntity extends Monster implements ACEntity<LastOfDee
                 .add(Attributes.MAX_HEALTH, 300.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.25D)
                 .add(Attributes.ATTACK_DAMAGE, 15.0D)
-                .add(Attributes.FOLLOW_RANGE, 40.0D)
+                .add(Attributes.FOLLOW_RANGE, 128.0D)
                 .add(Attributes.ARMOR, 10.0D)
                 .add(Attributes.ARMOR_TOUGHNESS, 8.0D)
                 .add(Attributes.STEP_HEIGHT, 1.5D)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 1.0D);
+    }
+
+    @Override
+    public boolean isPersistenceRequired() {
+        return true;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.ratrod.archaion;
 
 import com.ratrod.archaion.client.models.LastOfDeepslateModel;
+import com.ratrod.archaion.client.renderers.EchoStarProjectileRenderer;
 import com.ratrod.archaion.client.renderers.LastOfDeepslateRenderer;
 import com.ratrod.archaion.registry.ACEntityTypes;
 import net.neoforged.api.distmarker.Dist;
@@ -28,6 +29,7 @@ public class ACClientSetup {
     @SubscribeEvent
     static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(ACEntityTypes.LAST_OF_DEEPSLATE.get(), LastOfDeepslateRenderer::new);
+        event.registerEntityRenderer(ACEntityTypes.ECHO_STAR.get(), EchoStarProjectileRenderer::new);
     }
 
     @SubscribeEvent

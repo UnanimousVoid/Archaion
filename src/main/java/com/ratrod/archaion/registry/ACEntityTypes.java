@@ -1,6 +1,7 @@
 package com.ratrod.archaion.registry;
 
 import com.ratrod.archaion.Archaion;
+import com.ratrod.archaion.entities.EchoStarProjectile;
 import com.ratrod.archaion.entities.LastOfDeepslateEntity;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -15,4 +16,7 @@ public class ACEntityTypes {
 
     public static final DeferredHolder<EntityType<?>, EntityType<LastOfDeepslateEntity>> LAST_OF_DEEPSLATE = ENTITY_TYPE.register("last_of_deepslate",
             () -> EntityType.Builder.of(LastOfDeepslateEntity::new, MobCategory.MONSTER).sized(6.0F, 6.5F).build(ResourceKey.create(Registries.ENTITY_TYPE, Archaion.prefix("last_of_deepslate"))));
+
+    public static final DeferredHolder<EntityType<?>, EntityType<EchoStarProjectile>> ECHO_STAR = ENTITY_TYPE.register("echo_star",
+            () -> EntityType.Builder.<EchoStarProjectile>of(EchoStarProjectile::new, MobCategory.MISC).sized(1.5F, 1.5F).noSave().build(ResourceKey.create(Registries.ENTITY_TYPE, Archaion.prefix("echo_star"))));
 }

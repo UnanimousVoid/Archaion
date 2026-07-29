@@ -22,13 +22,18 @@ public class SwingSpinAction extends ManagedAction<LastOfDeepslateEntity> {
         LivingEntity target = entity.getTarget();
         if (target == null || !target.isAlive()) return false;
         if (!entity.hasLineOfSight(target)) return false;
-        return entity.distanceTo(target) <= entity.getBbWidth() * 1.5F;
+        return entity.distanceTo(target) <= entity.getBbWidth() * 1.25F;
     }
 
     @Override
     public void onStart() {
         this.timer = 0;
         entity.swingSpinAnim.start();
+    }
+
+    @Override
+    public int getWeight() {
+        return 150;
     }
 
     @Override
@@ -58,7 +63,7 @@ public class SwingSpinAction extends ManagedAction<LastOfDeepslateEntity> {
 
         for (LivingEntity target : targets) {
             entity.attackTarget(serverLevel, target, 1.0F, ACEntity.Operation.MULTIPLY);
-            Vec3 knockback = target.position().subtract(center).normalize().scale(1.5).add(0, 1.2, 0);
+            Vec3 knockback = target.position().subtract(center).normalize().scale(1.5).add(0, 0.35, 0);
             target.setDeltaMovement(target.getDeltaMovement().add(knockback));
             target.hurtMarked = true;
         }
