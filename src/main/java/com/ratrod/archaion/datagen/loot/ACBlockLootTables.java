@@ -19,7 +19,7 @@ public class ACBlockLootTables extends BlockLootSubProvider {
 
     @Override
     public void generate() {
-
+        this.dropSelf(ACBlocks.SOUL_LAMP.get());
     }
 
     @Override

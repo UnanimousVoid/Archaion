@@ -6,7 +6,6 @@ import com.ratrod.archaion.registry.ACBlocks;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
-import net.minecraft.client.data.models.MultiVariant;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.core.Direction;
@@ -24,7 +23,7 @@ public class ACModelProvider extends ModelProvider {
     protected void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
 //        blockModels.createTrivialCube(ACBlocks.REINFORCED_POLISHED_DEEPSLATE.get());
 //        blockModels.createTrivialCube(ACBlocks.REINFORCED_DEEPSLATE_BRICKS.get());
-//        blockModels.createTrivialCube(ACBlocks.REINFORCED_DEEPSLATE_TILES.get());
+        blockModels.createTrivialCube(ACBlocks.SOUL_LAMP.get());
         blockModels.createAxisAlignedPillarBlock(ACBlocks.REINFORCED_DEEPSLATE_PILLAR.get(), TexturedModel.COLUMN);
         blockModels.createAxisAlignedPillarBlock(ACBlocks.DEEPSLATE_PILLAR.get(), TexturedModel.COLUMN);
         itemModels.generateFlatItem(ACBlocks.REINFORCED_BARS.get().asItem(), ModelTemplates.FLAT_ITEM);
