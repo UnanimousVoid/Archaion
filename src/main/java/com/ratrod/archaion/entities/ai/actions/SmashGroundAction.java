@@ -6,9 +6,6 @@ import com.ratrod.archaion.entities.ai.ACEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
@@ -68,9 +65,6 @@ public class SmashGroundAction extends ManagedAction<LastOfDeepslateEntity> {
             entity.attackTarget(serverLevel, target, 1.2F, ACEntity.Operation.MULTIPLY);
             Vec3 knockback = target.position().subtract(center).normalize().scale(1.5).add(0, 0.35, 0);
             target.setDeltaMovement(target.getDeltaMovement().add(knockback));
-            if (target instanceof Player player) {
-                player.getCooldowns().addCooldown(new ItemStack(Items.SHIELD), 100);
-            }
             target.hurtMarked = true;
         }
     }

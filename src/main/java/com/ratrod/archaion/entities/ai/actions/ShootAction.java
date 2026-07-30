@@ -51,6 +51,10 @@ public class ShootAction extends ManagedAction<LastOfDeepslateEntity> {
             }
         }
 
+        if (timer > 25) {
+            if (entity.getTarget() != null) entity.getLookControl().setLookAt(entity.getTarget(), 45, 45);
+        }
+
         return timer < 60;
     }
 

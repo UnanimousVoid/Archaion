@@ -3,10 +3,7 @@ package com.ratrod.archaion;
 
 import com.mojang.logging.LogUtils;
 import com.ratrod.archaion.network.ACNetwork;
-import com.ratrod.archaion.registry.ACBlocks;
-import com.ratrod.archaion.registry.ACCreativeModeTabs;
-import com.ratrod.archaion.registry.ACEntityTypes;
-import com.ratrod.archaion.registry.ACItems;
+import com.ratrod.archaion.registry.*;
 import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -27,6 +24,7 @@ public class Archaion {
         ACBlocks.BLOCK.register(modEventBus);
         ACItems.ITEM.register(modEventBus);
         ACEntityTypes.ENTITY_TYPE.register(modEventBus);
+        ACEntityDataSerializers.ENTITY_DATA_SERIALIZERS.register(modEventBus);
         ACCreativeModeTabs.register(modEventBus);
 
     }

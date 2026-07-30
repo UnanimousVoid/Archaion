@@ -3,6 +3,7 @@ package com.ratrod.archaion.mixin;
 import com.ratrod.archaion.api.entity.ActionManager;
 import com.ratrod.archaion.entities.ai.ACEntity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -15,7 +16,9 @@ public abstract class LivingEntityMixin {
     private void ac$tickActionManagers(CallbackInfo ci) {
         LivingEntity self = (LivingEntity) (Object) this;
         if (self instanceof ACEntity<?> acEntity) {
-            if (!self.level().isClientSide()) {
+            boolean isNoAi = self instanceof Mob mob && mob.isNoAi();
+            boolean serverSide = !self.level().isClientSide();
+            if (serverSide && !isNoAi || !serverSide && !isNoAi) {
                 acEntity.getActionManagers().forEach(ActionManager::tick);
             }
         }

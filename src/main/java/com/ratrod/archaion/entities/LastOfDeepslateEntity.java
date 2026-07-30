@@ -5,12 +5,17 @@ import com.ratrod.archaion.api.client.animation.EntityAnimationManager;
 import com.ratrod.archaion.api.entity.ActionManager;
 import com.ratrod.archaion.client.animations.LastOfDeepslateAnimations;
 import com.ratrod.archaion.entities.ai.ACEntity;
+import com.ratrod.archaion.entities.ai.SleepingState;
 import com.ratrod.archaion.entities.ai.actions.ShootAction;
 import com.ratrod.archaion.entities.ai.actions.SmashGroundAction;
 import com.ratrod.archaion.entities.ai.actions.SwingSpinAction;
 import com.ratrod.archaion.entities.ai.controls.move.ACMoveControl;
 import com.ratrod.archaion.entities.ai.controls.pathnav.LargeEntityPathNavigation;
 import com.ratrod.archaion.entities.ai.goals.GoToTargetGoal;
+import com.ratrod.archaion.registry.ACEntityDataSerializers;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -27,12 +32,19 @@ import java.util.List;
 
 public class LastOfDeepslateEntity extends Monster implements ACEntity<LastOfDeepslateEntity> {
 
+    public static final EntityDataAccessor<SleepingState> SLEEPING_STATE = SynchedEntityData.defineId(LastOfDeepslateEntity.class, ACEntityDataSerializers.SLEEPING_STATE.get());
+
     private final EntityAnimationManager animationManager = new EntityAnimationManager(this);
     private final ActionManager<LastOfDeepslateEntity> attackManager = new ActionManager<>(this);
 
+    public final ACAnimation deathAnim = new ACAnimation(this, () -> LastOfDeepslateAnimations.DYING);
+    public final ACAnimation wakingAnim = new ACAnimation(this, () -> LastOfDeepslateAnimations.WAKING);
     public final ACAnimation shootAnim = new ACAnimation(this, () -> LastOfDeepslateAnimations.SHOOT_LAND);
     public final ACAnimation smashGroundAnim = new ACAnimation(this, () -> LastOfDeepslateAnimations.SMASH_GROUND);
     public final ACAnimation swingSpinAnim = new ACAnimation(this, () -> LastOfDeepslateAnimations.SPIN_SWING);
+
+    private int wakingStartTick = 0;
+    private boolean deathAnimationPlayed = false;
 
     public LastOfDeepslateEntity(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
@@ -96,7 +108,61 @@ public class LastOfDeepslateEntity extends Monster implements ACEntity<LastOfDee
     }
 
     @Override
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(SLEEPING_STATE, SleepingState.SLEEPING);
+    }
+
+    @Override
     public void tick() {
+        if (this.entityData.get(SLEEPING_STATE) != SleepingState.AWAKE) {
+            this.targetSelector.tick();
+        }
+
         super.tick();
+
+        if (!this.level().isClientSide()) {
+
+            SleepingState currentState = this.entityData.get(SLEEPING_STATE);
+
+            if (this.getTarget() != null) {
+                if (currentState == SleepingState.SLEEPING) {
+                    this.entityData.set(SLEEPING_STATE, SleepingState.WAKING);
+                    this.wakingAnim.forceStart();
+                    this.wakingStartTick = this.tickCount;
+                } else if (currentState == SleepingState.WAKING) {
+                    if (this.tickCount - this.wakingStartTick >= 80) {
+                        this.entityData.set(SLEEPING_STATE, SleepingState.AWAKE);
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    protected void tickDeath() {
+        this.deathTime++;
+
+        if (!deathAnimationPlayed) {
+            if (this.entityData.get(SLEEPING_STATE) != SleepingState.AWAKE) {
+                this.entityData.set(SLEEPING_STATE, SleepingState.AWAKE);
+            }
+            this.deathAnim.forceStart();
+            deathAnimationPlayed = true;
+        }
+        if (this.deathTime >= 80 && !this.level().isClientSide() && !this.isRemoved()) {
+            this.level().broadcastEntityEvent(this, (byte)60);
+            this.remove(Entity.RemovalReason.KILLED);
+        }
+    }
+
+    @Override
+    public boolean isNoAi() {
+        return super.isNoAi() || this.entityData.get(SLEEPING_STATE) != SleepingState.AWAKE;
+    }
+
+    @Override
+    public float getSecondsToDisableBlocking() {
+        return 5.0F;
     }
 }

@@ -57,8 +57,9 @@ public class LargeEntityPathNavigation extends GroundPathNavigation {
         }
 
         if (tryTruncateNodes(curPath, pathLength, entityPos, center, maxArea)) {
-            if (followingPath(curPath, 0.2F)
-                    || (elevationChangedFor(curPath) && followingPath(curPath, mob.getBbWidth() * 0.5F))
+            float maxDistanceToWaypoint = e.getBbWidth() > 0.75F ? e.getBbWidth() * 0.5F : 0.75F - e.getBbWidth() * 0.5F;
+            if (followingPath(curPath, maxDistanceToWaypoint)
+                    || (elevationChangedFor(curPath) && followingPath(curPath, e.getBbWidth() * 0.5F))
                     && canCutCorner(path.getNextNode().type)) {
                 path.setNextNodeIndex(path.getNextNodeIndex() + 1);
             }
@@ -66,8 +67,6 @@ public class LargeEntityPathNavigation extends GroundPathNavigation {
 
         doStuckDetection(tempPos);
     }
-
-    // ---- helpers ----
 
     private static int leti(float c, int step) {
         return Mth.floor(c - step * EPSILON);

@@ -35,7 +35,7 @@ public class EchoStarProjectile extends ThrowableProjectile {
         if (this.level().isClientSide()) {
             if (firstTick) {
                 ParticleEmitterInfo info = new ParticleEmitterInfo(Archaion.prefix("echo_star"));
-                AAALevel.addParticle(level(), info.bindOnEntity(this).scale(0.6F));
+                AAALevel.addParticle(level(), info.bindOnEntity(this).position(0, 0.5, 0).scale(0.6F));
             }
 
             if (getOwner() == null) {

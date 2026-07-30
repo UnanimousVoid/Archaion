@@ -1,7 +1,7 @@
 package com.ratrod.archaion.client.renderers;
 
 import com.ratrod.archaion.Archaion;
-import com.ratrod.archaion.client.ACLivingEntityRenderState;
+import com.ratrod.archaion.client.LastOfDeepslateRenderState;
 import com.ratrod.archaion.client.models.LastOfDeepslateModel;
 import com.ratrod.archaion.entities.LastOfDeepslateEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -11,7 +11,7 @@ import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 
-public class LastOfDeepslateRenderer extends MobRenderer<LastOfDeepslateEntity, ACLivingEntityRenderState, LastOfDeepslateModel<ACLivingEntityRenderState>> {
+public class LastOfDeepslateRenderer extends MobRenderer<LastOfDeepslateEntity, LastOfDeepslateRenderState, LastOfDeepslateModel<LastOfDeepslateRenderState>> {
 
     private static final Identifier TEXTURE = Archaion.prefix("textures/entity/last_of_deepslate.png");
     private static final Identifier GLOW_TEXTURE = Archaion.prefix("textures/entity/last_of_deepslate_glow.png");
@@ -31,18 +31,24 @@ public class LastOfDeepslateRenderer extends MobRenderer<LastOfDeepslateEntity, 
     }
 
     @Override
-    public ACLivingEntityRenderState createRenderState() {
-        return new ACLivingEntityRenderState();
+    protected float getFlipDegrees() {
+        return 0;
     }
 
     @Override
-    public void extractRenderState(LastOfDeepslateEntity entity, ACLivingEntityRenderState state, float partialTicks) {
+    public LastOfDeepslateRenderState createRenderState() {
+        return new LastOfDeepslateRenderState();
+    }
+
+    @Override
+    public void extractRenderState(LastOfDeepslateEntity entity, LastOfDeepslateRenderState state, float partialTicks) {
         super.extractRenderState(entity, state, partialTicks);
         state.animationManager = entity.getAnimationManager();
+        state.sleepingState = entity.getEntityData().get(LastOfDeepslateEntity.SLEEPING_STATE);
     }
 
     @Override
-    public Identifier getTextureLocation(ACLivingEntityRenderState state) {
+    public Identifier getTextureLocation(LastOfDeepslateRenderState state) {
         return TEXTURE;
     }
 }

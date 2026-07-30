@@ -1,15 +1,16 @@
 package com.ratrod.archaion.client.models;
 
 import com.ratrod.archaion.Archaion;
-import com.ratrod.archaion.client.ACLivingEntityRenderState;
+import com.ratrod.archaion.client.LastOfDeepslateRenderState;
 import com.ratrod.archaion.client.animations.LastOfDeepslateAnimations;
+import com.ratrod.archaion.entities.ai.SleepingState;
 import net.minecraft.client.animation.KeyframeAnimation;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 
-public class LastOfDeepslateModel<S extends ACLivingEntityRenderState> extends ACAnimatedModel<S> {
+public class LastOfDeepslateModel<S extends LastOfDeepslateRenderState> extends ACAnimatedModel<S> {
 
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(Archaion.prefix("lastofdeepslatemodel"), "main");
     private final ModelPart root;
@@ -80,7 +81,12 @@ public class LastOfDeepslateModel<S extends ACLivingEntityRenderState> extends A
     @Override
     public void setupAnim(S state) {
         super.setupAnim(state);
-        this.animateScaled(LastOfDeepslateAnimations.IDLE_UPPER, state.ageInTicks, 1.0F, 1.0F);
+
+        if (state.sleepingState == SleepingState.SLEEPING) {
+            this.animateScaled(LastOfDeepslateAnimations.SLEEPING, state.ageInTicks, 1.0F, 1.0F);
+        } else if (state.sleepingState == SleepingState.AWAKE) {
+            this.animateScaled(LastOfDeepslateAnimations.IDLE_UPPER, state.ageInTicks, 1.0F, 1.0F);
+        }
         walkUpperAnimation.applyWalk(state.walkAnimationPos, state.walkAnimationSpeed, 2.0F, 2.5F);
         walkLowerAnimation.applyWalk(state.walkAnimationPos, state.walkAnimationSpeed, 2.0F, 2.5F);
         this.animateManager(state, state.ageInTicks);

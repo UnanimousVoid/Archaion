@@ -36,7 +36,7 @@ public class GoToTargetGoal extends Goal {
         if (target == null) return;
 
         if (--this.pathRecalcTicks <= 0) {
-            this.pathRecalcTicks = 5;
+            this.pathRecalcTicks = 8;
             Vec3 targetPos = target.position();
             this.entity.getNavigation().moveTo(targetPos.x, targetPos.y, targetPos.z, this.speedModifier);
         }
