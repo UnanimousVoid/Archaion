@@ -37,6 +37,8 @@ public class ACBlocks {
 
     public static final DeferredBlock<ReinforcedBarBlock> REINFORCED_BARS = registerBlock("reinforced_bars", ReinforcedBarBlock::new, properties -> properties.mapColor(MapColor.DEEPSLATE).instrument(NoteBlockInstrument.BASEDRUM).sound(SoundType.DEEPSLATE).strength(55.0F, 1200.0F));
 
+    public static final DeferredBlock<VaultBlock> DEEPSLATE_VAULT = registerBlock("deepslate_vault", VaultBlock::new, properties -> properties.mapColor(MapColor.DEEPSLATE).sound(SoundType.VAULT).strength(-1.0F, 3600000.0F).noOcclusion());
+
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Function<BlockBehaviour.Properties, T> factory, Function<BlockBehaviour.Properties, BlockBehaviour.Properties> properties) {
         DeferredBlock<T> registeredBlock = BLOCK.registerBlock(name, factory, properties::apply);
         ACItems.ITEM.registerSimpleBlockItem(registeredBlock);

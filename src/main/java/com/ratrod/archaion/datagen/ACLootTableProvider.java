@@ -2,6 +2,7 @@ package com.ratrod.archaion.datagen;
 
 import com.ratrod.archaion.Archaion;
 import com.ratrod.archaion.datagen.loot.ACBlockLootTables;
+import com.ratrod.archaion.datagen.loot.ACChestLootTables;
 import com.ratrod.archaion.datagen.loot.ACEntityLootTables;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Registry;
@@ -19,7 +20,8 @@ public class ACLootTableProvider extends LootTableProvider {
     public ACLootTableProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, Set.of(), List.of(
                 new SubProviderEntry(ACBlockLootTables::new, LootContextParamSets.BLOCK),
-                new SubProviderEntry(ACEntityLootTables::new, LootContextParamSets.ENTITY)
+                new SubProviderEntry(ACEntityLootTables::new, LootContextParamSets.ENTITY),
+                new SubProviderEntry(ACChestLootTables::new, LootContextParamSets.CHEST)
         ), registries);
     }
 
