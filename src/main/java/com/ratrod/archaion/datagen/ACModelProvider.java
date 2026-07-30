@@ -8,21 +8,22 @@ import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
-import net.minecraft.core.Direction;
 import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TexturedModel;
+import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
+import net.minecraft.world.level.block.VaultBlock;
 
 public class ACModelProvider extends ModelProvider {
+
     public ACModelProvider(PackOutput output) {
         super(output, Archaion.MODID);
     }
 
     @Override
     protected void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
-//        blockModels.createTrivialCube(ACBlocks.REINFORCED_POLISHED_DEEPSLATE.get());
-//        blockModels.createTrivialCube(ACBlocks.REINFORCED_DEEPSLATE_BRICKS.get());
         blockModels.createTrivialCube(ACBlocks.SOUL_LAMP.get());
         blockModels.createAxisAlignedPillarBlock(ACBlocks.REINFORCED_DEEPSLATE_PILLAR.get(), TexturedModel.COLUMN);
         blockModels.createAxisAlignedPillarBlock(ACBlocks.DEEPSLATE_PILLAR.get(), TexturedModel.COLUMN);
@@ -42,5 +43,25 @@ public class ACModelProvider extends ModelProvider {
         blockModels.family(ACBlocks.REINFORCED_DEEPSLATE_BRICKS.get()).stairs(ACBlocks.REINFORCED_DEEPSLATE_BRICK_STAIRS.get()).slab(ACBlocks.REINFORCED_DEEPSLATE_BRICK_SLAB.get()).wall(ACBlocks.REINFORCED_DEEPSLATE_BRICK_WALL.get());
         blockModels.family(ACBlocks.REINFORCED_DEEPSLATE_TILES.get()).stairs(ACBlocks.REINFORCED_DEEPSLATE_TILE_STAIRS.get()).slab(ACBlocks.REINFORCED_DEEPSLATE_TILE_SLAB.get()).wall(ACBlocks.REINFORCED_DEEPSLATE_TILE_WALL.get());
 
+        createDeepslateVault(blockModels);
+    }
+
+    private void createDeepslateVault(BlockModelGenerators blockModels) {
+        var block = ACBlocks.DEEPSLATE_VAULT.get();
+
+        TextureMapping inactiveTextures = TextureMapping.vault(block, "_front_off", "_side_off", "_top", "_bottom");
+        TextureMapping activeTextures = TextureMapping.vault(block, "_front_on", "_side_on", "_top", "_bottom");
+        TextureMapping unlockingTextures = TextureMapping.vault(block, "_front_ejecting", "_side_on", "_top", "_bottom");
+        TextureMapping ejectingTextures = TextureMapping.vault(block, "_front_ejecting", "_side_on", "_top_ejecting", "_bottom");
+
+        blockModels.blockStateOutput.accept(
+                MultiVariantGenerator.dispatch(block)
+                        .with(PropertyDispatch.initial(VaultBlock.STATE).generate(state -> switch (state) {
+                            case INACTIVE -> BlockModelGenerators.plainVariant(ModelTemplates.VAULT.create(block, inactiveTextures, blockModels.modelOutput));
+                            case ACTIVE -> BlockModelGenerators.plainVariant(ModelTemplates.VAULT.createWithSuffix(block, "_active", activeTextures, blockModels.modelOutput));
+                            case UNLOCKING -> BlockModelGenerators.plainVariant(ModelTemplates.VAULT.createWithSuffix(block, "_unlocking", unlockingTextures, blockModels.modelOutput));
+                            case EJECTING -> BlockModelGenerators.plainVariant(ModelTemplates.VAULT.createWithSuffix(block, "_ejecting_reward", ejectingTextures, blockModels.modelOutput));
+                        }))
+                        .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING));
     }
 }

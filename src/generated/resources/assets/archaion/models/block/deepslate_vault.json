@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/template_vault",
+  "textures": {
+    "bottom": "archaion:block/deepslate_vault_bottom",
+    "front": "archaion:block/deepslate_vault_front_off",
+    "side": "archaion:block/deepslate_vault_side_off",
+    "top": "archaion:block/deepslate_vault_top"
+  }
+}
