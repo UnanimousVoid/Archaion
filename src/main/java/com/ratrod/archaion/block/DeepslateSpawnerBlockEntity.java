@@ -29,7 +29,7 @@ import net.minecraft.world.level.storage.loot.LootTable;
 
 import java.util.Optional;
 
-public class DeepslateTrialSpawnerBlockEntity extends BlockEntity implements TrialSpawner.StateAccessor, Spawner {
+public class DeepslateSpawnerBlockEntity extends BlockEntity implements TrialSpawner.StateAccessor, Spawner {
 
     private static SpawnData spawnDataOf(EntityType<?> type) {
         CompoundTag tag = new CompoundTag();
@@ -39,7 +39,7 @@ public class DeepslateTrialSpawnerBlockEntity extends BlockEntity implements Tri
 
     private final TrialSpawner trialSpawner = this.createDefaultSpawner();
 
-    public DeepslateTrialSpawnerBlockEntity(BlockPos worldPosition, BlockState blockState) {
+    public DeepslateSpawnerBlockEntity(BlockPos worldPosition, BlockState blockState) {
         super(ACBlockEntities.DEEPSLATE_TRIAL_SPAWNER.get(), worldPosition, blockState);
     }
 
@@ -91,7 +91,7 @@ public class DeepslateTrialSpawnerBlockEntity extends BlockEntity implements Tri
     @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
         return this.trialSpawner.getStateData().getUpdateTag(
-            this.getBlockState().getValue(DeepslateTrialSpawnerBlock.STATE)
+            this.getBlockState().getValue(DeepslateSpawnerBlock.STATE)
         );
     }
 

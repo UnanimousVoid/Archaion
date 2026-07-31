@@ -17,17 +17,17 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import org.jspecify.annotations.Nullable;
 
-public class DeepslateTrialSpawnerBlock extends BaseEntityBlock {
-    public static final MapCodec<DeepslateTrialSpawnerBlock> CODEC = simpleCodec(DeepslateTrialSpawnerBlock::new);
+public class DeepslateSpawnerBlock extends BaseEntityBlock {
+    public static final MapCodec<DeepslateSpawnerBlock> CODEC = simpleCodec(DeepslateSpawnerBlock::new);
     public static final EnumProperty<TrialSpawnerState> STATE = BlockStateProperties.TRIAL_SPAWNER_STATE;
 
-    public DeepslateTrialSpawnerBlock(Properties properties) {
+    public DeepslateSpawnerBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(STATE, TrialSpawnerState.INACTIVE));
     }
 
     @Override
-    public MapCodec<DeepslateTrialSpawnerBlock> codec() {
+    public MapCodec<DeepslateSpawnerBlock> codec() {
         return CODEC;
     }
 
@@ -38,7 +38,7 @@ public class DeepslateTrialSpawnerBlock extends BaseEntityBlock {
 
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos worldPosition, BlockState blockState) {
-        return new DeepslateTrialSpawnerBlockEntity(worldPosition, blockState);
+        return new DeepslateSpawnerBlockEntity(worldPosition, blockState);
     }
 
     @Override

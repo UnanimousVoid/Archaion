@@ -1,7 +1,7 @@
 package com.ratrod.archaion.datagen;
 
 import com.ratrod.archaion.Archaion;
-import com.ratrod.archaion.block.DeepslateTrialSpawnerBlock;
+import com.ratrod.archaion.block.DeepslateSpawnerBlock;
 import com.ratrod.archaion.block.DeepslateVaultBlock;
 import com.ratrod.archaion.block.ReinforcedBarBlock;
 import com.ratrod.archaion.registry.ACBlocks;
@@ -75,7 +75,7 @@ public class ACModelProvider extends ModelProvider {
     }
 
 private void createDeepslateSpawner(BlockModelGenerators blockModels) {
-        DeepslateTrialSpawnerBlock block = ACBlocks.DEEPSLATE_SPAWNER.get();
+        DeepslateSpawnerBlock block = ACBlocks.DEEPSLATE_SPAWNER.get();
 
         TextureMapping inactiveTextures = TextureMapping.trialSpawner(block, "_side_inactive", "_top_inactive");
         TextureMapping activeTextures = TextureMapping.trialSpawner(block, "_side_active", "_top_active");
@@ -87,7 +87,7 @@ private void createDeepslateSpawner(BlockModelGenerators blockModels) {
 
         blockModels.blockStateOutput.accept(
                 MultiVariantGenerator.dispatch(block)
-                        .with(PropertyDispatch.initial(DeepslateTrialSpawnerBlock.STATE).generate(state -> switch (state) {
+                        .with(PropertyDispatch.initial(DeepslateSpawnerBlock.STATE).generate(state -> switch (state) {
                             case INACTIVE, COOLDOWN -> BlockModelGenerators.plainVariant(inactiveModel);
                             case WAITING_FOR_PLAYERS, ACTIVE, WAITING_FOR_REWARD_EJECTION -> BlockModelGenerators.plainVariant(activeModel);
                             case EJECTING_REWARD -> BlockModelGenerators.plainVariant(ejectingModel);
