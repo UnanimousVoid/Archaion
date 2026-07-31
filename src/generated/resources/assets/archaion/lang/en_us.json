@@ -1,5 +1,6 @@
 {
   "block.archaion.deepslate_pillar": "Deepslate Pillar",
+  "block.archaion.deepslate_spawner": "Deepslate Spawner",
   "block.archaion.deepslate_vault": "Deepslate Vault",
   "block.archaion.reinforced_bars": "Reinforced Bars",
   "block.archaion.reinforced_deepslate_brick_slab": "Reinforced Deepslate Brick Slab",
@@ -18,5 +19,6 @@
   "block.archaion.soul_lamp": "Soul Lamp",
   "creativetab.archaion_tab": "Archaion",
   "entity.archaion.echo_star": "Echo Star",
-  "entity.archaion.last_of_deepslate": "Last Of Deepslate"
+  "entity.archaion.last_of_deepslate": "Last Of Deepslate",
+  "item.archaion.echo_key": "Echo Key"
 }

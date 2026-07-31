@@ -1,13 +1,16 @@
 package com.ratrod.archaion.client.renderers;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.ratrod.archaion.Archaion;
 import com.ratrod.archaion.client.LastOfDeepslateRenderState;
 import com.ratrod.archaion.client.models.LastOfDeepslateModel;
 import com.ratrod.archaion.entities.LastOfDeepslateEntity;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.LivingEntityEmissiveLayer;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 
@@ -28,6 +31,11 @@ public class LastOfDeepslateRenderer extends MobRenderer<LastOfDeepslateEntity, 
                         false
                 )
         );
+    }
+
+    @Override
+    public void submit(LastOfDeepslateRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
+        super.submit(state, poseStack, submitNodeCollector, camera);
     }
 
     @Override

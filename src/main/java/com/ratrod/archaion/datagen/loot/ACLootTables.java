@@ -7,4 +7,5 @@ import net.minecraft.world.level.storage.loot.LootTable;
 
 public class ACLootTables {
     public static final ResourceKey<LootTable> DEEPSLATE_VAULT = ResourceKey.create(Registries.LOOT_TABLE, Archaion.prefix("chests/deepslate_vault"));
+    public static final ResourceKey<LootTable> DEEPSLATE_SPAWNER = ResourceKey.create(Registries.LOOT_TABLE, Archaion.prefix("spawner/deepslate_spawner"));
 }

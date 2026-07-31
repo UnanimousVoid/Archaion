@@ -1,8 +1,11 @@
 package com.ratrod.archaion.datagen;
 
 import com.ratrod.archaion.Archaion;
+import com.ratrod.archaion.block.DeepslateTrialSpawnerBlock;
+import com.ratrod.archaion.block.DeepslateVaultBlock;
 import com.ratrod.archaion.block.ReinforcedBarBlock;
 import com.ratrod.archaion.registry.ACBlocks;
+import com.ratrod.archaion.registry.ACItems;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
@@ -14,6 +17,7 @@ import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TexturedModel;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.VaultBlock;
 
 public class ACModelProvider extends ModelProvider {
@@ -24,6 +28,9 @@ public class ACModelProvider extends ModelProvider {
 
     @Override
     protected void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
+
+        itemModels.generateFlatItem(ACItems.ECHO_KEY.get(), ModelTemplates.FLAT_ITEM);
+
         blockModels.createTrivialCube(ACBlocks.SOUL_LAMP.get());
         blockModels.createAxisAlignedPillarBlock(ACBlocks.REINFORCED_DEEPSLATE_PILLAR.get(), TexturedModel.COLUMN);
         blockModels.createAxisAlignedPillarBlock(ACBlocks.DEEPSLATE_PILLAR.get(), TexturedModel.COLUMN);
@@ -44,10 +51,11 @@ public class ACModelProvider extends ModelProvider {
         blockModels.family(ACBlocks.REINFORCED_DEEPSLATE_TILES.get()).stairs(ACBlocks.REINFORCED_DEEPSLATE_TILE_STAIRS.get()).slab(ACBlocks.REINFORCED_DEEPSLATE_TILE_SLAB.get()).wall(ACBlocks.REINFORCED_DEEPSLATE_TILE_WALL.get());
 
         createDeepslateVault(blockModels);
+        createDeepslateSpawner(blockModels);
     }
 
     private void createDeepslateVault(BlockModelGenerators blockModels) {
-        var block = ACBlocks.DEEPSLATE_VAULT.get();
+        DeepslateVaultBlock block = ACBlocks.DEEPSLATE_VAULT.get();
 
         TextureMapping inactiveTextures = TextureMapping.vault(block, "_front_off", "_side_off", "_top", "_bottom");
         TextureMapping activeTextures = TextureMapping.vault(block, "_front_on", "_side_on", "_top", "_bottom");
@@ -62,6 +70,28 @@ public class ACModelProvider extends ModelProvider {
                             case UNLOCKING -> BlockModelGenerators.plainVariant(ModelTemplates.VAULT.createWithSuffix(block, "_unlocking", unlockingTextures, blockModels.modelOutput));
                             case EJECTING -> BlockModelGenerators.plainVariant(ModelTemplates.VAULT.createWithSuffix(block, "_ejecting_reward", ejectingTextures, blockModels.modelOutput));
                         }))
-                        .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING));
+                        .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
+        );
+    }
+
+private void createDeepslateSpawner(BlockModelGenerators blockModels) {
+        DeepslateTrialSpawnerBlock block = ACBlocks.DEEPSLATE_SPAWNER.get();
+
+        TextureMapping inactiveTextures = TextureMapping.trialSpawner(block, "_side_inactive", "_top_inactive");
+        TextureMapping activeTextures = TextureMapping.trialSpawner(block, "_side_active", "_top_active");
+        TextureMapping ejectingRewardTextures = TextureMapping.trialSpawner(block, "_side_active", "_top_ejecting_reward");
+
+        Identifier inactiveModel = ModelTemplates.CUBE_BOTTOM_TOP_INNER_FACES.create(block, inactiveTextures, blockModels.modelOutput);
+        Identifier activeModel = ModelTemplates.CUBE_BOTTOM_TOP_INNER_FACES.createWithSuffix(block, "_active", activeTextures, blockModels.modelOutput);
+        Identifier ejectingModel = ModelTemplates.CUBE_BOTTOM_TOP_INNER_FACES.createWithSuffix(block, "_ejecting_reward", ejectingRewardTextures, blockModels.modelOutput);
+
+        blockModels.blockStateOutput.accept(
+                MultiVariantGenerator.dispatch(block)
+                        .with(PropertyDispatch.initial(DeepslateTrialSpawnerBlock.STATE).generate(state -> switch (state) {
+                            case INACTIVE, COOLDOWN -> BlockModelGenerators.plainVariant(inactiveModel);
+                            case WAITING_FOR_PLAYERS, ACTIVE, WAITING_FOR_REWARD_EJECTION -> BlockModelGenerators.plainVariant(activeModel);
+                            case EJECTING_REWARD -> BlockModelGenerators.plainVariant(ejectingModel);
+                        }))
+        );
     }
 }

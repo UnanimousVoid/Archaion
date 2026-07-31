@@ -12,12 +12,9 @@ public record CameraShakePacket(float intensity, int duration, float frequency) 
     public static final Type<CameraShakePacket> TYPE = new Type<>(Archaion.prefix("camera_shake"));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, CameraShakePacket> CODEC = StreamCodec.composite(
-            ByteBufCodecs.FLOAT,
-            CameraShakePacket::intensity,
-            ByteBufCodecs.INT,
-            CameraShakePacket::duration,
-            ByteBufCodecs.FLOAT,
-            CameraShakePacket::frequency,
+            ByteBufCodecs.FLOAT, CameraShakePacket::intensity,
+            ByteBufCodecs.INT, CameraShakePacket::duration,
+            ByteBufCodecs.FLOAT, CameraShakePacket::frequency,
             CameraShakePacket::new
     );
 

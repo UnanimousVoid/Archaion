@@ -13,5 +13,5 @@
       "rolls": 1.0
     }
   ],
-  "random_sequence": "archaion:chests/deepslate_vault"
+  "random_sequence": "archaion:spawner/deepslate_spawner"
 }
