@@ -158,6 +158,8 @@ public record ACChestLootTables(HolderLookup.Provider registries) implements Loo
                 )
                 .withPool(LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1.0F))
+                        .add(LootItem.lootTableItem(Items.DIAMOND_SPEAR)
+                        )
                         .add(LootItem.lootTableItem(Items.IRON_SWORD)
                                 .apply(new SetEnchantmentsFunction.Builder()
                                         .withEnchantment(enchantments.getOrThrow(Enchantments.SHARPNESS), UniformGenerator.between(3.0F, 5.0F))

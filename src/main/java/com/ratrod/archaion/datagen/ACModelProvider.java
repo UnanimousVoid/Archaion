@@ -18,8 +18,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.VaultBlock;
-import net.minecraft.world.level.block.entity.trialspawner.TrialSpawnerState;
-import net.minecraft.world.level.block.entity.vault.VaultState;
 
 public class ACModelProvider extends ModelProvider {
 
@@ -33,6 +31,7 @@ public class ACModelProvider extends ModelProvider {
         itemModels.generateFlatItem(ACItems.ECHO_KEY.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ACItems.SLATED_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ACItems.WIGHT_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ACItems.BRAVE_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ACItems.LAST_OF_DEEPSLATE_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
 
         blockModels.createTrivialCube(ACBlocks.SOUL_LAMP.get());
@@ -58,7 +57,7 @@ public class ACModelProvider extends ModelProvider {
         createDeepslateSpawner(blockModels);
     }
 
-private void createDeepslateSpawner(BlockModelGenerators blockModels) {
+    private void createDeepslateSpawner(BlockModelGenerators blockModels) {
         DeepslateSpawnerBlock block = ACBlocks.DEEPSLATE_SPAWNER.get();
 
         Identifier inactiveModel = ModelLocationUtils.getModelLocation(block);

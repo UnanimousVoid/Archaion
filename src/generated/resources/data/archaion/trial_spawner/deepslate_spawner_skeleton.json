@@ -10,13 +10,12 @@
       "weight": 2
     }
   ],
-  "simultaneous_mobs": 4.0,
   "simultaneous_mobs_added_per_player": 0.5,
   "spawn_potentials": [
     {
       "data": {
         "entity": {
-          "id": "minecraft:skeleton"
+          "id": "archaion:wight"
         },
         "equipment": {
           "loot_table": "archaion:equipment/deepslate_spawner_ranged",
@@ -38,7 +37,7 @@
       "weight": 1
     }
   ],
-  "ticks_between_spawn": 20,
-  "total_mobs": 12.0,
+  "ticks_between_spawn": 150,
+  "total_mobs": 8.0,
   "total_mobs_added_per_player": 1.0
 }

@@ -1,6 +1,7 @@
 package com.ratrod.archaion.datagen;
 
 import com.ratrod.archaion.datagen.loot.ACLootTables;
+import com.ratrod.archaion.registry.ACEntityTypes;
 import com.ratrod.archaion.registry.ACTrialSpawnerConfigs;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.worldgen.BootstrapContext;
@@ -23,14 +24,14 @@ public class ACTrialSpawnerConfigProvider {
     public static void bootstrap(BootstrapContext<TrialSpawnerConfig> ctx) {
         ctx.register(ACTrialSpawnerConfigs.DEEPSLATE_SPAWNER_ZOMBIE, TrialSpawnerConfig.builder()
                 .spawnRange(4)
-                .totalMobs(12.0F)
-                .simultaneousMobs(4.0F)
+                .totalMobs(8.0F)
+                .simultaneousMobs(2.0F)
                 .totalMobsAddedPerPlayer(1)
                 .simultaneousMobsAddedPerPlayer(0.5F)
-                .ticksBetweenSpawn(20)
+                .ticksBetweenSpawn(150)
                 .spawnPotentialsDefinition(
                         WeightedList.<SpawnData>builder()
-                                .add(spawnDataWithEquipment(EntityType.ZOMBIE, ACLootTables.EQUIPMENT_DEEPSLATE_SPAWNER_MELEE), 2)
+                                .add(spawnDataWithEquipment(ACEntityTypes.SLATED.get(), ACLootTables.EQUIPMENT_DEEPSLATE_SPAWNER_MELEE), 2)
                                 .build()
                 )
                 .lootTablesToEject(
@@ -44,15 +45,36 @@ public class ACTrialSpawnerConfigProvider {
 
         ctx.register(ACTrialSpawnerConfigs.DEEPSLATE_SPAWNER_SKELETON, TrialSpawnerConfig.builder()
                 .spawnRange(4)
-                .totalMobs(12.0F)
-                .simultaneousMobs(4.0F)
+                .totalMobs(8.0F)
+                .simultaneousMobs(2.0F)
                 .totalMobsAddedPerPlayer(1)
                 .simultaneousMobsAddedPerPlayer(0.5F)
-                .ticksBetweenSpawn(20)
+                .ticksBetweenSpawn(150)
                 .spawnPotentialsDefinition(
                         WeightedList.<SpawnData>builder()
-                                .add(spawnDataWithEquipment(EntityType.SKELETON, ACLootTables.EQUIPMENT_DEEPSLATE_SPAWNER_RANGED), 2)
+                                .add(spawnDataWithEquipment(ACEntityTypes.WIGHT.get(), ACLootTables.EQUIPMENT_DEEPSLATE_SPAWNER_RANGED), 2)
                                 .add(spawnDataWithEquipment(EntityType.STRAY, ACLootTables.EQUIPMENT_DEEPSLATE_SPAWNER_RANGED), 1)
+                                .build()
+                )
+                .lootTablesToEject(
+                        WeightedList.<ResourceKey<LootTable>>builder()
+                                .add(ACLootTables.DEEPSLATE_SPAWNER_KEY, 1)
+                                .add(ACLootTables.DEEPSLATE_SPAWNER_MISC, 2)
+                                .build()
+                )
+                .itemsToDropWhenOminous(ACLootTables.DEEPSLATE_SPAWNER_THROWABLES)
+                .build());
+
+        ctx.register(ACTrialSpawnerConfigs.DEEPSLATE_SPAWNER_BRAVE, TrialSpawnerConfig.builder()
+                .spawnRange(4)
+                .totalMobs(8.0F)
+                .simultaneousMobs(2.0F)
+                .totalMobsAddedPerPlayer(1)
+                .simultaneousMobsAddedPerPlayer(0.5F)
+                .ticksBetweenSpawn(150)
+                .spawnPotentialsDefinition(
+                        WeightedList.<SpawnData>builder()
+                                .add(spawnData(ACEntityTypes.BRAVE.get()))
                                 .build()
                 )
                 .lootTablesToEject(
