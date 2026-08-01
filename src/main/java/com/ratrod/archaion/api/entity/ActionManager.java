@@ -1,17 +1,19 @@
 package com.ratrod.archaion.api.entity;
 
+import net.minecraft.util.RandomSource;
+import net.minecraft.util.random.Weighted;
+import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.entity.Entity;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class ActionManager<T extends Entity> {
 
     private final T entity;
-    private final List<ManagedAction<T>> action = new ArrayList<>();
-    private final Random random = new Random();
+    private final WeightedList.Builder<ManagedAction<T>> actionBuilder = WeightedList.builder();
+    private @Nullable WeightedList<ManagedAction<T>> action;
+    private boolean dirty = true;
 
     private @Nullable ManagedAction<T> currentAction;
 
@@ -19,8 +21,11 @@ public class ActionManager<T extends Entity> {
         this.entity = entity;
     }
 
-    public final void addAction(ManagedAction<T> tasks) {
-        this.action.add(tasks);
+    public final void addAction(ManagedAction<T> task, int weight) {
+        if (weight > 0) {
+            this.actionBuilder.add(task, weight);
+            this.dirty = true;
+        }
     }
 
     public void tick() {
@@ -34,42 +39,29 @@ public class ActionManager<T extends Entity> {
         }
     }
 
-    private void tryStartNewTask() {
-        List<ManagedAction<T>> availableActions = new ArrayList<>();
-        int totalWeight = 0;
-
-        for (ManagedAction<T> act : this.action) {
-            if (act.canStart()) {
-                int w = act.getWeight();
-                if (w > 0) {
-                    availableActions.add(act);
-                    totalWeight += w;
-                }
-            }
+    private WeightedList<ManagedAction<T>> getActions() {
+        if (this.action == null || this.dirty) {
+            this.action = this.actionBuilder.build();
+            this.dirty = false;
         }
+        return this.action;
+    }
 
-        if (availableActions.isEmpty() || totalWeight <= 0) {
+    private void tryStartNewTask() {
+        List<Weighted<ManagedAction<T>>> availableActions = this.getActions().unwrap().stream()
+                .filter(weighted -> weighted.value().canStart())
+                .toList();
+
+        if (availableActions.isEmpty()) {
             return;
         }
 
-        int roll = random.nextInt(totalWeight);
-        int cumulative = 0;
+        RandomSource random = this.entity.getRandom();
+        WeightedList.of(availableActions).getRandom(random).ifPresent(this::startAction);
+    }
 
-        ManagedAction<T> selected = null;
-
-        for (ManagedAction<T> act : availableActions) {
-            cumulative += act.getWeight();
-            if (roll < cumulative) {
-                selected = act;
-                break;
-            }
-        }
-
-        if (selected == null) {
-            selected = availableActions.get(availableActions.size() - 1);
-        }
-
-        this.currentAction = selected;
+    private void startAction(ManagedAction<T> action) {
+        this.currentAction = action;
         this.currentAction.onStart();
     }
 

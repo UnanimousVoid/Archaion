@@ -17,7 +17,7 @@ public class ACAnimation {
     public ACAnimation(Entity entity, Supplier<AnimationDefinition> definition) {
         this.state = new AnimationState();
         this.definition = definition;
-        this.manager = ((ACEntity) entity).getAnimationManager();
+        this.manager = ((ACEntity<?>) entity).getAnimationManager();
         this.manager.registerAnimation(this);
     }
 

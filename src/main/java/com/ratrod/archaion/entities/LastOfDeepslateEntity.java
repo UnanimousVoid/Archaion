@@ -6,9 +6,9 @@ import com.ratrod.archaion.api.entity.ActionManager;
 import com.ratrod.archaion.client.animations.LastOfDeepslateAnimations;
 import com.ratrod.archaion.entities.ai.ACEntity;
 import com.ratrod.archaion.entities.ai.SleepingState;
-import com.ratrod.archaion.entities.ai.actions.ShootAction;
-import com.ratrod.archaion.entities.ai.actions.SmashGroundAction;
-import com.ratrod.archaion.entities.ai.actions.SwingSpinAction;
+import com.ratrod.archaion.entities.ai.actions.LODShootAction;
+import com.ratrod.archaion.entities.ai.actions.LODSmashGroundAction;
+import com.ratrod.archaion.entities.ai.actions.LODSwingSpinAction;
 import com.ratrod.archaion.entities.ai.controls.move.ACMoveControl;
 import com.ratrod.archaion.entities.ai.controls.pathnav.LargeEntityPathNavigation;
 import com.ratrod.archaion.entities.ai.goals.GoToTargetGoal;
@@ -51,9 +51,9 @@ public class LastOfDeepslateEntity extends Monster implements ACEntity<LastOfDee
         this.moveControl = new ACMoveControl<>(this);
         this.navigation = new LargeEntityPathNavigation(this, level);
 
-        this.attackManager.addAction(new SmashGroundAction(this));
-        this.attackManager.addAction(new SwingSpinAction(this));
-        this.attackManager.addAction(new ShootAction(this));
+        this.attackManager.addAction(new LODSmashGroundAction(this), 100);
+        this.attackManager.addAction(new LODSwingSpinAction(this), 150);
+        this.attackManager.addAction(new LODShootAction(this), 100);
     }
 
     @Override
@@ -61,8 +61,8 @@ public class LastOfDeepslateEntity extends Monster implements ACEntity<LastOfDee
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(2, new GoToTargetGoal(this, 1.2F, this.getBbWidth() * 1.5F));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 0.0F));
-        this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
+        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
+        this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
     }
 
@@ -122,7 +122,6 @@ public class LastOfDeepslateEntity extends Monster implements ACEntity<LastOfDee
         super.tick();
 
         if (!this.level().isClientSide()) {
-
             SleepingState currentState = this.entityData.get(SLEEPING_STATE);
 
             if (this.getTarget() != null) {

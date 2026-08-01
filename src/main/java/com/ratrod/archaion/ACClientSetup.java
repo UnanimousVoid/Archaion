@@ -1,6 +1,8 @@
 package com.ratrod.archaion;
 
+import com.ratrod.archaion.client.models.BraveModel;
 import com.ratrod.archaion.client.models.LastOfDeepslateModel;
+import com.ratrod.archaion.client.renderers.BraveRenderer;
 import com.ratrod.archaion.client.renderers.DeepslateSpawnerRenderer;
 import com.ratrod.archaion.client.renderers.EchoStarProjectileRenderer;
 import com.ratrod.archaion.client.renderers.LastOfDeepslateRenderer;
@@ -36,6 +38,7 @@ public class ACClientSetup {
         event.registerEntityRenderer(ACEntityTypes.SLATED.get(), SlatedRenderer::new);
         event.registerEntityRenderer(ACEntityTypes.WIGHT.get(), WightRenderer::new);
         event.registerEntityRenderer(ACEntityTypes.ECHO_STAR.get(), EchoStarProjectileRenderer::new);
+        event.registerEntityRenderer(ACEntityTypes.BRAVE.get(), BraveRenderer::new);
 
         event.registerBlockEntityRenderer(ACBlockEntities.DEEPSLATE_TRIAL_SPAWNER.get(), DeepslateSpawnerRenderer::new);
     }
@@ -43,5 +46,6 @@ public class ACClientSetup {
     @SubscribeEvent
     static void onRegisterLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(LastOfDeepslateModel.LAYER_LOCATION, LastOfDeepslateModel::createBodyLayer);
+        event.registerLayerDefinition(BraveModel.LAYER_LOCATION, BraveModel::createBodyLayer);
     }
 }

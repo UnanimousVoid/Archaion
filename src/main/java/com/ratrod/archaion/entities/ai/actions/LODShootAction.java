@@ -9,9 +9,9 @@ import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 
-public class ShootAction extends ManagedAction<LastOfDeepslateEntity> {
+public class LODShootAction extends ManagedAction<LastOfDeepslateEntity> {
 
-    public ShootAction(LastOfDeepslateEntity entity) {
+    public LODShootAction(LastOfDeepslateEntity entity) {
         super(entity);
     }
 
