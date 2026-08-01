@@ -6,12 +6,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:enchanted_golden_apple",
-          "weight": 2
+          "name": "archaion:echo_key"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "archaion:spawner/deepslate_spawner"
+  "random_sequence": "archaion:spawner/deepslate_spawner_key"
 }

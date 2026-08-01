@@ -43,7 +43,7 @@ neoForge {
             programArgument("ManMeme####")
             jvmArgument("-XX:+AllowEnhancedClassRedefinition")
             jvmArgument("-XX:HotswapAgent=fatjar")
-            jvmArgument("-XX:TieredStopAtLevel=1")
+//            jvmArgument("-XX:TieredStopAtLevel=1")
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
 

@@ -26,10 +26,9 @@ public class Archaion {
         ACBlockEntities.BLOCK_ENTITIES.register(modEventBus);
         ACEntityTypes.ENTITY_TYPE.register(modEventBus);
         ACEntityDataSerializers.ENTITY_DATA_SERIALIZERS.register(modEventBus);
-        ACCreativeModeTabs.register(modEventBus);
+        ACCreativeModeTabs.CREATIVE_MODE_TABS.register(modEventBus);
 
     }
-
 
     public static Identifier prefix(String path) {
         return Identifier.fromNamespaceAndPath(MODID, path.toLowerCase(Locale.ROOT));
