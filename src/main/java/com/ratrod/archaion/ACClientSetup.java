@@ -4,6 +4,8 @@ import com.ratrod.archaion.client.models.LastOfDeepslateModel;
 import com.ratrod.archaion.client.renderers.DeepslateSpawnerRenderer;
 import com.ratrod.archaion.client.renderers.EchoStarProjectileRenderer;
 import com.ratrod.archaion.client.renderers.LastOfDeepslateRenderer;
+import com.ratrod.archaion.client.renderers.SlatedRenderer;
+import com.ratrod.archaion.client.renderers.WightRenderer;
 import com.ratrod.archaion.registry.ACBlockEntities;
 import com.ratrod.archaion.registry.ACEntityTypes;
 import net.neoforged.api.distmarker.Dist;
@@ -31,6 +33,8 @@ public class ACClientSetup {
     @SubscribeEvent
     static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(ACEntityTypes.LAST_OF_DEEPSLATE.get(), LastOfDeepslateRenderer::new);
+        event.registerEntityRenderer(ACEntityTypes.SLATED.get(), SlatedRenderer::new);
+        event.registerEntityRenderer(ACEntityTypes.WIGHT.get(), WightRenderer::new);
         event.registerEntityRenderer(ACEntityTypes.ECHO_STAR.get(), EchoStarProjectileRenderer::new);
 
         event.registerBlockEntityRenderer(ACBlockEntities.DEEPSLATE_TRIAL_SPAWNER.get(), DeepslateSpawnerRenderer::new);
