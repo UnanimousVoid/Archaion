@@ -1,0 +1,15 @@
+{
+  "structures": [
+    {
+      "structure": "archaion:ancient_keep",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 1215455,
+    "spacing": 64,
+    "separation": 48,
+    "spread_type": "linear",
+    "type": "minecraft:random_spread"
+  }
+}

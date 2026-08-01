@@ -13,12 +13,13 @@ import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
-import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TexturedModel;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.VaultBlock;
+import net.minecraft.world.level.block.entity.trialspawner.TrialSpawnerState;
+import net.minecraft.world.level.block.entity.vault.VaultState;
 
 public class ACModelProvider extends ModelProvider {
 
@@ -54,36 +55,12 @@ public class ACModelProvider extends ModelProvider {
         createDeepslateSpawner(blockModels);
     }
 
-    private void createDeepslateVault(BlockModelGenerators blockModels) {
-        DeepslateVaultBlock block = ACBlocks.DEEPSLATE_VAULT.get();
-
-        TextureMapping inactiveTextures = TextureMapping.vault(block, "_front_off", "_side_off", "_top", "_bottom");
-        TextureMapping activeTextures = TextureMapping.vault(block, "_front_on", "_side_on", "_top", "_bottom");
-        TextureMapping unlockingTextures = TextureMapping.vault(block, "_front_ejecting", "_side_on", "_top", "_bottom");
-        TextureMapping ejectingTextures = TextureMapping.vault(block, "_front_ejecting", "_side_on", "_top_ejecting", "_bottom");
-
-        blockModels.blockStateOutput.accept(
-                MultiVariantGenerator.dispatch(block)
-                        .with(PropertyDispatch.initial(VaultBlock.STATE).generate(state -> switch (state) {
-                            case INACTIVE -> BlockModelGenerators.plainVariant(ModelTemplates.VAULT.create(block, inactiveTextures, blockModels.modelOutput));
-                            case ACTIVE -> BlockModelGenerators.plainVariant(ModelTemplates.VAULT.createWithSuffix(block, "_active", activeTextures, blockModels.modelOutput));
-                            case UNLOCKING -> BlockModelGenerators.plainVariant(ModelTemplates.VAULT.createWithSuffix(block, "_unlocking", unlockingTextures, blockModels.modelOutput));
-                            case EJECTING -> BlockModelGenerators.plainVariant(ModelTemplates.VAULT.createWithSuffix(block, "_ejecting_reward", ejectingTextures, blockModels.modelOutput));
-                        }))
-                        .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
-        );
-    }
-
 private void createDeepslateSpawner(BlockModelGenerators blockModels) {
         DeepslateSpawnerBlock block = ACBlocks.DEEPSLATE_SPAWNER.get();
 
-        TextureMapping inactiveTextures = TextureMapping.trialSpawner(block, "_side_inactive", "_top_inactive");
-        TextureMapping activeTextures = TextureMapping.trialSpawner(block, "_side_active", "_top_active");
-        TextureMapping ejectingRewardTextures = TextureMapping.trialSpawner(block, "_side_active", "_top_ejecting_reward");
-
-        Identifier inactiveModel = ModelTemplates.CUBE_BOTTOM_TOP_INNER_FACES.create(block, inactiveTextures, blockModels.modelOutput);
-        Identifier activeModel = ModelTemplates.CUBE_BOTTOM_TOP_INNER_FACES.createWithSuffix(block, "_active", activeTextures, blockModels.modelOutput);
-        Identifier ejectingModel = ModelTemplates.CUBE_BOTTOM_TOP_INNER_FACES.createWithSuffix(block, "_ejecting_reward", ejectingRewardTextures, blockModels.modelOutput);
+        Identifier inactiveModel = ModelLocationUtils.getModelLocation(block);
+        Identifier activeModel = ModelLocationUtils.getModelLocation(block, "_active");
+        Identifier ejectingModel = ModelLocationUtils.getModelLocation(block, "_ejecting_reward");
 
         blockModels.blockStateOutput.accept(
                 MultiVariantGenerator.dispatch(block)
@@ -93,5 +70,18 @@ private void createDeepslateSpawner(BlockModelGenerators blockModels) {
                             case EJECTING_REWARD -> BlockModelGenerators.plainVariant(ejectingModel);
                         }))
         );
+    }
+
+    private void createDeepslateVault(BlockModelGenerators blockModels) {
+        DeepslateVaultBlock block = ACBlocks.DEEPSLATE_VAULT.get();
+        blockModels.blockStateOutput.accept(
+                MultiVariantGenerator.dispatch(block)
+                        .with(PropertyDispatch.initial(VaultBlock.STATE).generate(state -> switch (state) {
+                            case INACTIVE -> BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block));
+                            case ACTIVE -> BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, "_active"));
+                            case UNLOCKING -> BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, "_unlocking"));
+                            case EJECTING -> BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block, "_ejecting_reward"));
+                        }))
+                        .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING));
     }
 }

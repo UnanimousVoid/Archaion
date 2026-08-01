@@ -27,6 +27,7 @@ public class Archaion {
         ACEntityTypes.ENTITY_TYPE.register(modEventBus);
         ACEntityDataSerializers.ENTITY_DATA_SERIALIZERS.register(modEventBus);
         ACCreativeModeTabs.CREATIVE_MODE_TABS.register(modEventBus);
+        ACStructureTypes.STRUCTURE_TYPE.register(modEventBus);
 
     }
 

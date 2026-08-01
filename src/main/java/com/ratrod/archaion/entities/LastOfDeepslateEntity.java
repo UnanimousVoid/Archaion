@@ -133,6 +133,7 @@ public class LastOfDeepslateEntity extends Monster implements ACEntity<LastOfDee
                 } else if (currentState == SleepingState.WAKING) {
                     if (this.tickCount - this.wakingStartTick >= 80) {
                         this.entityData.set(SLEEPING_STATE, SleepingState.AWAKE);
+                        this.setNoAi(false);
                     }
                 }
             }
