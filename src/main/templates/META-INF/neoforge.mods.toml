@@ -24,3 +24,10 @@ config="${mod_id}.mixins.json"
     ordering="NONE"
     side="BOTH"
 
+[[dependencies.${mod_id}]]
+modId="aaa_particles"
+type="required"
+versionRange="${aaa_particles_version_range}"
+ordering="NONE"
+side="BOTH"
+

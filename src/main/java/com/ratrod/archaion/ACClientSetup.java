@@ -2,13 +2,7 @@ package com.ratrod.archaion;
 
 import com.ratrod.archaion.client.models.BraveModel;
 import com.ratrod.archaion.client.models.LastOfDeepslateModel;
-import com.ratrod.archaion.client.renderers.BraveRenderer;
-import com.ratrod.archaion.client.renderers.DeepslateSpawnerRenderer;
-import com.ratrod.archaion.client.renderers.EchoStarProjectileRenderer;
-import com.ratrod.archaion.client.renderers.LastOfDeepslateRenderer;
-import com.ratrod.archaion.client.renderers.SlatedRenderer;
-import com.ratrod.archaion.client.renderers.ThrownEchoMaceRenderer;
-import com.ratrod.archaion.client.renderers.WightRenderer;
+import com.ratrod.archaion.client.renderers.*;
 import com.ratrod.archaion.registry.ACBlockEntities;
 import com.ratrod.archaion.registry.ACEntityTypes;
 import net.neoforged.api.distmarker.Dist;
@@ -20,7 +14,6 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 
-//@Mod(value = Archaion.MODID, dist = Dist.CLIENT)
 @EventBusSubscriber(modid = Archaion.MODID, value = Dist.CLIENT)
 public class ACClientSetup {
 
@@ -30,7 +23,6 @@ public class ACClientSetup {
 
     @SubscribeEvent
     static void onClientSetup(FMLClientSetupEvent event) {
-
     }
 
     @SubscribeEvent
