@@ -47,13 +47,15 @@ public record ACChestLootTables(HolderLookup.Provider registries) implements Loo
         output.accept(ACLootTables.DEEPSLATE_VAULT, LootTable.lootTable()
                 .withPool(LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(6.0F))
-                        .add(LootItem.lootTableItem(Items.ENCHANTED_GOLDEN_APPLE).setWeight(2))
-                        .add(LootItem.lootTableItem(Items.GOLDEN_APPLE).setWeight(4).apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 4.0F))))
-                        .add(LootItem.lootTableItem(Items.DIAMOND).setWeight(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(6.0F, 12.0F))))
-                        .add(LootItem.lootTableItem(Items.GOLDEN_CARROT).setWeight(2))
-                        .add(LootItem.lootTableItem(Items.GOLD_INGOT).setWeight(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(12.0F, 22.0F))))
-                        .add(LootItem.lootTableItem(Items.GOLD_INGOT).setWeight(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(12.0F, 22.0F))))
-
+                        .add(LootItem.lootTableItem(Items.ENCHANTED_GOLDEN_APPLE).setWeight(1))
+                        .add(LootItem.lootTableItem(Items.GOLDEN_APPLE).setWeight(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 4.0F))))
+                        .add(LootItem.lootTableItem(Items.DIAMOND).setWeight(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(4.0F, 8.0F))))
+                        .add(LootItem.lootTableItem(Items.GOLDEN_CARROT).setWeight(4).apply(SetItemCountFunction.setCount(UniformGenerator.between(6.0F, 8.0F))))
+                        .add(LootItem.lootTableItem(Items.GOLD_INGOT).setWeight(4).apply(SetItemCountFunction.setCount(UniformGenerator.between(8.0F, 16.0F))))
+                        .add(LootItem.lootTableItem(Items.ENCHANTED_BOOK).setWeight(1).apply(new SetEnchantmentsFunction.Builder().withEnchantment(enchantments.getOrThrow(Enchantments.MENDING), ConstantValue.exactly(1.0F))))
+                        .add(LootItem.lootTableItem(Items.ENCHANTED_BOOK).setWeight(1).apply(new SetEnchantmentsFunction.Builder().withEnchantment(enchantments.getOrThrow(Enchantments.UNBREAKING), UniformGenerator.between(1.0F, 3.0F))))
+                        .add(LootItem.lootTableItem(Items.ENCHANTED_BOOK).setWeight(1).apply(new SetEnchantmentsFunction.Builder().withEnchantment(enchantments.getOrThrow(Enchantments.SHARPNESS), UniformGenerator.between(1.0F, 5.0F))))
+                        .add(LootItem.lootTableItem(Items.ENCHANTED_BOOK).setWeight(1).apply(new SetEnchantmentsFunction.Builder().withEnchantment(enchantments.getOrThrow(Enchantments.POWER), UniformGenerator.between(1.0F, 5.0F))))
                 )
         );
 

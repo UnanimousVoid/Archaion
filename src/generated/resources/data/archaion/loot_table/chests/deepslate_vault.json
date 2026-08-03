@@ -6,8 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:enchanted_golden_apple",
-          "weight": 2
+          "name": "minecraft:enchanted_golden_apple"
         },
         {
           "type": "minecraft:item",
@@ -23,7 +22,7 @@
             }
           ],
           "name": "minecraft:golden_apple",
-          "weight": 4
+          "weight": 3
         },
         {
           "type": "minecraft:item",
@@ -32,8 +31,8 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 12.0,
-                "min": 6.0
+                "max": 8.0,
+                "min": 4.0
               },
               "function": "minecraft:set_count"
             }
@@ -43,8 +42,19 @@
         },
         {
           "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 8.0,
+                "min": 6.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
           "name": "minecraft:golden_carrot",
-          "weight": 2
+          "weight": 4
         },
         {
           "type": "minecraft:item",
@@ -53,30 +63,78 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 22.0,
-                "min": 12.0
+                "max": 16.0,
+                "min": 8.0
               },
               "function": "minecraft:set_count"
             }
           ],
           "name": "minecraft:gold_ingot",
-          "weight": 2
+          "weight": 4
         },
         {
           "type": "minecraft:item",
           "functions": [
             {
               "add": false,
-              "count": {
-                "type": "minecraft:uniform",
-                "max": 22.0,
-                "min": 12.0
+              "enchantments": {
+                "minecraft:mending": 1.0
               },
-              "function": "minecraft:set_count"
+              "function": "minecraft:set_enchantments"
             }
           ],
-          "name": "minecraft:gold_ingot",
-          "weight": 2
+          "name": "minecraft:enchanted_book"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "enchantments": {
+                "minecraft:unbreaking": {
+                  "type": "minecraft:uniform",
+                  "max": 3.0,
+                  "min": 1.0
+                }
+              },
+              "function": "minecraft:set_enchantments"
+            }
+          ],
+          "name": "minecraft:enchanted_book"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "enchantments": {
+                "minecraft:sharpness": {
+                  "type": "minecraft:uniform",
+                  "max": 5.0,
+                  "min": 1.0
+                }
+              },
+              "function": "minecraft:set_enchantments"
+            }
+          ],
+          "name": "minecraft:enchanted_book"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "enchantments": {
+                "minecraft:power": {
+                  "type": "minecraft:uniform",
+                  "max": 5.0,
+                  "min": 1.0
+                }
+              },
+              "function": "minecraft:set_enchantments"
+            }
+          ],
+          "name": "minecraft:enchanted_book"
         }
       ],
       "rolls": 6.0
