@@ -3,7 +3,7 @@
   "addition": "minecraft:echo_shard",
   "base": "minecraft:mace",
   "result": {
-    "id": "minecraft:mace"
+    "id": "archaion:echo_mace"
   },
   "template": "archaion:echo_mace_upgrade_smithing_template"
 }

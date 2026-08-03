@@ -25,7 +25,7 @@ public class ACRecipeProvider extends RecipeProvider {
                 Ingredient.of(Items.MACE),
                 Ingredient.of(Items.ECHO_SHARD),
                 RecipeCategory.COMBAT,
-                Items.MACE
+                ACItems.ECHO_MACE.get()
         ).unlocks("has_echo_shard", this.has(Items.ECHO_SHARD)).save(this.output, Archaion.prefix("echo_mace_upgrade_smithing").toString());
     }
 
