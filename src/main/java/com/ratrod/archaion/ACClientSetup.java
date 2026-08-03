@@ -1,5 +1,8 @@
 package com.ratrod.archaion;
 
+import com.ratrod.archaion.client.animations.BraveAnimations;
+import com.ratrod.archaion.client.animations.ClientAnimationRegistry;
+import com.ratrod.archaion.client.animations.LastOfDeepslateAnimations;
 import com.ratrod.archaion.client.models.BraveModel;
 import com.ratrod.archaion.client.models.LastOfDeepslateModel;
 import com.ratrod.archaion.client.renderers.*;
@@ -14,6 +17,8 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 
+import java.util.List;
+
 @EventBusSubscriber(modid = Archaion.MODID, value = Dist.CLIENT)
 public class ACClientSetup {
 
@@ -23,6 +28,19 @@ public class ACClientSetup {
 
     @SubscribeEvent
     static void onClientSetup(FMLClientSetupEvent event) {
+
+        ClientAnimationRegistry.register(ACEntityTypes.LAST_OF_DEEPSLATE.get(), List.of(
+                LastOfDeepslateAnimations.DYING,
+                LastOfDeepslateAnimations.WAKING,
+                LastOfDeepslateAnimations.SHOOT_LAND,
+                LastOfDeepslateAnimations.SMASH_GROUND,
+                LastOfDeepslateAnimations.SPIN_SWING
+        ));
+
+        ClientAnimationRegistry.register(ACEntityTypes.BRAVE.get(), List.of(
+                BraveAnimations.JUMPING,
+                BraveAnimations.TEST
+        ));
     }
 
     @SubscribeEvent

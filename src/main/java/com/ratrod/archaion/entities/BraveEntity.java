@@ -3,7 +3,6 @@ package com.ratrod.archaion.entities;
 import com.ratrod.archaion.api.client.animation.ACAnimation;
 import com.ratrod.archaion.api.client.animation.EntityAnimationManager;
 import com.ratrod.archaion.api.entity.ActionManager;
-import com.ratrod.archaion.client.animations.BraveAnimations;
 import com.ratrod.archaion.entities.ai.ACEntity;
 import com.ratrod.archaion.entities.ai.actions.BraveJumpOnAction;
 import com.ratrod.archaion.entities.ai.goals.BraveDistanceAwayGoal;
@@ -35,8 +34,8 @@ public class BraveEntity extends Monster implements ACEntity<BraveEntity> {
     public final EntityAnimationManager animationManager = new EntityAnimationManager(this);
     public final ActionManager<BraveEntity> attackManager = new ActionManager<>(this);
 
-    public final ACAnimation jumpingAnim = new ACAnimation(this, () -> BraveAnimations.JUMPING);
-    public final ACAnimation shootingAnim = new ACAnimation(this, () -> BraveAnimations.TEST);
+    public final ACAnimation jumpingAnim = new ACAnimation(this);
+    public final ACAnimation shootingAnim = new ACAnimation(this);
 
     public BraveEntity(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);

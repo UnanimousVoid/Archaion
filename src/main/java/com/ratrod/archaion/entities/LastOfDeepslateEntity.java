@@ -4,7 +4,6 @@ import com.ratrod.archaion.Archaion;
 import com.ratrod.archaion.api.client.animation.ACAnimation;
 import com.ratrod.archaion.api.client.animation.EntityAnimationManager;
 import com.ratrod.archaion.api.entity.ActionManager;
-import com.ratrod.archaion.client.animations.LastOfDeepslateAnimations;
 import com.ratrod.archaion.entities.ai.ACEntity;
 import com.ratrod.archaion.entities.ai.SleepingState;
 import com.ratrod.archaion.entities.ai.actions.LODShootAction;
@@ -57,11 +56,11 @@ public class LastOfDeepslateEntity extends Monster implements ACEntity<LastOfDee
     private final EntityAnimationManager animationManager = new EntityAnimationManager(this);
     private final ActionManager<LastOfDeepslateEntity> attackManager = new ActionManager<>(this);
 
-    public final ACAnimation deathAnim = new ACAnimation(this, () -> LastOfDeepslateAnimations.DYING);
-    public final ACAnimation wakingAnim = new ACAnimation(this, () -> LastOfDeepslateAnimations.WAKING);
-    public final ACAnimation shootAnim = new ACAnimation(this, () -> LastOfDeepslateAnimations.SHOOT_LAND);
-    public final ACAnimation smashGroundAnim = new ACAnimation(this, () -> LastOfDeepslateAnimations.SMASH_GROUND);
-    public final ACAnimation swingSpinAnim = new ACAnimation(this, () -> LastOfDeepslateAnimations.SPIN_SWING);
+    public final ACAnimation deathAnim = new ACAnimation(this);
+    public final ACAnimation wakingAnim = new ACAnimation(this);
+    public final ACAnimation shootAnim = new ACAnimation(this);
+    public final ACAnimation smashGroundAnim = new ACAnimation(this);
+    public final ACAnimation swingSpinAnim = new ACAnimation(this);
 
     private int wakingStartTick = 0;
     private boolean deathAnimationPlayed = false;
