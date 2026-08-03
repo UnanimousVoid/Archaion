@@ -29,8 +29,14 @@ public class ActionManager<T extends Entity> {
     }
 
     public void tick() {
+
+        if (!entity.isAlive()) {
+            this.stopCurrentAction();
+            return;
+        }
+
         if (this.currentAction != null) {
-            if (!this.currentAction.onTick() || !entity.isAlive()) {
+            if (!this.currentAction.onTick()) {
                 this.stopCurrentAction();
                 this.tryStartNewTask();
             }

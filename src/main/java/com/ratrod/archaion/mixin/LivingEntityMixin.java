@@ -21,10 +21,6 @@ public abstract class LivingEntityMixin {
             if (serverSide && !isNoAi || !serverSide && !isNoAi) {
                 acEntity.getActionManagers().forEach(ActionManager::tick);
             }
-
-            if (serverSide && self.isDeadOrDying()) {
-                acEntity.getActionManagers().forEach(ActionManager::stopCurrentAction);
-            }
         }
     }
 }

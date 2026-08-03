@@ -137,7 +137,6 @@ public class LastOfDeepslateEntity extends Monster implements ACEntity<LastOfDee
 
     @Override
     public void tick() {
-
         super.tick();
 
         if (!this.level().isClientSide()) {
