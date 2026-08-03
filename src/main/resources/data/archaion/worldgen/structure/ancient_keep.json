@@ -1,12 +1,12 @@
 {
   "type": "archaion:ancient_keep",
-  "biomes": "#minecraft:has_structure/ancient_city",
+  "biomes": "#minecraft:has_structure/trial_chambers",
   "step": "underground_structures",
   "dimension_padding": 10,
   "terrain_adaptation": "encapsulate",
   "spawn_overrides": {},
   "start_pool": "archaion:ancient_keep/main_path",
-  "size": 6,
+  "size": 4,
   "start_height": {
     "type": "minecraft:uniform",
     "max_inclusive": {
