@@ -104,7 +104,7 @@ public class BraveJumpOnAction extends ManagedAction<BraveEntity> {
 
         for (LivingEntity target : targets) {
             entity.attackTarget(serverLevel, target, 1.0F, ACEntity.Operation.MULTIPLY);
-            Vec3 knockback = target.position().subtract(center).normalize().scale(1.8).add(0, 0.5, 0);
+            Vec3 knockback = target.position().subtract(center).normalize().scale(1.8);
             target.setDeltaMovement(target.getDeltaMovement().add(knockback));
             target.hurtMarked = true;
         }

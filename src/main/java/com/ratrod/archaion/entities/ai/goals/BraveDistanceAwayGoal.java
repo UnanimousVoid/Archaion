@@ -42,7 +42,7 @@ public class BraveDistanceAwayGoal extends Goal {
         }
 
         if (--this.pathRecalcTicks <= 0) {
-            this.pathRecalcTicks = 5;
+            this.pathRecalcTicks = 8 + entity.getRandom().nextInt(5);
 
             double dx = this.entity.getX() - target.getX();
             double dz = this.entity.getZ() - target.getZ();

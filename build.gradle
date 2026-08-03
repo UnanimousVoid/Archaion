@@ -76,6 +76,7 @@ neoForge {
         }
     }
 }
+
 configurations {
     runtimeClasspath.extendsFrom localRuntime
 }
@@ -85,7 +86,7 @@ dependencies {
     implementation "curse.maven:aaa-particles-979809:8402890"
 
     // Testing
-    compileOnly "curse.maven:behemoths-1454931:7875285"
+    runtimeOnly "curse.maven:re-retro-damage-indicators-1456876:8001889"
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {

@@ -10,6 +10,7 @@
     "spacing": 64,
     "separation": 48,
     "spread_type": "linear",
-    "type": "minecraft:random_spread"
+    "type": "archaion:avoid_trial_chambers",
+    "trial_chambers_min_distance": 16
   }
 }
