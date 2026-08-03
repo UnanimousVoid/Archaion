@@ -1,0 +1,69 @@
+{
+  "name": "archaion:ancient_keep",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "archaion:ancient_keep/hallway_1",
+        "processors": "minecraft:ancient_city_start_degradation",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "archaion:ancient_keep/hallway_2",
+        "processors": "minecraft:ancient_city_start_degradation",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "archaion:ancient_keep/hallway_3",
+        "processors": "minecraft:ancient_city_start_degradation",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 9,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "archaion:ancient_keep/map_room",
+        "processors": "minecraft:ancient_city_start_degradation",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 9,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "archaion:ancient_keep/misc_room_1",
+        "processors": "minecraft:ancient_city_start_degradation",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 9,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "archaion:ancient_keep/storage_room",
+        "processors": "minecraft:ancient_city_start_degradation",
+        "projection": "rigid"
+      }
+    },
+    {
+      "weight": 9,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "archaion:ancient_keep/water_room",
+        "processors": "minecraft:ancient_city_start_degradation",
+        "projection": "rigid"
+      }
+    }
+  ]
+}

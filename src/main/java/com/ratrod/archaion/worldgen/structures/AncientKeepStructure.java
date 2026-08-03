@@ -7,7 +7,6 @@ import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.ratrod.archaion.registry.ACStructureTypes;
-import com.ratrod.archaion.worldgen.pools.FixedJigsawPlacement;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.Identifier;
@@ -20,6 +19,7 @@ import net.minecraft.world.level.levelgen.heightproviders.HeightProvider;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pools.DimensionPadding;
+import net.minecraft.world.level.levelgen.structure.pools.JigsawPlacement;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 import net.minecraft.world.level.levelgen.structure.structures.JigsawStructure;
 import net.minecraft.world.level.levelgen.structure.pools.alias.PoolAliasBinding;
@@ -33,7 +33,7 @@ import java.util.function.Function;
 public class AncientKeepStructure extends Structure {
     public static final DimensionPadding DEFAULT_DIMENSION_PADDING;
     public static final LiquidSettings DEFAULT_LIQUID_SETTINGS;
-    public static final int MAX_TOTAL_STRUCTURE_RANGE = 512;
+    public static final int MAX_TOTAL_STRUCTURE_RANGE = 1024;
     public static final int MIN_DEPTH = 0;
     public static final int MAX_DEPTH = 64;
     public static final MapCodec<AncientKeepStructure> CODEC;
@@ -94,7 +94,7 @@ public class AncientKeepStructure extends Structure {
         ChunkPos chunkPos = context.chunkPos();
         int height = this.startHeight.sample(context.random(), new WorldGenerationContext(context.chunkGenerator(), context.heightAccessor()));
         BlockPos startPos = new BlockPos(chunkPos.getMinBlockX(), height, chunkPos.getMinBlockZ());
-        return FixedJigsawPlacement.addPieces(context, this.startPool, this.startJigsawName, this.maxDepth, startPos, this.useExpansionHack, this.projectStartToHeightmap, this.maxDistanceFromCenter, PoolAliasLookup.create(this.poolAliases, startPos, context.seed()), this.dimensionPadding, this.liquidSettings);
+        return JigsawPlacement.addPieces(context, this.startPool, this.startJigsawName, this.maxDepth, startPos, this.useExpansionHack, this.projectStartToHeightmap, this.maxDistanceFromCenter, PoolAliasLookup.create(this.poolAliases, startPos, context.seed()), this.dimensionPadding, this.liquidSettings);
     }
 
     public StructureType<?> type() {

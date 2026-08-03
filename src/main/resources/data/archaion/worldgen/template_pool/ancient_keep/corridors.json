@@ -6,7 +6,7 @@
       "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
-        "location": "archaion:ancient_keep/ancient_keep_main_connector",
+        "location": "archaion:ancient_keep/hallway_alt_1",
         "processors": "minecraft:ancient_city_start_degradation",
         "projection": "rigid"
       }
@@ -15,7 +15,7 @@
       "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
-        "location": "archaion:ancient_keep/arena",
+        "location": "archaion:ancient_keep/hallway_alt_2",
         "processors": "minecraft:ancient_city_start_degradation",
         "projection": "rigid"
       }
@@ -24,7 +24,7 @@
       "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
-        "location": "archaion:ancient_keep/arena_hall",
+        "location": "archaion:ancient_keep/hallway_alt_3",
         "processors": "minecraft:ancient_city_start_degradation",
         "projection": "rigid"
       }
