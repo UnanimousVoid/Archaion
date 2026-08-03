@@ -49,7 +49,7 @@ neoForge {
 
         server {
             server()
-            programArgument '--nogui'
+//            programArgument '--nogui'
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
 
@@ -86,7 +86,7 @@ dependencies {
     implementation "curse.maven:aaa-particles-979809:8402890"
 
     // Testing
-    runtimeOnly "curse.maven:re-retro-damage-indicators-1456876:8001889"
+//    runtimeOnly "curse.maven:re-retro-damage-indicators-1456876:8001889"
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
