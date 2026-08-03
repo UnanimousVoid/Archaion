@@ -1,6 +1,6 @@
 {
   "type": "archaion:ancient_keep",
-  "biomes": "#minecraft:has_structure/ancient_city",
+  "biomes": "#minecraft:has_structure/trial_chambers",
   "step": "underground_structures",
   "dimension_padding": 10,
   "terrain_adaptation": "encapsulate",

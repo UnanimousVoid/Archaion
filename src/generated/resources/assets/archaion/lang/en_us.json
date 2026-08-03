@@ -34,5 +34,21 @@
   "item.archaion.smithing_template.mace_upgrade.applies_to": "Mace",
   "item.archaion.smithing_template.mace_upgrade.base_slot_description": "Add a Mace",
   "item.archaion.smithing_template.mace_upgrade.ingredients": "Echo Shard",
-  "item.archaion.wight_spawn_egg": "Wight Spawn Egg"
+  "item.archaion.wight_spawn_egg": "Wight Spawn Egg",
+  "subtitle.archaion.brave_ambient": "Brave ambient",
+  "subtitle.archaion.brave_death": "Brave death",
+  "subtitle.archaion.brave_hurt": "Brave hurt",
+  "subtitle.archaion.brave_jump": "Brave jump",
+  "subtitle.archaion.echo_mace_throw": "Echo mace throw",
+  "subtitle.archaion.echo_star_blast": "Echo star blast",
+  "subtitle.archaion.lod_action_start": "Last of Deepslate prepares",
+  "subtitle.archaion.lod_activate": "Last of Deepslate awakens",
+  "subtitle.archaion.lod_activate_smash": "Last of Deepslate crashes down",
+  "subtitle.archaion.lod_ambient": "Last of Deepslate groans",
+  "subtitle.archaion.lod_death": "Last of Deepslate dies",
+  "subtitle.archaion.lod_hurt": "Last of Deepslate hurts",
+  "subtitle.archaion.lod_shoot": "Last of Deepslate shoots",
+  "subtitle.archaion.lod_smash": "Last of Deepslate smashes",
+  "subtitle.archaion.lod_spin": "Last of Deepslate spins",
+  "subtitle.archaion.lod_step": "Last of Deepslate steps"
 }

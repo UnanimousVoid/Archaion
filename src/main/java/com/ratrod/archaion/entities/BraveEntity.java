@@ -7,7 +7,10 @@ import com.ratrod.archaion.client.animations.BraveAnimations;
 import com.ratrod.archaion.entities.ai.ACEntity;
 import com.ratrod.archaion.entities.ai.actions.BraveJumpOnAction;
 import com.ratrod.archaion.entities.ai.goals.BraveDistanceAwayGoal;
+import com.ratrod.archaion.registry.ACSounds;
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -23,6 +26,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.Vec3;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -83,6 +87,21 @@ public class BraveEntity extends Monster implements ACEntity<BraveEntity> {
     @Override
     public int getMaxHeadYRot() {
         return 30;
+    }
+
+    @Override
+    protected @Nullable SoundEvent getAmbientSound() {
+        return ACSounds.BRAVE_AMBIENT.get();
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return ACSounds.BRAVE_HURT.get();
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return ACSounds.BRAVE_DEATH.get();
     }
 
     @Override

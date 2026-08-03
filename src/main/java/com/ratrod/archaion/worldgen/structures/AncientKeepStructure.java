@@ -33,7 +33,7 @@ import java.util.function.Function;
 public class AncientKeepStructure extends Structure {
     public static final DimensionPadding DEFAULT_DIMENSION_PADDING;
     public static final LiquidSettings DEFAULT_LIQUID_SETTINGS;
-    public static final int MAX_TOTAL_STRUCTURE_RANGE = 1024;
+    public static final int MAX_TOTAL_STRUCTURE_RANGE = 2048;
     public static final int MIN_DEPTH = 0;
     public static final int MAX_DEPTH = 64;
     public static final MapCodec<AncientKeepStructure> CODEC;
@@ -49,22 +49,22 @@ public class AncientKeepStructure extends Structure {
     private final LiquidSettings liquidSettings;
 
     private static DataResult<AncientKeepStructure> verifyRange(AncientKeepStructure structure) {
-        byte var10000;
+        byte flag;
         switch (structure.terrainAdaptation()) {
             case NONE:
-                var10000 = 0;
+                flag = 0;
                 break;
             case BURY:
             case BEARD_THIN:
             case BEARD_BOX:
             case ENCAPSULATE:
-                var10000 = 12;
+                flag = 12;
                 break;
             default:
                 throw new MatchException((String)null, (Throwable)null);
         }
 
-        int edgeNeeded = var10000;
+        int edgeNeeded = flag;
         return structure.maxDistanceFromCenter.horizontal() + edgeNeeded > MAX_TOTAL_STRUCTURE_RANGE ? DataResult.error(() -> "Horizontal structure size including terrain adaptation must not exceed " + MAX_TOTAL_STRUCTURE_RANGE) : DataResult.success(structure);
     }
 

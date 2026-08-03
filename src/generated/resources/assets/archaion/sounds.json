@@ -1,0 +1,98 @@
+{
+  "brave_ambient": {
+    "sounds": [
+      "archaion:brave_ambient"
+    ],
+    "subtitle": "subtitle.archaion.brave_ambient"
+  },
+  "brave_death": {
+    "sounds": [
+      "archaion:brave_death"
+    ],
+    "subtitle": "subtitle.archaion.brave_death"
+  },
+  "brave_hurt": {
+    "sounds": [
+      "archaion:brave_hurt"
+    ],
+    "subtitle": "subtitle.archaion.brave_hurt"
+  },
+  "brave_jump": {
+    "sounds": [
+      "archaion:brave_jump"
+    ],
+    "subtitle": "subtitle.archaion.brave_jump"
+  },
+  "echo_mace_throw": {
+    "sounds": [
+      "archaion:echo_mace_throw"
+    ],
+    "subtitle": "subtitle.archaion.echo_mace_throw"
+  },
+  "echo_star_blast": {
+    "sounds": [
+      "archaion:echo_star_blast"
+    ],
+    "subtitle": "subtitle.archaion.echo_star_blast"
+  },
+  "lod_action_start": {
+    "sounds": [
+      "archaion:lod_action_start"
+    ],
+    "subtitle": "subtitle.archaion.lod_action_start"
+  },
+  "lod_activate": {
+    "sounds": [
+      "archaion:lod_activate"
+    ],
+    "subtitle": "subtitle.archaion.lod_activate"
+  },
+  "lod_activate_smash": {
+    "sounds": [
+      "archaion:lod_activate_smash"
+    ],
+    "subtitle": "subtitle.archaion.lod_activate_smash"
+  },
+  "lod_ambient": {
+    "sounds": [
+      "archaion:lod_ambient"
+    ],
+    "subtitle": "subtitle.archaion.lod_ambient"
+  },
+  "lod_death": {
+    "sounds": [
+      "archaion:lod_death"
+    ],
+    "subtitle": "subtitle.archaion.lod_death"
+  },
+  "lod_hurt": {
+    "sounds": [
+      "archaion:lod_hurt"
+    ],
+    "subtitle": "subtitle.archaion.lod_hurt"
+  },
+  "lod_shoot": {
+    "sounds": [
+      "archaion:lod_shoot"
+    ],
+    "subtitle": "subtitle.archaion.lod_shoot"
+  },
+  "lod_smash": {
+    "sounds": [
+      "archaion:lod_smash"
+    ],
+    "subtitle": "subtitle.archaion.lod_smash"
+  },
+  "lod_spin": {
+    "sounds": [
+      "archaion:lod_spin"
+    ],
+    "subtitle": "subtitle.archaion.lod_spin"
+  },
+  "lod_step": {
+    "sounds": [
+      "archaion:lod_step"
+    ],
+    "subtitle": "subtitle.archaion.lod_step"
+  }
+}

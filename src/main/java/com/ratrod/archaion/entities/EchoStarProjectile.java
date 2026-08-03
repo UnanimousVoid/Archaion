@@ -1,6 +1,7 @@
 package com.ratrod.archaion.entities;
 
 import com.ratrod.archaion.Archaion;
+import com.ratrod.archaion.registry.ACSounds;
 import mod.chloeprime.aaaparticles.api.common.AAALevel;
 import mod.chloeprime.aaaparticles.api.common.ParticleEmitterInfo;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -36,6 +37,11 @@ public class EchoStarProjectile extends ThrowableProjectile {
             if (firstTick) {
                 ParticleEmitterInfo info = new ParticleEmitterInfo(Archaion.prefix("echo_star"));
                 AAALevel.addParticle(level(), info.bindOnEntity(this).position(0, 0.5, 0).scale(0.6F));
+            }
+
+            if (tickCount % 2 == 0) {
+                ParticleEmitterInfo info = new ParticleEmitterInfo(Archaion.prefix("lod_boom"));
+                AAALevel.addParticle(level(), info.position(this.position().add(0, 0.5, 0)).scale(2F));
             }
 
             if (getOwner() == null) {
@@ -94,14 +100,17 @@ public class EchoStarProjectile extends ThrowableProjectile {
     public void damageArea() {
         if (!level().isClientSide()) {
             ServerLevel server = (ServerLevel) level();
-            ParticleEmitterInfo info = new ParticleEmitterInfo(Archaion.prefix("boss_smash_ground"));
-            AAALevel.addParticle(server, info.position(this.position().add(0, 0.5, 0)).scale(3));
 
             for (LivingEntity target : server.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(2))) {
                 if (target != this.getOwner()) {
                     target.hurtServer(server, server.damageSources().indirectMagic(this, getOwner()), 2);
                 }
             }
+
+            this.playSound(ACSounds.ECHO_STAR_BLAST.get(), 2.0F, 1.0F);
+            ParticleEmitterInfo info = new ParticleEmitterInfo(Archaion.prefix("lod_boom_group"));
+            AAALevel.addParticle(level(), info.position(this.position().add(0, 0.5, 0)).scale(1.5F));
+
             this.discard();
         }
     }

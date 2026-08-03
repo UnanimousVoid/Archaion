@@ -2,7 +2,6 @@ package com.ratrod.archaion.entities;
 
 import com.ratrod.archaion.registry.ACEntityTypes;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
@@ -34,6 +33,8 @@ import org.jspecify.annotations.Nullable;
 public class ThrownEchoMace extends ThrowableProjectile {
 
     private static final EntityDataAccessor<ItemStack> DATA_MACE_STACK = SynchedEntityData.defineId(ThrownEchoMace.class, EntityDataSerializers.ITEM_STACK);
+
+    public int bounces = 0;
 
     public ThrownEchoMace(EntityType<? extends ThrowableProjectile> entityType, Level level) {
         super(entityType, level);
@@ -107,19 +108,25 @@ public class ThrownEchoMace extends ThrowableProjectile {
         super.onHitBlock(hitResult);
         if (this.level() instanceof ServerLevel serverLevel) {
             this.level().playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.MACE_SMASH_GROUND, SoundSource.PLAYERS, 2.0F, 1.0F);
-            if (hitResult.getDirection() != Direction.DOWN) {
-                this.spawnSmashEffect(serverLevel, hitResult.getBlockPos(), 750, null);
-                this.discard();
-            } else {
-                this.spawnSmashEffect(serverLevel, hitResult.getBlockPos(), 200, null);
-                this.setDeltaMovement(0, -1, 0);
-            }
+
+            this.spawnSmashEffect(serverLevel, hitResult.getBlockPos(), 550, null);
+            this.setDeltaMovement(this.getDeltaMovement().relative(hitResult.getDirection(), 2));
+
+//            if (hitResult.getDirection() != Direction.DOWN) {
+//                this.spawnSmashEffect(serverLevel, hitResult.getBlockPos(), 750, null);
+//                this.discard();
+//            } else {
+//                this.spawnSmashEffect(serverLevel, hitResult.getBlockPos(), 200, null);
+//                this.setDeltaMovement(0, -1, 0);
+//            }
         }
     }
 
     private void spawnSmashEffect(ServerLevel serverLevel, BlockPos pos, int particleCount, @Nullable Entity center) {
         serverLevel.levelEvent(2013, pos, particleCount);
         this.applyWindBurst(serverLevel, pos, center);
+
+        if (bounces++ > 3) this.discard();
     }
 
     private ItemStack withoutWindBurst() {

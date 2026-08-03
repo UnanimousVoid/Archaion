@@ -1,8 +1,8 @@
 package com.ratrod.archaion.items;
 
 import com.ratrod.archaion.entities.ThrownEchoMace;
+import com.ratrod.archaion.registry.ACSounds;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -65,7 +65,7 @@ public class EchoMaceItem extends MaceItem {
             if (level instanceof ServerLevel serverLevel) {
                 stack.hurtWithoutBreaking(1, player);
                 ThrownEchoMace mace = Projectile.spawnProjectileFromRotation(ThrownEchoMace::new, serverLevel, stack.copyWithCount(1), player, 0.0F, 2.5F, 1.0F);
-                level.playSound(null, mace, SoundEvents.TRIDENT_THROW.value(), SoundSource.PLAYERS, 1.0F, 1.0F);
+                level.playSound(null, mace, ACSounds.ECHO_MACE_THROW.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
             }
             return true;
         }

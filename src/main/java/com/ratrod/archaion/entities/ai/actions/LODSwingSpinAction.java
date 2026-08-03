@@ -1,8 +1,12 @@
 package com.ratrod.archaion.entities.ai.actions;
 
+import com.ratrod.archaion.Archaion;
 import com.ratrod.archaion.api.entity.ManagedAction;
 import com.ratrod.archaion.entities.LastOfDeepslateEntity;
 import com.ratrod.archaion.entities.ai.ACEntity;
+import com.ratrod.archaion.registry.ACSounds;
+import mod.chloeprime.aaaparticles.api.common.AAALevel;
+import mod.chloeprime.aaaparticles.api.common.ParticleEmitterInfo;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.AABB;
@@ -29,6 +33,7 @@ public class LODSwingSpinAction extends ManagedAction<LastOfDeepslateEntity> {
     public void onStart() {
         this.timer = 0;
         entity.swingSpinAnim.start();
+        entity.playSound(ACSounds.LOD_ACTION_START.get(), 3.0F, 1.0F);
     }
 
     @Override
@@ -39,6 +44,12 @@ public class LODSwingSpinAction extends ManagedAction<LastOfDeepslateEntity> {
     @Override
     public boolean onTick() {
         timer++;
+
+        if (timer == 10) {
+            entity.playSound(ACSounds.LOD_SPIN.get(), 3.0F, 1.0F);
+            ParticleEmitterInfo info = new ParticleEmitterInfo(Archaion.prefix("echo_spin"));
+            AAALevel.addParticle(entity.level(), info.position(entity.position().add(0, 1, 0)).scale(2.0F));
+        }
 
         if (timer == 15) {
             this.applySwingDamage();

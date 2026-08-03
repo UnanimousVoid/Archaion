@@ -5,6 +5,7 @@ import com.ratrod.archaion.Archaion;
 import com.ratrod.archaion.client.LastOfDeepslateRenderState;
 import com.ratrod.archaion.client.models.LastOfDeepslateModel;
 import com.ratrod.archaion.entities.LastOfDeepslateEntity;
+import com.ratrod.archaion.entities.ai.SleepingState;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
@@ -25,7 +26,7 @@ public class LastOfDeepslateRenderer extends MobRenderer<LastOfDeepslateEntity, 
                 new LivingEntityEmissiveLayer<>(
                         this,
                         renderState -> GLOW_TEXTURE,
-                        (entity, ageInTicks) -> Mth.clamp(1F + Mth.sin(ageInTicks * 0.25F), 0.0F, 1.0F),
+                        (entity, ageInTicks) -> entity.sleepingState == SleepingState.SLEEPING ? 0 : Mth.clamp(1F + Mth.sin(ageInTicks * 0.25F), 0.0F, 1.0F),
                         new LastOfDeepslateModel<>(context.bakeLayer(LastOfDeepslateModel.LAYER_LOCATION)),
                         RenderTypes::entityTranslucentEmissive,
                         false

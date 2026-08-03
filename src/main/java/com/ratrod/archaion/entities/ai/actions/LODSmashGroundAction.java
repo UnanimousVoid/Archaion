@@ -1,8 +1,12 @@
 package com.ratrod.archaion.entities.ai.actions;
 
+import com.ratrod.archaion.Archaion;
 import com.ratrod.archaion.api.entity.ManagedAction;
 import com.ratrod.archaion.entities.LastOfDeepslateEntity;
 import com.ratrod.archaion.entities.ai.ACEntity;
+import com.ratrod.archaion.registry.ACSounds;
+import mod.chloeprime.aaaparticles.api.common.AAALevel;
+import mod.chloeprime.aaaparticles.api.common.ParticleEmitterInfo;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
@@ -29,6 +33,7 @@ public class LODSmashGroundAction extends ManagedAction<LastOfDeepslateEntity> {
     public void onStart() {
         this.timer = 0;
         entity.smashGroundAnim.start();
+        entity.playSound(ACSounds.LOD_ACTION_START.get(), 3.0F, 1.0F);
     }
 
     @Override
@@ -49,12 +54,14 @@ public class LODSmashGroundAction extends ManagedAction<LastOfDeepslateEntity> {
     private void applySmashDamage() {
         if (!(entity.level() instanceof ServerLevel serverLevel)) return;
 
+        entity.playSound(ACSounds.LOD_SMASH.get(), 3.0F, 1.0F);
+
         float yaw = entity.getYHeadRot() * Mth.DEG_TO_RAD;
         Vec3 flatLook = new Vec3(-Mth.sin(yaw), 0, Mth.cos(yaw));
         Vec3 center = entity.position().add(flatLook.yRot(7.5F * Mth.DEG_TO_RAD).scale(7.5));
 
-//        ParticleEmitterInfo info = new ParticleEmitterInfo(Archaion.prefix("boss_smash_ground"));
-//        AAALevel.addParticle(serverLevel, info.position(center.add(0, 0.2, 0)).scale(6.0F));
+        ParticleEmitterInfo info = new ParticleEmitterInfo(Archaion.prefix("lod_boom_ground"));
+        AAALevel.addParticle(serverLevel, info.position(center.add(0, 0.2, 0)).scale(3.0F));
 
         AABB area = AABB.ofSize(center, 12, 6, 12);
 

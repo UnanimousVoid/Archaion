@@ -3,6 +3,7 @@ package com.ratrod.archaion.entities.ai.actions;
 import com.ratrod.archaion.api.entity.ManagedAction;
 import com.ratrod.archaion.entities.BraveEntity;
 import com.ratrod.archaion.entities.ai.ACEntity;
+import com.ratrod.archaion.registry.ACSounds;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
@@ -45,6 +46,7 @@ public class BraveJumpOnAction extends ManagedAction<BraveEntity> {
 
         LivingEntity target = entity.getTarget();
         if (timer == 15 && target != null) {
+            entity.playSound(ACSounds.BRAVE_JUMP.get(), 3.0F, 1.0F);
             this.jumpTowards(target);
         }
 

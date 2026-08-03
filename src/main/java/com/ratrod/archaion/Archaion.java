@@ -23,6 +23,7 @@ public class Archaion {
 
         ACBlocks.BLOCK.register(modEventBus);
         ACItems.ITEM.register(modEventBus);
+        ACSounds.SOUND_EVENT.register(modEventBus);
         ACBlockEntities.BLOCK_ENTITIES.register(modEventBus);
         ACEntityTypes.ENTITY_TYPE.register(modEventBus);
         ACEntityDataSerializers.ENTITY_DATA_SERIALIZERS.register(modEventBus);
