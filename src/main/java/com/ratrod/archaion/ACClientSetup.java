@@ -7,6 +7,7 @@ import com.ratrod.archaion.client.renderers.DeepslateSpawnerRenderer;
 import com.ratrod.archaion.client.renderers.EchoStarProjectileRenderer;
 import com.ratrod.archaion.client.renderers.LastOfDeepslateRenderer;
 import com.ratrod.archaion.client.renderers.SlatedRenderer;
+import com.ratrod.archaion.client.renderers.ThrownEchoMaceRenderer;
 import com.ratrod.archaion.client.renderers.WightRenderer;
 import com.ratrod.archaion.registry.ACBlockEntities;
 import com.ratrod.archaion.registry.ACEntityTypes;
@@ -39,6 +40,7 @@ public class ACClientSetup {
         event.registerEntityRenderer(ACEntityTypes.WIGHT.get(), WightRenderer::new);
         event.registerEntityRenderer(ACEntityTypes.ECHO_STAR.get(), EchoStarProjectileRenderer::new);
         event.registerEntityRenderer(ACEntityTypes.BRAVE.get(), BraveRenderer::new);
+        event.registerEntityRenderer(ACEntityTypes.THROWN_ECHO_MACE.get(), ThrownEchoMaceRenderer::new);
 
         event.registerBlockEntityRenderer(ACBlockEntities.DEEPSLATE_TRIAL_SPAWNER.get(), DeepslateSpawnerRenderer::new);
     }

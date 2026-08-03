@@ -28,6 +28,7 @@ public class ACModelProvider extends ModelProvider {
     @Override
     protected void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
 
+        itemModels.generateFlatItem(ACItems.ECHO_MACE.get(), ModelTemplates.FLAT_HANDHELD_MACE_ITEM);
         itemModels.generateFlatItem(ACItems.ECHO_KEY.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ACItems.SLATED_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ACItems.WIGHT_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);

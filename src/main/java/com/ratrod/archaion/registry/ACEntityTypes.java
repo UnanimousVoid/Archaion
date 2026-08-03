@@ -5,6 +5,7 @@ import com.ratrod.archaion.entities.BraveEntity;
 import com.ratrod.archaion.entities.EchoStarProjectile;
 import com.ratrod.archaion.entities.LastOfDeepslateEntity;
 import com.ratrod.archaion.entities.Slated;
+import com.ratrod.archaion.entities.ThrownEchoMace;
 import com.ratrod.archaion.entities.Wight;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -31,4 +32,11 @@ public class ACEntityTypes {
 
     public static final DeferredHolder<EntityType<?>, EntityType<EchoStarProjectile>> ECHO_STAR = ENTITY_TYPE.register("echo_star",
             () -> EntityType.Builder.<EchoStarProjectile>of(EchoStarProjectile::new, MobCategory.MISC).sized(1.5F, 1.5F).noSave().build(ResourceKey.create(Registries.ENTITY_TYPE, Archaion.prefix("echo_star"))));
+
+    public static final DeferredHolder<EntityType<?>, EntityType<ThrownEchoMace>> THROWN_ECHO_MACE = ENTITY_TYPE.register("thrown_echo_mace",
+            () -> EntityType.Builder.<ThrownEchoMace>of(ThrownEchoMace::new, MobCategory.MISC)
+                    .sized(0.5F, 0.5F)
+                    .clientTrackingRange(8)
+                    .noSave()
+                    .build(ResourceKey.create(Registries.ENTITY_TYPE, Archaion.prefix("thrown_echo_mace"))));
 }
