@@ -23,6 +23,12 @@ public class ACLanguageProvider extends LanguageProvider {
     protected void addTranslations() {
         this.add("creativetab.archaion_tab", "Archaion");
 
+        this.add(ACItems.ECHO_MACE_UPGRADE_SMITHING_TEMPLATE.get(), "Echo Mace Upgrade");
+        this.add("item.archaion.smithing_template.mace_upgrade.applies_to", "Mace");
+        this.add("item.archaion.smithing_template.mace_upgrade.ingredients", "Echo Shard");
+        this.add("item.archaion.smithing_template.mace_upgrade.base_slot_description", "Add a Mace");
+        this.add("item.archaion.smithing_template.mace_upgrade.additions_slot_description", "Add an Echo Shard");
+
         for (DeferredHolder<Item, ? extends Item> item : ACItems.ITEM.getEntries()) {
             if (!(item.get() instanceof BlockItem) && !(item.get() instanceof SmithingTemplateItem)) {
                 this.addItem(item, WordUtils.capitalize(item.getId().getPath().replace("_", " ")));

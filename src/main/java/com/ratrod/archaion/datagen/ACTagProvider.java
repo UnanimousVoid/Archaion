@@ -39,6 +39,11 @@ public class ACTagProvider {
                     ACBlocks.REINFORCED_DEEPSLATE_TILE_WALL.get(),
                     ACBlocks.REINFORCED_POLISHED_DEEPSLATE_WALL.get()
             );
+
+            this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(
+                    ACBlocks.SOUL_LAMP.get(),
+                    ACBlocks.DEEPSLATE_PILLAR.get()
+            );
         }
     }
 

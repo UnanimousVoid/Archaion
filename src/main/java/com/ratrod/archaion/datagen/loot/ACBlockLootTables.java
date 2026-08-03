@@ -1,5 +1,6 @@
 package com.ratrod.archaion.datagen.loot;
 
+import com.ratrod.archaion.registry.ACBlocks;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
@@ -15,15 +16,12 @@ public class ACBlockLootTables extends BlockLootSubProvider {
 
     @Override
     public void generate() {
-//        this.dropSelf(ACBlocks.SOUL_LAMP.get());
+        this.dropSelf(ACBlocks.SOUL_LAMP.get());
+        this.dropSelf(ACBlocks.DEEPSLATE_PILLAR.get());
     }
 
     @Override
     protected Iterable<Block> getKnownBlocks() {
-
-        return List.of();
-//        return ACLootTableProvider.knownSet(BuiltInRegistries.BLOCK).stream()
-//                .filter(block -> !excluded.contains(block))
-//                .collect(Collectors.toSet());
+        return List.of(ACBlocks.SOUL_LAMP.get(), ACBlocks.DEEPSLATE_PILLAR.get());
     }
 }

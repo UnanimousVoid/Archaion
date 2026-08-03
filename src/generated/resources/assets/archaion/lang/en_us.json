@@ -25,7 +25,12 @@
   "entity.archaion.wight": "Wight",
   "item.archaion.brave_spawn_egg": "Brave Spawn Egg",
   "item.archaion.echo_key": "Echo Key",
+  "item.archaion.echo_mace_upgrade_smithing_template": "Echo Mace Upgrade",
   "item.archaion.last_of_deepslate_spawn_egg": "Last Of Deepslate Spawn Egg",
   "item.archaion.slated_spawn_egg": "Slated Spawn Egg",
+  "item.archaion.smithing_template.mace_upgrade.additions_slot_description": "Add an Echo Shard",
+  "item.archaion.smithing_template.mace_upgrade.applies_to": "Mace",
+  "item.archaion.smithing_template.mace_upgrade.base_slot_description": "Add a Mace",
+  "item.archaion.smithing_template.mace_upgrade.ingredients": "Echo Shard",
   "item.archaion.wight_spawn_egg": "Wight Spawn Egg"
 }

@@ -46,8 +46,14 @@ public record ACChestLootTables(HolderLookup.Provider registries) implements Loo
         // DEEPSLATE VAULT DROP
         output.accept(ACLootTables.DEEPSLATE_VAULT, LootTable.lootTable()
                 .withPool(LootPool.lootPool()
-                        .setRolls(ConstantValue.exactly(1.0F))
+                        .setRolls(ConstantValue.exactly(6.0F))
                         .add(LootItem.lootTableItem(Items.ENCHANTED_GOLDEN_APPLE).setWeight(2))
+                        .add(LootItem.lootTableItem(Items.GOLDEN_APPLE).setWeight(4).apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 4.0F))))
+                        .add(LootItem.lootTableItem(Items.DIAMOND).setWeight(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(6.0F, 12.0F))))
+                        .add(LootItem.lootTableItem(Items.GOLDEN_CARROT).setWeight(2))
+                        .add(LootItem.lootTableItem(Items.GOLD_INGOT).setWeight(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(12.0F, 22.0F))))
+                        .add(LootItem.lootTableItem(Items.GOLD_INGOT).setWeight(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(12.0F, 22.0F))))
+
                 )
         );
 

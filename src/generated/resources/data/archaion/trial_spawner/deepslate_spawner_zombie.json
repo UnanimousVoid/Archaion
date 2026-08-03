@@ -3,7 +3,7 @@
   "loot_tables_to_eject": [
     {
       "data": "archaion:spawner/deepslate_spawner_key",
-      "weight": 1
+      "weight": 2
     },
     {
       "data": "archaion:spawner/deepslate_spawner_misc",
