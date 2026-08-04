@@ -3,6 +3,7 @@ package com.ratrod.archaion.client.renderers;
 import com.ratrod.archaion.Archaion;
 import com.ratrod.archaion.client.ACLivingEntityRenderState;
 import com.ratrod.archaion.client.models.BraveModel;
+import com.ratrod.archaion.client.renderers.layer.BraveChargedLayer;
 import com.ratrod.archaion.entities.BraveEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
@@ -28,6 +29,7 @@ public class BraveRenderer extends MobRenderer<BraveEntity, ACLivingEntityRender
                         false
                 )
         );
+        this.addLayer(new BraveChargedLayer(this, context.getModelSet()));
     }
 
     @Override

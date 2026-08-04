@@ -8,6 +8,8 @@ import com.ratrod.archaion.client.models.LastOfDeepslateModel;
 import com.ratrod.archaion.client.renderers.*;
 import com.ratrod.archaion.registry.ACBlockEntities;
 import com.ratrod.archaion.registry.ACEntityTypes;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
@@ -34,7 +36,8 @@ public class ACClientSetup {
                 LastOfDeepslateAnimations.WAKING,
                 LastOfDeepslateAnimations.SHOOT_LAND,
                 LastOfDeepslateAnimations.SMASH_GROUND,
-                LastOfDeepslateAnimations.SPIN_SWING
+                LastOfDeepslateAnimations.SPIN_SWING,
+                LastOfDeepslateAnimations.INTERCEPT_SHOOT
         ));
 
         ClientAnimationRegistry.register(ACEntityTypes.BRAVE.get(), List.of(
@@ -51,6 +54,8 @@ public class ACClientSetup {
         event.registerEntityRenderer(ACEntityTypes.ECHO_STAR.get(), EchoStarProjectileRenderer::new);
         event.registerEntityRenderer(ACEntityTypes.BRAVE.get(), BraveRenderer::new);
         event.registerEntityRenderer(ACEntityTypes.THROWN_ECHO_MACE.get(), ThrownEchoMaceRenderer::new);
+        event.registerEntityRenderer(ACEntityTypes.THROWN_IMPACT_PEARL.get(), ThrownItemRenderer::new);
+        event.registerEntityRenderer(ACEntityTypes.LOD_INTERCEPT_BLAST.get(), LODInterceptBlastRenderer::new);
 
         event.registerBlockEntityRenderer(ACBlockEntities.DEEPSLATE_TRIAL_SPAWNER.get(), DeepslateSpawnerRenderer::new);
     }
@@ -58,6 +63,7 @@ public class ACClientSetup {
     @SubscribeEvent
     static void onRegisterLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(LastOfDeepslateModel.LAYER_LOCATION, LastOfDeepslateModel::createBodyLayer);
-        event.registerLayerDefinition(BraveModel.LAYER_LOCATION, BraveModel::createBodyLayer);
+        event.registerLayerDefinition(BraveModel.LAYER_LOCATION, () -> BraveModel.createBodyLayer(CubeDeformation.NONE));
+        event.registerLayerDefinition(BraveModel.CHARGED_LAYER_LOCATION, () -> BraveModel.createBodyLayer(new CubeDeformation(2.0F)));
     }
 }

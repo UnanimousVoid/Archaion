@@ -35,6 +35,10 @@ public class ACModelProvider extends ModelProvider {
         itemModels.generateFlatItem(ACItems.BRAVE_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ACItems.LAST_OF_DEEPSLATE_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ACItems.ECHO_MACE_UPGRADE_SMITHING_TEMPLATE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ACItems.BRAVE_ROD.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ACItems.BRAVE_ESSENCE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ACItems.IMPACT_PEARL.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ACItems.ECHO_CHARGE.get(), ModelTemplates.FLAT_ITEM);
 
         blockModels.createTrivialCube(ACBlocks.SOUL_LAMP.get());
         blockModels.createAxisAlignedPillarBlock(ACBlocks.REINFORCED_DEEPSLATE_PILLAR.get(), TexturedModel.COLUMN);

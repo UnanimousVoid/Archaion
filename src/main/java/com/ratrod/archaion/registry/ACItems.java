@@ -2,7 +2,9 @@ package com.ratrod.archaion.registry;
 
 import com.ratrod.archaion.Archaion;
 import com.ratrod.archaion.item.ACSmithingTemplateItem;
+import com.ratrod.archaion.item.EchoChargeItem;
 import com.ratrod.archaion.item.EchoMaceItem;
+import com.ratrod.archaion.item.ImpactPearlItem;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.Weapon;
@@ -13,7 +15,8 @@ public class ACItems {
     public static final DeferredRegister.Items ITEM = DeferredRegister.createItems(Archaion.MODID);
 
     public static final DeferredItem<Item> ECHO_KEY = ITEM.registerItem("echo_key", Item::new);
-    public static final DeferredItem<EchoMaceItem> ECHO_MACE = ITEM.registerItem("echo_mace", EchoMaceItem::new, () -> new Item.Properties()
+    public static final DeferredItem<EchoMaceItem> ECHO_MACE = ITEM.registerItem("echo_mace",
+            EchoMaceItem::new, () -> new Item.Properties()
                     .rarity(Rarity.EPIC)
                     .durability(250)
                     .component(DataComponents.TOOL, MaceItem.createToolProperties())
@@ -29,5 +32,11 @@ public class ACItems {
     public static final DeferredItem<Item> LAST_OF_DEEPSLATE_SPAWN_EGG = ITEM.registerItem("last_of_deepslate_spawn_egg", SpawnEggItem::new, () -> new Item.Properties().spawnEgg(ACEntityTypes.LAST_OF_DEEPSLATE.get()));
 
     public static final DeferredItem<Item> ECHO_MACE_UPGRADE_SMITHING_TEMPLATE = ITEM.registerItem("echo_mace_upgrade_smithing_template", ACSmithingTemplateItem::new, () -> new Item.Properties().rarity(Rarity.EPIC));
+
+    public static final DeferredItem<Item> BRAVE_ROD = ITEM.registerItem("brave_rod", Item::new, Item.Properties::new);
+    public static final DeferredItem<Item> BRAVE_ESSENCE = ITEM.registerItem("brave_essence", Item::new, Item.Properties::new);
+    public static final DeferredItem<Item> IMPACT_PEARL = ITEM.registerItem("impact_pearl", ImpactPearlItem::new, () -> new Item.Properties().stacksTo(16).useCooldown(1.0F));
+    public static final DeferredItem<Item> ECHO_CHARGE = ITEM.registerItem("echo_charge", EchoChargeItem::new, () -> new Item.Properties().useCooldown(0.2F));
+
 
 }

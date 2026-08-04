@@ -6,6 +6,7 @@ import com.ratrod.archaion.api.client.animation.EntityAnimationManager;
 import com.ratrod.archaion.api.entity.ActionManager;
 import com.ratrod.archaion.entities.ai.ACEntity;
 import com.ratrod.archaion.entities.ai.SleepingState;
+import com.ratrod.archaion.entities.ai.actions.LODInterceptShootAction;
 import com.ratrod.archaion.entities.ai.actions.LODShootAction;
 import com.ratrod.archaion.entities.ai.actions.LODSmashGroundAction;
 import com.ratrod.archaion.entities.ai.actions.LODSwingSpinAction;
@@ -61,6 +62,7 @@ public class LastOfDeepslateEntity extends Monster implements ACEntity<LastOfDee
     public final ACAnimation shootAnim = new ACAnimation(this);
     public final ACAnimation smashGroundAnim = new ACAnimation(this);
     public final ACAnimation swingSpinAnim = new ACAnimation(this);
+    public final ACAnimation interceptShootAnim = new ACAnimation(this);
 
     private int wakingStartTick = 0;
     private boolean deathAnimationPlayed = false;
@@ -75,6 +77,7 @@ public class LastOfDeepslateEntity extends Monster implements ACEntity<LastOfDee
         this.attackManager.addAction(new LODSmashGroundAction(this), 100);
         this.attackManager.addAction(new LODSwingSpinAction(this), 150);
         this.attackManager.addAction(new LODShootAction(this), 100);
+        this.attackManager.addAction(new LODInterceptShootAction(this), 500);
     }
 
     @Override
@@ -142,32 +145,29 @@ public class LastOfDeepslateEntity extends Monster implements ACEntity<LastOfDee
             this.bossEvent.setProgress(this.getHealth() / this.getMaxHealth());
 
             SleepingState currentState = this.entityData.get(SLEEPING_STATE);
+            int curWakingTick = this.tickCount - this.wakingStartTick;
 
             Predicate<Entity> predicate = EntitySelector.NO_CREATIVE_OR_SPECTATOR;
             boolean nearbyPlayers = level().getNearestPlayer(getX(), getY(), getZ(), 32, predicate) != null;
             if (nearbyPlayers) {
-
-                int curWakingTick = this.tickCount - this.wakingStartTick;
-
                 if (currentState == SleepingState.SLEEPING) {
-
                     this.entityData.set(SLEEPING_STATE, SleepingState.WAKING);
                     this.playSound(ACSounds.LOD_ACTIVATE.get(), 3.0F, 1.0F);
                     this.wakingAnim.forceStart();
                     this.wakingStartTick = this.tickCount;
-
-                } else if (currentState == SleepingState.WAKING) {
-
-                    if (curWakingTick == 45) {
-                        this.playSound(ACSounds.LOD_ACTIVATE_SMASH.get(), 3.0F, 1.0F);
-                    }
-
-                    if (curWakingTick >= 80) {
-                        this.entityData.set(SLEEPING_STATE, SleepingState.AWAKE);
-                        this.setNoAi(false);
-                    }
                 }
             }
+
+            if (currentState == SleepingState.WAKING) {
+                if (curWakingTick == 45) {
+                    this.playSound(ACSounds.LOD_ACTIVATE_SMASH.get(), 3.0F, 1.0F);
+                }
+                if (curWakingTick >= 80) {
+                    this.entityData.set(SLEEPING_STATE, SleepingState.AWAKE);
+                    this.setNoAi(false);
+                }
+            }
+
         } else {
             if (this.entityData.get(SLEEPING_STATE) != SleepingState.SLEEPING && tickCount % 8 == 0) {
                 ParticleEmitterInfo info = new ParticleEmitterInfo(Archaion.prefix("lod_aura"));

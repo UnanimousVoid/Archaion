@@ -20,6 +20,17 @@ public class ACRecipeProvider extends RecipeProvider {
 
     @Override
     protected void buildRecipes() {
+        this.shapeless(RecipeCategory.COMBAT, ACItems.BRAVE_ESSENCE, 2)
+                .requires(ACItems.BRAVE_ROD)
+                .unlockedBy("has_brave_rod", this.has(ACItems.BRAVE_ROD))
+                .save(this.output);
+
+        this.shapeless(RecipeCategory.COMBAT, ACItems.IMPACT_PEARL)
+                .requires(ACItems.BRAVE_ESSENCE)
+                .requires(Items.ENDER_PEARL)
+                .unlockedBy("has_brave_essence", this.has(ACItems.BRAVE_ESSENCE))
+                .save(this.output);
+
         SmithingTransformRecipeBuilder.smithing(
                 Ingredient.of(ACItems.ECHO_MACE_UPGRADE_SMITHING_TEMPLATE.get()),
                 Ingredient.of(Items.MACE),

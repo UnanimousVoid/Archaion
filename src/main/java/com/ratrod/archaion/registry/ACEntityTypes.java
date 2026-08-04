@@ -4,8 +4,10 @@ import com.ratrod.archaion.Archaion;
 import com.ratrod.archaion.entities.BraveEntity;
 import com.ratrod.archaion.entities.EchoStarProjectile;
 import com.ratrod.archaion.entities.LastOfDeepslateEntity;
+import com.ratrod.archaion.entities.LODInterceptBlast;
 import com.ratrod.archaion.entities.Slated;
 import com.ratrod.archaion.entities.ThrownEchoMace;
+import com.ratrod.archaion.entities.ThrownImpactPearl;
 import com.ratrod.archaion.entities.Wight;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -39,4 +41,18 @@ public class ACEntityTypes {
                     .clientTrackingRange(8)
                     .noSave()
                     .build(ResourceKey.create(Registries.ENTITY_TYPE, Archaion.prefix("thrown_echo_mace"))));
+
+    public static final DeferredHolder<EntityType<?>, EntityType<ThrownImpactPearl>> THROWN_IMPACT_PEARL = ENTITY_TYPE.register("thrown_impact_pearl",
+            () -> EntityType.Builder.<ThrownImpactPearl>of(ThrownImpactPearl::new, MobCategory.MISC)
+                    .sized(0.25F, 0.25F)
+                    .clientTrackingRange(8)
+                    .noSave()
+                    .build(ResourceKey.create(Registries.ENTITY_TYPE, Archaion.prefix("thrown_impact_pearl"))));
+
+    public static final DeferredHolder<EntityType<?>, EntityType<LODInterceptBlast>> LOD_INTERCEPT_BLAST = ENTITY_TYPE.register("lod_intercept_blast",
+            () -> EntityType.Builder.<LODInterceptBlast>of(LODInterceptBlast::new, MobCategory.MISC)
+                    .sized(0.1F, 0.1F)
+                    .noSave()
+                    .noSummon()
+                    .build(ResourceKey.create(Registries.ENTITY_TYPE, Archaion.prefix("lod_intercept_blast"))));
 }

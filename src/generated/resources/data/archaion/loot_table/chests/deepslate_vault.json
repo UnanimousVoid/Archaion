@@ -77,13 +77,30 @@
           "functions": [
             {
               "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 8.0,
+                "min": 4.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "archaion:echo_charge",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
               "enchantments": {
                 "minecraft:mending": 1.0
               },
               "function": "minecraft:set_enchantments"
             }
           ],
-          "name": "minecraft:enchanted_book"
+          "name": "minecraft:enchanted_book",
+          "weight": 3
         },
         {
           "type": "minecraft:item",
@@ -94,13 +111,14 @@
                 "minecraft:unbreaking": {
                   "type": "minecraft:uniform",
                   "max": 3.0,
-                  "min": 1.0
+                  "min": 2.0
                 }
               },
               "function": "minecraft:set_enchantments"
             }
           ],
-          "name": "minecraft:enchanted_book"
+          "name": "minecraft:enchanted_book",
+          "weight": 2
         },
         {
           "type": "minecraft:item",
@@ -111,13 +129,14 @@
                 "minecraft:sharpness": {
                   "type": "minecraft:uniform",
                   "max": 5.0,
-                  "min": 1.0
+                  "min": 2.0
                 }
               },
               "function": "minecraft:set_enchantments"
             }
           ],
-          "name": "minecraft:enchanted_book"
+          "name": "minecraft:enchanted_book",
+          "weight": 2
         },
         {
           "type": "minecraft:item",
@@ -128,13 +147,14 @@
                 "minecraft:power": {
                   "type": "minecraft:uniform",
                   "max": 5.0,
-                  "min": 1.0
+                  "min": 2.0
                 }
               },
               "function": "minecraft:set_enchantments"
             }
           ],
-          "name": "minecraft:enchanted_book"
+          "name": "minecraft:enchanted_book",
+          "weight": 2
         }
       ],
       "rolls": 6.0

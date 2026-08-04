@@ -3,9 +3,10 @@
   "package": "com.ratrod.archaion.mixin",
   "compatibilityLevel": "JAVA_25",
   "mixins": [
-    "MobMixin",
+    "BlockEntityTypeMixin",
     "LivingEntityMixin",
-    "BlockEntityTypeMixin"
+    "MobMixin",
+    "ThrownEnderpearlMixin"
   ],
   "injectors": {
     "defaultRequire": 1

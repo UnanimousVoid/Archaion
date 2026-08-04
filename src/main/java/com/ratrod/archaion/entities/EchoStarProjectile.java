@@ -1,6 +1,7 @@
 package com.ratrod.archaion.entities;
 
 import com.ratrod.archaion.Archaion;
+import com.ratrod.archaion.registry.ACEntityTypes;
 import com.ratrod.archaion.registry.ACSounds;
 import mod.chloeprime.aaaparticles.api.common.AAALevel;
 import mod.chloeprime.aaaparticles.api.common.ParticleEmitterInfo;
@@ -12,6 +13,7 @@ import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.ThrowableProjectile;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
@@ -28,6 +30,12 @@ public class EchoStarProjectile extends ThrowableProjectile {
 
     public EchoStarProjectile(EntityType<? extends ThrowableProjectile> entityType, Level level) {
         super(entityType, level);
+    }
+
+    public EchoStarProjectile(Level level, LivingEntity owner, ItemStack stack) {
+        super(ACEntityTypes.ECHO_STAR.get(), level);
+        this.snapTo(owner.getX(), owner.getEyeY() - 0.1F, owner.getZ(), owner.getYRot(), owner.getXRot());
+        this.setOwner(owner);
     }
 
     @Override
@@ -103,13 +111,13 @@ public class EchoStarProjectile extends ThrowableProjectile {
 
             for (LivingEntity target : server.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(2))) {
                 if (target != this.getOwner()) {
-                    target.hurtServer(server, server.damageSources().indirectMagic(this, getOwner()), 2);
+                    target.hurtServer(server, server.damageSources().indirectMagic(this, getOwner()), 3);
                 }
             }
 
-            this.playSound(ACSounds.ECHO_STAR_BLAST.get(), 2.0F, 1.0F);
+            this.playSound(ACSounds.ECHO_STAR_BLAST.get(), 4.0F, 1.0F);
             ParticleEmitterInfo info = new ParticleEmitterInfo(Archaion.prefix("lod_boom_group"));
-            AAALevel.addParticle(level(), info.position(this.position().add(0, 0.5, 0)).scale(1.5F));
+            AAALevel.addParticle(level(), true, info.position(this.position().add(0, 0.5, 0)).scale(1.5F));
 
             this.discard();
         }

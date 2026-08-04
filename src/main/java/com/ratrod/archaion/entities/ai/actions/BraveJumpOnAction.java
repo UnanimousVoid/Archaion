@@ -105,10 +105,11 @@ public class BraveJumpOnAction extends ManagedAction<BraveEntity> {
         entity.level().levelEvent(2013, entity.getOnPos(), 750);
 
         for (LivingEntity target : targets) {
-            entity.attackTarget(serverLevel, target, 1.0F, ACEntity.Operation.MULTIPLY);
-            Vec3 knockback = target.position().subtract(center).normalize().scale(1.8);
-            target.setDeltaMovement(target.getDeltaMovement().add(knockback));
-            target.hurtMarked = true;
+            if (entity.attackTarget(serverLevel, target, 1.0F, ACEntity.Operation.MULTIPLY)) {
+                Vec3 knockback = target.position().subtract(center).normalize().scale(1.8);
+                target.setDeltaMovement(target.getDeltaMovement().add(knockback));
+                target.hurtMarked = true;
+            }
         }
     }
 }

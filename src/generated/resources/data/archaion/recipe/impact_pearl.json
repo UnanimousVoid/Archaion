@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    "archaion:brave_essence",
+    "minecraft:ender_pearl"
+  ],
+  "result": {
+    "id": "archaion:impact_pearl"
+  }
+}
