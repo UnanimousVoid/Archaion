@@ -7,7 +7,7 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "archaion:ancient_keep/map_room",
-        "processors": "minecraft:ancient_city_start_degradation",
+        "processors": "archaion:ancient_keep/ancient_keep_decay",
         "projection": "rigid"
       }
     },
@@ -16,7 +16,7 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "archaion:ancient_keep/misc_room_1",
-        "processors": "minecraft:ancient_city_start_degradation",
+        "processors": "archaion:ancient_keep/ancient_keep_decay",
         "projection": "rigid"
       }
     },
@@ -25,7 +25,7 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "archaion:ancient_keep/storage_room",
-        "processors": "minecraft:ancient_city_start_degradation",
+        "processors": "archaion:ancient_keep/ancient_keep_decay",
         "projection": "rigid"
       }
     },
@@ -34,7 +34,7 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "archaion:ancient_keep/water_room",
-        "processors": "minecraft:ancient_city_start_degradation",
+        "processors": "archaion:ancient_keep/ancient_keep_decay",
         "projection": "rigid"
       }
     }

@@ -2,7 +2,7 @@ package com.ratrod.archaion.registry;
 
 import com.ratrod.archaion.Archaion;
 import com.ratrod.archaion.item.ACSmithingTemplateItem;
-import com.ratrod.archaion.items.EchoMaceItem;
+import com.ratrod.archaion.item.EchoMaceItem;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.Weapon;
@@ -13,9 +13,7 @@ public class ACItems {
     public static final DeferredRegister.Items ITEM = DeferredRegister.createItems(Archaion.MODID);
 
     public static final DeferredItem<Item> ECHO_KEY = ITEM.registerItem("echo_key", Item::new);
-    public static final DeferredItem<EchoMaceItem> ECHO_MACE = ITEM.registerItem("echo_mace",
-            EchoMaceItem::new,
-            () -> new Item.Properties()
+    public static final DeferredItem<EchoMaceItem> ECHO_MACE = ITEM.registerItem("echo_mace", EchoMaceItem::new, () -> new Item.Properties()
                     .rarity(Rarity.EPIC)
                     .durability(250)
                     .component(DataComponents.TOOL, MaceItem.createToolProperties())

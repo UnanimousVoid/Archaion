@@ -30,6 +30,7 @@ public class Archaion {
         ACCreativeModeTabs.CREATIVE_MODE_TABS.register(modEventBus);
         ACStructureTypes.STRUCTURE_TYPE.register(modEventBus);
         ACStructurePlacements.STRUCTURE_PLACEMENT.register(modEventBus);
+        ACStructureProcessorTypes.STRUCTURE_PROCESSOR.register(modEventBus);
 
     }
 

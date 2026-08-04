@@ -1,4 +1,4 @@
-package com.ratrod.archaion.items;
+package com.ratrod.archaion.item;
 
 import com.ratrod.archaion.entities.ThrownEchoMace;
 import com.ratrod.archaion.registry.ACSounds;
