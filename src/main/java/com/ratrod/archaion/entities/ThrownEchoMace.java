@@ -110,15 +110,13 @@ public class ThrownEchoMace extends ThrowableProjectile {
             this.level().playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.MACE_SMASH_GROUND, SoundSource.PLAYERS, 2.0F, 1.0F);
 
             this.spawnSmashEffect(serverLevel, hitResult.getBlockPos(), 550, null);
-            this.setDeltaMovement(this.getDeltaMovement().relative(hitResult.getDirection(), 2));
+//            this.setDeltaMovement(this.getDeltaMovement().relative(hitResult.getDirection(), 2));
 
-//            if (hitResult.getDirection() != Direction.DOWN) {
-//                this.spawnSmashEffect(serverLevel, hitResult.getBlockPos(), 750, null);
-//                this.discard();
-//            } else {
-//                this.spawnSmashEffect(serverLevel, hitResult.getBlockPos(), 200, null);
-//                this.setDeltaMovement(0, -1, 0);
-//            }
+            Vec3 velocity = this.getDeltaMovement();
+            Vec3 normal = Vec3.atLowerCornerOf(hitResult.getDirection().getUnitVec3i());
+            double approach = velocity.dot(normal);
+            this.setDeltaMovement(velocity.subtract(normal.scale((1.5) * approach)));
+            this.setPos(this.position().add(normal.scale(0.05)));
         }
     }
 

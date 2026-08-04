@@ -62,8 +62,7 @@ public class LODSwingSpinAction extends ManagedAction<LastOfDeepslateEntity> {
         if (!(entity.level() instanceof ServerLevel serverLevel)) return;
 
         Vec3 center = entity.position();
-        float width = entity.getBbWidth() * 1.25F;
-        AABB area = AABB.ofSize(center, width * 2, 6, width * 2);
+        AABB area = this.entity.getBoundingBox().inflate(2);
 
         List<LivingEntity> targets = entity.level().getEntitiesOfClass(LivingEntity.class, area, e -> e != entity && e.isAlive() && entity.canAttack(e));
 
