@@ -41,6 +41,10 @@ public class ACModelProvider extends ModelProvider {
         itemModels.generateFlatItem(ACItems.ECHO_CHARGE.get(), ModelTemplates.FLAT_ITEM);
 
         blockModels.createTrivialCube(ACBlocks.SOUL_LAMP.get());
+        blockModels.createTrivialCube(ACBlocks.REINFORCED_GRATE.get());
+        blockModels.createAxisAlignedPillarBlockCustomModel(ACBlocks.REINFORCED_CHAIN.get(), BlockModelGenerators.plainVariant(TexturedModel.CHAIN.create(ACBlocks.REINFORCED_CHAIN.get(), blockModels.modelOutput)));
+        itemModels.generateFlatItem(ACBlocks.REINFORCED_CHAIN.get().asItem(), ModelTemplates.FLAT_ITEM);
+
         blockModels.createAxisAlignedPillarBlock(ACBlocks.REINFORCED_DEEPSLATE_PILLAR.get(), TexturedModel.COLUMN);
         blockModels.createAxisAlignedPillarBlock(ACBlocks.DEEPSLATE_PILLAR.get(), TexturedModel.COLUMN);
         itemModels.generateFlatItem(ACBlocks.REINFORCED_BARS.get().asItem(), ModelTemplates.FLAT_ITEM);
