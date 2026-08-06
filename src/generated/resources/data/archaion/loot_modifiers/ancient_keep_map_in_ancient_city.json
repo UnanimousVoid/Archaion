@@ -1,0 +1,19 @@
+{
+  "type": "archaion:add_loot_table",
+  "conditions": [
+    {
+      "condition": "minecraft:any_of",
+      "terms": [
+        {
+          "condition": "neoforge:loot_table_id",
+          "loot_table_id": "minecraft:chests/ancient_city"
+        },
+        {
+          "condition": "neoforge:loot_table_id",
+          "loot_table_id": "minecraft:chests/ancient_city_ice_box"
+        }
+      ]
+    }
+  ],
+  "loot_table": "archaion:chests/ancient_keep_map"
+}
