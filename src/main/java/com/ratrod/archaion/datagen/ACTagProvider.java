@@ -4,9 +4,11 @@ import com.ratrod.archaion.Archaion;
 import com.ratrod.archaion.registry.ACBlocks;
 import com.ratrod.archaion.registry.ACEntityTypes;
 import com.ratrod.archaion.registry.ACItems;
+import com.ratrod.archaion.registry.ACStructures;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
+import net.minecraft.data.tags.StructureTagsProvider;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.tags.ItemTags;
@@ -16,6 +18,18 @@ import net.neoforged.neoforge.common.data.ItemTagsProvider;
 import java.util.concurrent.CompletableFuture;
 
 public class ACTagProvider {
+    public static class StructuresProvider extends StructureTagsProvider {
+        public StructuresProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+            super(output, lookupProvider, Archaion.MODID);
+        }
+
+        @Override
+        protected void addTags(HolderLookup.Provider pProvider) {
+            // ancient_keep is a handwritten pack JSON, not part of the datagen registry lookup
+            this.tag(ACStructures.ON_ANCIENT_KEEP_MAPS).addOptional(ACStructures.ANCIENT_KEEP);
+        }
+    }
+
     public static class EntityTypesProvider extends EntityTypeTagsProvider {
         public EntityTypesProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
             super(output, lookupProvider, Archaion.MODID);

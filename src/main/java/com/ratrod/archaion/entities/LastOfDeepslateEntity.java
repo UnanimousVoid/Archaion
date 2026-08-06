@@ -6,10 +6,8 @@ import com.ratrod.archaion.api.client.animation.EntityAnimationManager;
 import com.ratrod.archaion.api.entity.ActionManager;
 import com.ratrod.archaion.entities.ai.ACEntity;
 import com.ratrod.archaion.entities.ai.SleepingState;
-import com.ratrod.archaion.entities.ai.actions.LODInterceptShootAction;
-import com.ratrod.archaion.entities.ai.actions.LODShootAction;
-import com.ratrod.archaion.entities.ai.actions.LODSmashGroundAction;
-import com.ratrod.archaion.entities.ai.actions.LODSwingSpinAction;
+import com.ratrod.archaion.entities.ai.actions.*;
+import com.ratrod.archaion.entities.ai.controls.look.LastOfDeepslateLookControl;
 import com.ratrod.archaion.entities.ai.controls.move.ACMoveControl;
 import com.ratrod.archaion.entities.ai.controls.pathnav.LargeEntityPathNavigation;
 import com.ratrod.archaion.entities.ai.goals.GoToTargetGoal;
@@ -63,6 +61,7 @@ public class LastOfDeepslateEntity extends Monster implements ACEntity<LastOfDee
     public final ACAnimation smashGroundAnim = new ACAnimation(this);
     public final ACAnimation swingSpinAnim = new ACAnimation(this);
     public final ACAnimation interceptShootAnim = new ACAnimation(this);
+    public final ACAnimation rollingAnim = new ACAnimation(this);
 
     private int wakingStartTick = 0;
     private boolean deathAnimationPlayed = false;
@@ -72,12 +71,14 @@ public class LastOfDeepslateEntity extends Monster implements ACEntity<LastOfDee
         super(entityType, level);
         this.moveControl = new ACMoveControl<>(this);
         this.navigation = new LargeEntityPathNavigation(this, level);
+        this.lookControl = new LastOfDeepslateLookControl(this);
         this.bossEvent = new ServerBossEvent(Mth.createInsecureUUID(this.random), this.getDisplayName(), BossBarColor.BLUE, BossBarOverlay.PROGRESS);
 
         this.attackManager.addAction(new LODSmashGroundAction(this), 100);
         this.attackManager.addAction(new LODSwingSpinAction(this), 150);
         this.attackManager.addAction(new LODShootAction(this), 100);
         this.attackManager.addAction(new LODInterceptShootAction(this), 500);
+        this.attackManager.addAction(new LODRollAction(this), 50);
     }
 
     @Override
@@ -94,7 +95,7 @@ public class LastOfDeepslateEntity extends Monster implements ACEntity<LastOfDee
         return Monster.createMonsterAttributes()
                 .add(Attributes.MAX_HEALTH, 500.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.25D)
-                .add(Attributes.ATTACK_DAMAGE, 15.0D)
+                .add(Attributes.ATTACK_DAMAGE, 22.0D)
                 .add(Attributes.FOLLOW_RANGE, 64.0D)
                 .add(Attributes.ARMOR, 10.0D)
                 .add(Attributes.ARMOR_TOUGHNESS, 8.0D)
@@ -161,6 +162,10 @@ public class LastOfDeepslateEntity extends Monster implements ACEntity<LastOfDee
             if (currentState == SleepingState.WAKING) {
                 if (curWakingTick == 45) {
                     this.playSound(ACSounds.LOD_ACTIVATE_SMASH.get(), 3.0F, 1.0F);
+
+                    for (ServerPlayer player : ((ServerLevel)this.level()).getPlayers(p -> this.getSensing().hasLineOfSight(p) || this.distanceTo(p) < 512)) {
+                        this.addBossBarPlayer(bossEvent, player, 0);
+                    }
                 }
                 if (curWakingTick >= 80) {
                     this.entityData.set(SLEEPING_STATE, SleepingState.AWAKE);
@@ -201,13 +206,15 @@ public class LastOfDeepslateEntity extends Monster implements ACEntity<LastOfDee
     @Override
     public void startSeenByPlayer(ServerPlayer player) {
         super.startSeenByPlayer(player);
-        this.bossEvent.addPlayer(player);
+        if (this.entityData.get(SLEEPING_STATE) == SleepingState.AWAKE) {
+            this.addBossBarPlayer(bossEvent, player, 0);
+        }
     }
 
     @Override
     public void stopSeenByPlayer(ServerPlayer player) {
         super.stopSeenByPlayer(player);
-        this.bossEvent.removePlayer(player);
+        this.removeBossBarPlayer(bossEvent, player);
     }
 
     @Override

@@ -9,5 +9,6 @@ public class ACTrialSpawnerConfigs {
     public static final ResourceKey<TrialSpawnerConfig> DEEPSLATE_SPAWNER_ZOMBIE = ResourceKey.create(Registries.TRIAL_SPAWNER_CONFIG, Archaion.prefix("deepslate_spawner_zombie"));
     public static final ResourceKey<TrialSpawnerConfig> DEEPSLATE_SPAWNER_SKELETON = ResourceKey.create(Registries.TRIAL_SPAWNER_CONFIG, Archaion.prefix("deepslate_spawner_skeleton"));
     public static final ResourceKey<TrialSpawnerConfig> DEEPSLATE_SPAWNER_BRAVE = ResourceKey.create(Registries.TRIAL_SPAWNER_CONFIG, Archaion.prefix("deepslate_spawner_brave"));
+    public static final ResourceKey<TrialSpawnerConfig> DEEPSLATE_SPAWNER_SENTINEL = ResourceKey.create(Registries.TRIAL_SPAWNER_CONFIG, Archaion.prefix("deepslate_spawner_sentinel"));
 
 }

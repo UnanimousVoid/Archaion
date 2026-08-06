@@ -111,7 +111,7 @@ public class EchoStarProjectile extends ThrowableProjectile {
 
             for (LivingEntity target : server.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(2))) {
                 if (target != this.getOwner()) {
-                    target.hurtServer(server, server.damageSources().indirectMagic(this, getOwner()), 3);
+                    target.hurtServer(server, server.damageSources().explosion(this, this.getOwner()), 12);
                 }
             }
 

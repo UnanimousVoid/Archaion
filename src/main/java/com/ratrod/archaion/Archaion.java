@@ -31,6 +31,7 @@ public class Archaion {
         ACStructureTypes.STRUCTURE_TYPE.register(modEventBus);
         ACStructurePlacements.STRUCTURE_PLACEMENT.register(modEventBus);
         ACStructureProcessorTypes.STRUCTURE_PROCESSOR.register(modEventBus);
+        ACLootModifiers.GLOBAL_LOOT_MODIFIER_SERIALIZERS.register(modEventBus);
 
     }
 

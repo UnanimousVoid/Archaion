@@ -26,6 +26,7 @@ public class LODSmashGroundAction extends ManagedAction<LastOfDeepslateEntity> {
         LivingEntity target = entity.getTarget();
         if (target == null || !target.isAlive()) return false;
         if (!entity.hasLineOfSight(target)) return false;
+        if (entity.getY() + 3 < target.getY()) return false;
         return entity.distanceTo(target) <= entity.getBbWidth() * 1.5F;
     }
 

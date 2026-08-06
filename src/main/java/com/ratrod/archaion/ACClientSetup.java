@@ -2,8 +2,10 @@ package com.ratrod.archaion;
 
 import com.ratrod.archaion.client.animations.BraveAnimations;
 import com.ratrod.archaion.client.animations.ClientAnimationRegistry;
+import com.ratrod.archaion.client.animations.DeepslateSentinelAnimations;
 import com.ratrod.archaion.client.animations.LastOfDeepslateAnimations;
 import com.ratrod.archaion.client.models.BraveModel;
+import com.ratrod.archaion.client.models.DeepslateSentinelModel;
 import com.ratrod.archaion.client.models.LastOfDeepslateModel;
 import com.ratrod.archaion.client.renderers.*;
 import com.ratrod.archaion.registry.ACBlockEntities;
@@ -37,12 +39,17 @@ public class ACClientSetup {
                 LastOfDeepslateAnimations.SHOOT_LAND,
                 LastOfDeepslateAnimations.SMASH_GROUND,
                 LastOfDeepslateAnimations.SPIN_SWING,
-                LastOfDeepslateAnimations.INTERCEPT_SHOOT
+                LastOfDeepslateAnimations.INTERCEPT_SHOOT,
+                LastOfDeepslateAnimations.ROLL
         ));
 
         ClientAnimationRegistry.register(ACEntityTypes.BRAVE.get(), List.of(
                 BraveAnimations.JUMPING,
                 BraveAnimations.TEST
+        ));
+
+        ClientAnimationRegistry.register(ACEntityTypes.DEEPSLATE_SENTINEL.get(), List.of(
+                DeepslateSentinelAnimations.CHARGE
         ));
     }
 
@@ -56,6 +63,7 @@ public class ACClientSetup {
         event.registerEntityRenderer(ACEntityTypes.THROWN_ECHO_MACE.get(), ThrownEchoMaceRenderer::new);
         event.registerEntityRenderer(ACEntityTypes.THROWN_IMPACT_PEARL.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(ACEntityTypes.LOD_INTERCEPT_BLAST.get(), LODInterceptBlastRenderer::new);
+        event.registerEntityRenderer(ACEntityTypes.DEEPSLATE_SENTINEL.get(), DeepslateSentinelRenderer::new);
 
         event.registerBlockEntityRenderer(ACBlockEntities.DEEPSLATE_TRIAL_SPAWNER.get(), DeepslateSpawnerRenderer::new);
     }
@@ -65,5 +73,7 @@ public class ACClientSetup {
         event.registerLayerDefinition(LastOfDeepslateModel.LAYER_LOCATION, LastOfDeepslateModel::createBodyLayer);
         event.registerLayerDefinition(BraveModel.LAYER_LOCATION, () -> BraveModel.createBodyLayer(CubeDeformation.NONE));
         event.registerLayerDefinition(BraveModel.CHARGED_LAYER_LOCATION, () -> BraveModel.createBodyLayer(new CubeDeformation(2.0F)));
+        event.registerLayerDefinition(DeepslateSentinelModel.LAYER_LOCATION, DeepslateSentinelModel::createBodyLayer);
     }
+
 }

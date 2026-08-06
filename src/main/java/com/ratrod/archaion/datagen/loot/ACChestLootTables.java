@@ -1,10 +1,12 @@
 package com.ratrod.archaion.datagen.loot;
 
 import com.ratrod.archaion.registry.ACItems;
+import com.ratrod.archaion.registry.ACStructures;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.LootTableSubProvider;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -16,14 +18,12 @@ import net.minecraft.world.item.equipment.trim.TrimMaterial;
 import net.minecraft.world.item.equipment.trim.TrimMaterials;
 import net.minecraft.world.item.equipment.trim.TrimPattern;
 import net.minecraft.world.item.equipment.trim.TrimPatterns;
+import net.minecraft.world.level.saveddata.maps.MapDecorationTypes;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.entries.NestedLootTable;
-import net.minecraft.world.level.storage.loot.functions.SetComponentsFunction;
-import net.minecraft.world.level.storage.loot.functions.SetEnchantmentsFunction;
-import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
-import net.minecraft.world.level.storage.loot.functions.SetPotionFunction;
+import net.minecraft.world.level.storage.loot.functions.*;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
@@ -187,6 +187,24 @@ public record ACChestLootTables(HolderLookup.Provider registries) implements Loo
                         .add(LootItem.lootTableItem(Items.DIAMOND_AXE)
                                 .apply(new SetEnchantmentsFunction.Builder()
                                         .withEnchantment(enchantments.getOrThrow(Enchantments.SHARPNESS), UniformGenerator.between(2.0F, 4.0F))
+                                )
+                        )
+                )
+        );
+
+        output.accept(ACLootTables.ANCIENT_KEEP_MAP, LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1.0F))
+                        .add(LootItem.lootTableItem(Items.MAP)
+                                .apply(ExplorationMapFunction.makeExplorationMap()
+                                        .setDestination(ACStructures.ON_ANCIENT_KEEP_MAPS)
+                                        .setMapDecoration(MapDecorationTypes.WOODLAND_MANSION)
+                                        .setZoom((byte)1)
+                                        .setSearchRadius(100)
+                                        .setSkipKnownStructures(false)
+                                )
+                                .apply(
+                                        SetNameFunction.setName(Component.translatable("misc.archaion.filled_map.ancient_keep"), SetNameFunction.Target.ITEM_NAME)
                                 )
                         )
                 )

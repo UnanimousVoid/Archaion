@@ -24,7 +24,7 @@ public class Wight extends Skeleton {
     public static AttributeSupplier.Builder createAttributes() {
         return Monster.createMonsterAttributes()
                 .add(Attributes.MOVEMENT_SPEED, 0.25D)
-                .add(Attributes.MAX_HEALTH, 30);
+                .add(Attributes.MAX_HEALTH, 22);
     }
 
     @Override

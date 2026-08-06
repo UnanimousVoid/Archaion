@@ -92,8 +92,12 @@ public class ThrownEchoMace extends ThrowableProjectile {
                 EnchantmentHelper.doPostAttackEffectsWithItemSourceOnBreak(serverLevel, target, source, this.withoutWindBurst(), weapon -> {});
                 this.level().playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.MACE_SMASH_AIR, SoundSource.PLAYERS, 2.0F, 1.2F);
                 this.spawnSmashEffect(serverLevel, target.getOnPos(), 550, target);
+                this.setDeltaMovement(0, 1, 0);
+            } else {
+                this.level().playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.MACE_SMASH_GROUND, SoundSource.PLAYERS, 2.0F, 1.0F);
+                this.spawnSmashEffect(serverLevel, target.getOnPos(), 550, null);
+                this.discard();
             }
-            this.setDeltaMovement(0, 1, 0);
         }
     }
 

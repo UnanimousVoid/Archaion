@@ -39,6 +39,8 @@ public class LODShootAction extends ManagedAction<LastOfDeepslateEntity> {
     public boolean onTick() {
         timer++;
 
+        LivingEntity target = entity.getTarget();
+
         if (timer == 22) {
             entity.playSound(ACSounds.LOD_SHOOT.get(), 5.0F, 1.0F);
 
@@ -53,16 +55,12 @@ public class LODShootAction extends ManagedAction<LastOfDeepslateEntity> {
                 EchoStarProjectile projectile = ACEntityTypes.ECHO_STAR.get().create(entity.level(), EntitySpawnReason.TRIGGERED);
                 projectile.moveOrInterpolateTo(center);
                 projectile.setOwner(entity);
-                projectile.setHomingTarget(entity.getTarget());
+                projectile.setHomingTarget(target);
                 float xR = -15 + (-1 + entity.getRandom().nextFloat() * 2) * 45;
                 float yR = (-1 + entity.getRandom().nextFloat() * 2) * 45;
                 projectile.shootFromRotation(entity, entity.getXRot() + xR, entity.getYRot() + yR, 0, 3F, 0.0F);
                 entity.level().addFreshEntity(projectile);
             }
-        }
-
-        if (timer > 25) {
-            if (entity.getTarget() != null) entity.getLookControl().setLookAt(entity.getTarget(), 45, 45);
         }
 
         return timer < 60;

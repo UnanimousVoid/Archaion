@@ -33,6 +33,8 @@ public class ACLanguageProvider extends LanguageProvider {
         this.add("item.archaion.smithing_template.mace_upgrade.base_slot_description", "Add a Mace");
         this.add("item.archaion.smithing_template.mace_upgrade.additions_slot_description", "Add an Echo Shard");
 
+        this.add("misc.archaion.filled_map.ancient_keep", "Ancient Keep Map");
+
         for (DeferredHolder<Item, ? extends Item> item : ACItems.ITEM.getEntries()) {
             if (!(item.get() instanceof BlockItem) && !(item.get() instanceof SmithingTemplateItem)) {
                 this.addItem(item, WordUtils.capitalize(item.getId().getPath().replace("_", " ")));

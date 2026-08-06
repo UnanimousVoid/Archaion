@@ -18,7 +18,7 @@ public class Slated extends Zombie {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Zombie.createAttributes()
-                .add(Attributes.MAX_HEALTH, 40)
+                .add(Attributes.MAX_HEALTH, 30)
                 .add(Attributes.MOVEMENT_SPEED, 0.23D)
                 .add(Attributes.ATTACK_DAMAGE, 5.0D)
                 .add(Attributes.FOLLOW_RANGE, 50.0D);

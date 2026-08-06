@@ -2,6 +2,7 @@ package com.ratrod.archaion.registry;
 
 import com.ratrod.archaion.Archaion;
 import com.ratrod.archaion.entities.BraveEntity;
+import com.ratrod.archaion.entities.DeepslateSentinelEntity;
 import com.ratrod.archaion.entities.EchoStarProjectile;
 import com.ratrod.archaion.entities.LastOfDeepslateEntity;
 import com.ratrod.archaion.entities.LODInterceptBlast;
@@ -31,6 +32,9 @@ public class ACEntityTypes {
 
     public static final DeferredHolder<EntityType<?>, EntityType<Wight>> WIGHT = ENTITY_TYPE.register("wight",
             () -> EntityType.Builder.of(Wight::new, MobCategory.MONSTER).sized(0.6F, 1.99F).eyeHeight(1.74F).ridingOffset(-0.7F).clientTrackingRange(8).build(ResourceKey.create(Registries.ENTITY_TYPE, Archaion.prefix("wight"))));
+
+    public static final DeferredHolder<EntityType<?>, EntityType<DeepslateSentinelEntity>> DEEPSLATE_SENTINEL = ENTITY_TYPE.register("deepslate_sentinel",
+            () -> EntityType.Builder.of(DeepslateSentinelEntity::new, MobCategory.MONSTER).sized(2.75F, 2.6F).eyeHeight(1.05F).nameTagOffset(2.05F).clientTrackingRange(10).build(ResourceKey.create(Registries.ENTITY_TYPE, Archaion.prefix("deepslate_sentinel"))));
 
     public static final DeferredHolder<EntityType<?>, EntityType<EchoStarProjectile>> ECHO_STAR = ENTITY_TYPE.register("echo_star",
             () -> EntityType.Builder.<EchoStarProjectile>of(EchoStarProjectile::new, MobCategory.MISC).sized(1.5F, 1.5F).noSave().build(ResourceKey.create(Registries.ENTITY_TYPE, Archaion.prefix("echo_star"))));

@@ -45,7 +45,12 @@ public class LODInterceptShootAction extends ManagedAction<LastOfDeepslateEntity
             Vec3 center = entity.position().add(flatLook.yRot(-90 * Mth.DEG_TO_RAD).scale(3).with(Direction.Axis.Y, entity.getBbHeight() + 6));
 
             if (entity.level() instanceof ServerLevel serverLevel) {
-                serverLevel.addFreshEntity(LODInterceptBlast.create(serverLevel, center, 1, entity));
+                LODInterceptBlast blast = ACEntityTypes.LOD_INTERCEPT_BLAST.get().create(serverLevel, EntitySpawnReason.TRIGGERED);
+                blast.moveOrInterpolateTo(center);
+                blast.source = this.entity;
+                blast.setOwner(this.entity);
+                blast.setDeltaMovement(0, 3.0, 0);
+                serverLevel.addFreshEntity(blast);
             }
 
             for (int i = 0; i < 5; i++) {

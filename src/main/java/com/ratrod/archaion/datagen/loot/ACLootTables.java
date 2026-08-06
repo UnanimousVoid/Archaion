@@ -14,4 +14,6 @@ public class ACLootTables {
     public static final ResourceKey<LootTable> EQUIPMENT_DEEPSLATE_SPAWNER = ResourceKey.create(Registries.LOOT_TABLE, Archaion.prefix("equipment/deepslate_spawner"));
     public static final ResourceKey<LootTable> EQUIPMENT_DEEPSLATE_SPAWNER_RANGED = ResourceKey.create(Registries.LOOT_TABLE, Archaion.prefix("equipment/deepslate_spawner_ranged"));
     public static final ResourceKey<LootTable> EQUIPMENT_DEEPSLATE_SPAWNER_MELEE = ResourceKey.create(Registries.LOOT_TABLE, Archaion.prefix("equipment/deepslate_spawner_melee"));
+
+    public static final ResourceKey<LootTable> ANCIENT_KEEP_MAP = ResourceKey.create(Registries.LOOT_TABLE, Archaion.prefix("chests/ancient_keep_map"));
 }

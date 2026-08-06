@@ -49,7 +49,7 @@ public class BraveEntity extends Monster implements ACEntity<BraveEntity> {
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MOVEMENT_SPEED, 0.35F)
-                .add(Attributes.MAX_HEALTH, 80.0)
+                .add(Attributes.MAX_HEALTH, 55.0)
                 .add(Attributes.FOLLOW_RANGE, 48.0)
                 .add(Attributes.ATTACK_DAMAGE, 5.0);
     }
