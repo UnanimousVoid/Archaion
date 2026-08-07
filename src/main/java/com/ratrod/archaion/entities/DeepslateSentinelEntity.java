@@ -5,9 +5,12 @@ import com.ratrod.archaion.api.client.animation.EntityAnimationManager;
 import com.ratrod.archaion.api.entity.ActionManager;
 import com.ratrod.archaion.entities.ai.ACEntity;
 import com.ratrod.archaion.entities.ai.actions.SentinelChargeAction;
+import com.ratrod.archaion.entities.ai.controls.pathnav.LargeEntityPathNavigation;
+import com.ratrod.archaion.entities.ai.goals.PickUpRidersGoal;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
@@ -16,9 +19,12 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 public class DeepslateSentinelEntity extends Monster implements ACEntity<DeepslateSentinelEntity> {
 
@@ -29,13 +35,15 @@ public class DeepslateSentinelEntity extends Monster implements ACEntity<Deepsla
 
     public DeepslateSentinelEntity(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
+        this.navigation = new LargeEntityPathNavigation(this, level);
+
         this.attackManager.addAction(new SentinelChargeAction(this), 100);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
         return Monster.createMonsterAttributes()
                 .add(Attributes.MAX_HEALTH, 80.0D)
-                .add(Attributes.MOVEMENT_SPEED, 0.2D)
+                .add(Attributes.MOVEMENT_SPEED, 0.3D)
                 .add(Attributes.ATTACK_DAMAGE, 12.0D)
                 .add(Attributes.FOLLOW_RANGE, 48.0D);
     }
@@ -53,20 +61,36 @@ public class DeepslateSentinelEntity extends Monster implements ACEntity<Deepsla
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
+        this.goalSelector.addGoal(1, new PickUpRidersGoal(this, 1.0D, 32.0D));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 0.0F));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
     }
 
+    public boolean hasNearbyRidersToPickup(double searchRadius) {
+        // Only a wight may ride, and only when the sentinel is empty.
+        if (!this.getPassengers().isEmpty()) {
+            return false;
+        }
+        AABB box = this.getBoundingBox().inflate(searchRadius);
+        Predicate<Entity> free = e -> e.isAlive() && !e.isPassenger();
+        return !this.level().getEntitiesOfClass(Wight.class, box, free).isEmpty();
+    }
+
     @Override
     protected boolean canAddPassenger(Entity passenger) {
-        return this.getPassengers().size() < 2;
+        return this.getPassengers().isEmpty() && passenger instanceof Wight;
     }
 
     @Override
     protected Vec3 getPassengerAttachmentPoint(Entity passenger, EntityDimensions dimensions, float scale) {
-        int index = this.getPassengers().indexOf(passenger);
-        float forwardOffset = index == 0 ? 0.5F : -0.7F;
+        // Single rider sits on the front.
+        float forwardOffset = 0.5F;
         float height = dimensions.height() * scale;
         return new Vec3(0.0D, height, forwardOffset * scale).yRot(-this.getYRot() * ((float)Math.PI / 180F));
+    }
+
+    @Override
+    public @Nullable LivingEntity getControllingPassenger() {
+        return hasNearbyRidersToPickup(32) ? null : super.getControllingPassenger();
     }
 }

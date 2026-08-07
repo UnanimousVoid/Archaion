@@ -70,6 +70,6 @@ public class DeepslateSentinelModel<S extends ACLivingEntityRenderState> extends
 		super.setupAnim(state);
 		this.animateManager(state, state.ageInTicks);
 
-		walkAnimation.applyWalk(state.walkAnimationPos, state.walkAnimationSpeed, 2.0F, 100F);
+		walkAnimation.applyWalk(state.walkAnimationPos, state.walkAnimationSpeed, 3.0F, 100F);
 	}
 }

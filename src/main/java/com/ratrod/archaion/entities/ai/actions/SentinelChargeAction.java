@@ -31,7 +31,8 @@ public class SentinelChargeAction extends ManagedAction<DeepslateSentinelEntity>
         LivingEntity target = entity.getTarget();
         if (target == null || !target.isAlive()) return false;
         if (!entity.hasLineOfSight(target)) return false;
-        return entity.getPassengers().isEmpty();
+        if (!entity.getPassengers().isEmpty()) return false;
+        return !entity.hasNearbyRidersToPickup(32.0D);
     }
 
     @Override

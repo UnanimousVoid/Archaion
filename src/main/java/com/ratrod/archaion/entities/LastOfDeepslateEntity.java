@@ -78,7 +78,7 @@ public class LastOfDeepslateEntity extends Monster implements ACEntity<LastOfDee
         this.attackManager.addAction(new LODSwingSpinAction(this), 150);
         this.attackManager.addAction(new LODShootAction(this), 100);
         this.attackManager.addAction(new LODInterceptShootAction(this), 500);
-        this.attackManager.addAction(new LODRollAction(this), 50);
+        this.attackManager.addAction(new LODRollAction(this), 20);
     }
 
     @Override
