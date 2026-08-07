@@ -3,6 +3,7 @@ package com.ratrod.archaion.registry;
 import com.ratrod.archaion.Archaion;
 import com.ratrod.archaion.block.DeepslateSpawnerBlock;
 import com.ratrod.archaion.block.DeepslateVaultBlock;
+import com.ratrod.archaion.block.HologramBlock;
 import com.ratrod.archaion.block.ReinforcedBarBlock;
 
 import net.minecraft.world.level.block.*;
@@ -43,6 +44,7 @@ public class ACBlocks {
 
     public static final DeferredBlock<DeepslateVaultBlock> DEEPSLATE_VAULT = registerBlock("deepslate_vault", DeepslateVaultBlock::new, properties -> properties.mapColor(MapColor.DEEPSLATE).sound(SoundType.VAULT).strength(-1.0F, 3600000.0F).noOcclusion());
     public static final DeferredBlock<DeepslateSpawnerBlock> DEEPSLATE_SPAWNER = registerBlock("deepslate_spawner", DeepslateSpawnerBlock::new, properties -> properties.mapColor(MapColor.DEEPSLATE).sound(SoundType.TRIAL_SPAWNER).strength(50.0F, 1200.0F).noOcclusion().lightLevel(state -> state.getValue(DeepslateSpawnerBlock.STATE).lightLevel()));
+public static final DeferredBlock<HologramBlock> DEEPSLATE_HOLOGRAM = registerBlock("deepslate_hologram", HologramBlock::new, properties -> properties.mapColor(MapColor.DEEPSLATE).instrument(NoteBlockInstrument.BASEDRUM).sound(SoundType.DEEPSLATE).strength(4.5F, 1200.0F));
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Function<BlockBehaviour.Properties, T> factory, Function<BlockBehaviour.Properties, BlockBehaviour.Properties> properties) {
         DeferredBlock<T> registeredBlock = BLOCK.registerBlock(name, factory, properties::apply);

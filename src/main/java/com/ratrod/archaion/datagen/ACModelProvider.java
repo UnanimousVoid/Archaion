@@ -66,6 +66,14 @@ public class ACModelProvider extends ModelProvider {
 
         createDeepslateVault(blockModels);
         createDeepslateSpawner(blockModels);
+
+        createDeepslateHologram(blockModels);
+    }
+
+    private void createDeepslateHologram(BlockModelGenerators blockModels) {
+        Identifier model = ModelLocationUtils.getModelLocation(ACBlocks.DEEPSLATE_HOLOGRAM.get());
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(ACBlocks.DEEPSLATE_HOLOGRAM.get(), BlockModelGenerators.plainVariant(model)));
+        blockModels.registerSimpleItemModel(ACBlocks.DEEPSLATE_HOLOGRAM.get(), model);
     }
 
     private void createDeepslateSpawner(BlockModelGenerators blockModels) {

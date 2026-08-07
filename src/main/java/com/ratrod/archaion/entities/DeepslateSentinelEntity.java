@@ -15,6 +15,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.MoveTowardsTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
@@ -32,6 +33,8 @@ public class DeepslateSentinelEntity extends Monster implements ACEntity<Deepsla
     private final ActionManager<DeepslateSentinelEntity> attackManager = new ActionManager<>(this);
 
     public final ACAnimation chargeAnim = new ACAnimation(this);
+
+    private int chargeCooldownTicks;
 
     public DeepslateSentinelEntity(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
@@ -62,12 +65,28 @@ public class DeepslateSentinelEntity extends Monster implements ACEntity<Deepsla
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new PickUpRidersGoal(this, 1.0D, 32.0D));
+        this.goalSelector.addGoal(2, new MoveTowardsTargetGoal(this, 1.0D, 48.0F));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 0.0F));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
     }
 
+    @Override
+    public void tick() {
+        if (this.chargeCooldownTicks > 0) {
+            this.chargeCooldownTicks--;
+        }
+        super.tick();
+    }
+
+    public boolean isChargeOnCooldown() {
+        return this.chargeCooldownTicks > 0;
+    }
+
+    public void startChargeCooldown() {
+        this.chargeCooldownTicks = this.random.nextIntBetweenInclusive(120, 180);
+    }
+
     public boolean hasNearbyRidersToPickup(double searchRadius) {
-        // Only a wight may ride, and only when the sentinel is empty.
         if (!this.getPassengers().isEmpty()) {
             return false;
         }

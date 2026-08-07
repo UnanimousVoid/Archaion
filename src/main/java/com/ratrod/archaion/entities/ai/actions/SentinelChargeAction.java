@@ -28,6 +28,7 @@ public class SentinelChargeAction extends ManagedAction<DeepslateSentinelEntity>
 
     @Override
     public boolean canStart() {
+        if (entity.isChargeOnCooldown()) return false;
         LivingEntity target = entity.getTarget();
         if (target == null || !target.isAlive()) return false;
         if (!entity.hasLineOfSight(target)) return false;
@@ -108,6 +109,7 @@ public class SentinelChargeAction extends ManagedAction<DeepslateSentinelEntity>
     public void onStop() {
         entity.chargeAnim.stop();
         entity.setDeltaMovement(0.0, entity.getDeltaMovement().y, 0.0);
+        entity.startChargeCooldown();
     }
 
     private double chargeSpeed() {
