@@ -28,6 +28,8 @@ public class EchoStarProjectile extends ThrowableProjectile {
 
     private static final EntityDataAccessor<Optional<EntityReference<LivingEntity>>> HOMING_TARGET_ID = SynchedEntityData.defineId(EchoStarProjectile.class, EntityDataSerializers.OPTIONAL_LIVING_ENTITY_REFERENCE);
 
+    private float powerBonus;
+
     public EchoStarProjectile(EntityType<? extends ThrowableProjectile> entityType, Level level) {
         super(entityType, level);
     }
@@ -58,8 +60,6 @@ public class EchoStarProjectile extends ThrowableProjectile {
             }
         }
 
-        super.tick();
-
         LivingEntity target = this.getHomingTarget();
 
         if (target != null && target.isAlive()) {
@@ -78,20 +78,13 @@ public class EchoStarProjectile extends ThrowableProjectile {
 
                 this.setDeltaMovement(newVelocity);
             }
-
-            if (!this.level().isClientSide()) {
-                if (this.getBoundingBox().intersects(target.getBoundingBox())) {
-                    this.damageArea();
-                }
-            }
         }
+
+        super.tick();
 
         if (tickCount >= 100) {
             this.discard();
         }
-
-        Vec3 delta = this.getDeltaMovement();
-        this.setPos(this.getX() + delta.x, this.getY() + delta.y, this.getZ() + delta.z);
     }
 
     @Override
@@ -105,13 +98,18 @@ public class EchoStarProjectile extends ThrowableProjectile {
         this.damageArea();
     }
 
+    public void setPowerBonus(float powerBonus) {
+        this.powerBonus = powerBonus;
+    }
+
     public void damageArea() {
         if (!level().isClientSide()) {
             ServerLevel server = (ServerLevel) level();
+            float damage = 12.0F + this.powerBonus;
 
             for (LivingEntity target : server.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(2))) {
                 if (target != this.getOwner()) {
-                    target.hurtServer(server, server.damageSources().explosion(this, this.getOwner()), 12);
+                    target.hurtServer(server, server.damageSources().explosion(this, this.getOwner()), damage);
                 }
             }
 

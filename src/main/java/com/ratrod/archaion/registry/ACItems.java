@@ -4,6 +4,7 @@ import com.ratrod.archaion.Archaion;
 import com.ratrod.archaion.item.ACSmithingTemplateItem;
 import com.ratrod.archaion.item.EchoChargeItem;
 import com.ratrod.archaion.item.EchoMaceItem;
+import com.ratrod.archaion.item.EchosGraceItem;
 import com.ratrod.archaion.item.ImpactPearlItem;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.*;
@@ -39,6 +40,7 @@ public class ACItems {
     public static final DeferredItem<Item> BRAVE_ESSENCE = ITEM.registerItem("brave_essence", Item::new, Item.Properties::new);
     public static final DeferredItem<Item> IMPACT_PEARL = ITEM.registerItem("impact_pearl", ImpactPearlItem::new, () -> new Item.Properties().stacksTo(16).useCooldown(1.0F));
     public static final DeferredItem<Item> ECHO_CHARGE = ITEM.registerItem("echo_charge", EchoChargeItem::new, () -> new Item.Properties().useCooldown(0.2F));
+    public static final DeferredItem<EchosGraceItem> ECHOS_GRACE = ITEM.registerItem("echos_grace", EchosGraceItem::new, () -> new Item.Properties().durability(512).rarity(Rarity.EPIC).enchantable(15).repairable(Items.ECHO_SHARD));
 
 
 }

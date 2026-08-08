@@ -89,6 +89,14 @@ public class ACTagProvider {
             this.tag(ItemTags.MACE_ENCHANTABLE).add(
                     ACItems.ECHO_MACE.get()
             );
+
+            this.tag(ItemTags.BOW_ENCHANTABLE).add(
+                    ACItems.ECHOS_GRACE.get()
+            );
+
+            this.tag(ItemTags.CROSSBOW_ENCHANTABLE).add(
+                    ACItems.ECHOS_GRACE.get()
+            );
         }
     }
 }

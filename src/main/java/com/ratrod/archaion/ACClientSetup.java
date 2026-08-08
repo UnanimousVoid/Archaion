@@ -4,6 +4,7 @@ import com.ratrod.archaion.client.animations.BraveAnimations;
 import com.ratrod.archaion.client.animations.ClientAnimationRegistry;
 import com.ratrod.archaion.client.animations.DeepslateSentinelAnimations;
 import com.ratrod.archaion.client.animations.LastOfDeepslateAnimations;
+import com.ratrod.archaion.client.item.EchosGracePull;
 import com.ratrod.archaion.client.models.BraveModel;
 import com.ratrod.archaion.client.models.DeepslateSentinelModel;
 import com.ratrod.archaion.client.models.LastOfDeepslateModel;
@@ -18,6 +19,7 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterRangeSelectItemModelPropertyEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 
@@ -51,6 +53,11 @@ public class ACClientSetup {
         ClientAnimationRegistry.register(ACEntityTypes.DEEPSLATE_SENTINEL.get(), List.of(
                 DeepslateSentinelAnimations.CHARGE
         ));
+    }
+
+    @SubscribeEvent
+    static void onRegisterRangeSelectItemModelProperties(RegisterRangeSelectItemModelPropertyEvent event) {
+        event.register(Archaion.prefix("echos_grace_pull"), EchosGracePull.MAP_CODEC);
     }
 
     @SubscribeEvent

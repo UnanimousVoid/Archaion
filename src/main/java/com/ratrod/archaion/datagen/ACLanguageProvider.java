@@ -1,6 +1,7 @@
 package com.ratrod.archaion.datagen;
 
 import com.ratrod.archaion.Archaion;
+import com.ratrod.archaion.item.EchosGraceItem;
 import com.ratrod.archaion.registry.ACBlocks;
 import com.ratrod.archaion.registry.ACEntityTypes;
 import com.ratrod.archaion.registry.ACItems;
@@ -27,6 +28,9 @@ public class ACLanguageProvider extends LanguageProvider {
     protected void addTranslations() {
         this.add("creativetab.archaion_tab", "Archaion");
 
+        this.add(ACItems.ECHOS_GRACE.get(), "Echo's Grace");
+
+
         this.add(ACItems.ECHO_MACE_UPGRADE_SMITHING_TEMPLATE.get(), "Echo Mace Upgrade");
         this.add("item.archaion.smithing_template.mace_upgrade.applies_to", "Mace");
         this.add("item.archaion.smithing_template.mace_upgrade.ingredients", "Echo Shard");
@@ -36,7 +40,7 @@ public class ACLanguageProvider extends LanguageProvider {
         this.add("misc.archaion.filled_map.ancient_keep", "Ancient Keep Map");
 
         for (DeferredHolder<Item, ? extends Item> item : ACItems.ITEM.getEntries()) {
-            if (!(item.get() instanceof BlockItem) && !(item.get() instanceof SmithingTemplateItem)) {
+            if (!(item.get() instanceof BlockItem) && !(item.get() instanceof SmithingTemplateItem) && !(item.get() instanceof EchosGraceItem)) {
                 this.addItem(item, WordUtils.capitalize(item.getId().getPath().replace("_", " ")));
             }
         }
