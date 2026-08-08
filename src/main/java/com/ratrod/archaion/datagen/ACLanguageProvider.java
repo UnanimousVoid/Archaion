@@ -39,6 +39,12 @@ public class ACLanguageProvider extends LanguageProvider {
 
         this.add("misc.archaion.filled_map.ancient_keep", "Ancient Keep Map");
 
+        this.add("misc.archaion.hologram.ancient_keep_0",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. " +
+                        "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit " +
+                        "in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+        );
+
         for (DeferredHolder<Item, ? extends Item> item : ACItems.ITEM.getEntries()) {
             if (!(item.get() instanceof BlockItem) && !(item.get() instanceof SmithingTemplateItem) && !(item.get() instanceof EchosGraceItem)) {
                 this.addItem(item, WordUtils.capitalize(item.getId().getPath().replace("_", " ")));

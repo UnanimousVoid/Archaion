@@ -1,4 +1,5 @@
 {
+  "block.archaion.deepslate_hologram": "Deepslate Hologram",
   "block.archaion.deepslate_pillar": "Deepslate Pillar",
   "block.archaion.deepslate_spawner": "Deepslate Spawner",
   "block.archaion.deepslate_vault": "Deepslate Vault",
@@ -47,6 +48,7 @@
   "item.archaion.smithing_template.mace_upgrade.ingredients": "Echo Shard",
   "item.archaion.wight_spawn_egg": "Wight Spawn Egg",
   "misc.archaion.filled_map.ancient_keep": "Ancient Keep Map",
+  "misc.archaion.hologram.ancient_keep_0": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
   "subtitle.archaion.brave_ambient": "Brave ambient",
   "subtitle.archaion.brave_death": "Brave death",
   "subtitle.archaion.brave_hurt": "Brave hurt",

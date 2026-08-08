@@ -37,7 +37,7 @@ public class LODRollAction extends ManagedAction<LastOfDeepslateEntity> {
         if (target == null || !target.isAlive()) return false;
         if (!entity.hasLineOfSight(target)) return false;
         if (entity.getY() + entity.getBbHeight() < target.getY()) return false;
-        return entity.distanceTo(target) >= entity.getBbWidth() * 1.75F;
+        return true;
     }
 
     @Override
