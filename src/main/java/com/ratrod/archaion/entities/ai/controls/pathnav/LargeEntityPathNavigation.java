@@ -95,7 +95,7 @@ public class LargeEntityPathNavigation extends GroundPathNavigation {
 
     @Override
     protected boolean canMoveDirectly(Vec3 a, Vec3 b) {
-        return true;
+        return isClearForMovementBetween(mob, a, b, false);
     }
 
     private boolean elevationChangedFor(Path ePath) {
@@ -148,9 +148,7 @@ public class LargeEntityPathNavigation extends GroundPathNavigation {
 
         final BlockPos.MutableBlockPos mpos = new BlockPos.MutableBlockPos();
         do {
-            int axis = trailNext[0] < trailNext[1]
-                    ? (trailNext[0] < trailNext[2] ? 0 : 2)
-                    : (trailNext[1] < trailNext[2] ? 1 : 2);
+            int axis = trailNext[0] < trailNext[1] ? (trailNext[0] < trailNext[2] ? 0 : 2) : (trailNext[1] < trailNext[2] ? 1 : 2);
             float nd = trailNext[axis] - l;
             l = trailNext[axis];
             leadI[axis] += step[axis];
@@ -171,12 +169,10 @@ public class LargeEntityPathNavigation extends GroundPathNavigation {
                         if (!this.level.getBlockState(mpos.set(x, y, z)).isPathfindable(PathComputationType.LAND))
                             return false;
                     }
-                    PathType below = this.nodeEvaluator.getPathType(
-                            new PathfindingContext(this.level, this.mob), x, y0 - 1, z);
+                    PathType below = this.nodeEvaluator.getPathType(new PathfindingContext(this.level, this.mob), x, y0 - 1, z);
                     if (below == PathType.WATER || below == PathType.LAVA || below == PathType.OPEN)
                         return false;
-                    PathType in = this.nodeEvaluator.getPathType(
-                            new PathfindingContext(this.level, this.mob), x, y0, z);
+                    PathType in = this.nodeEvaluator.getPathType(new PathfindingContext(this.level, this.mob), x, y0, z);
                     float malus = this.mob.getPathfindingMalus(in);
                     if (malus < 0.0F || malus >= 8.0F) return false;
                     if (in == PathType.FIRE || in == PathType.FIRE_IN_NEIGHBOR || in == PathType.DAMAGING || in == PathType.WATER)

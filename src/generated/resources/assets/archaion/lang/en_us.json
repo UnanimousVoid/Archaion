@@ -22,6 +22,7 @@
   "block.archaion.soul_lamp": "Soul Lamp",
   "creativetab.archaion_tab": "Archaion",
   "entity.archaion.brave": "Brave",
+  "entity.archaion.brave_spawn_projectile": "Brave Spawn Projectile",
   "entity.archaion.deepslate_sentinel": "Deepslate Sentinel",
   "entity.archaion.echo_star": "Echo Star",
   "entity.archaion.last_of_deepslate": "Last Of Deepslate",
@@ -64,5 +65,9 @@
   "subtitle.archaion.lod_shoot": "Last of Deepslate shoots",
   "subtitle.archaion.lod_smash": "Last of Deepslate smashes",
   "subtitle.archaion.lod_spin": "Last of Deepslate spins",
-  "subtitle.archaion.lod_step": "Last of Deepslate steps"
+  "subtitle.archaion.lod_step": "Last of Deepslate steps",
+  "subtitle.archaion.sentinel_ambient": "Deepslate Sentinel hums",
+  "subtitle.archaion.sentinel_death": "Deepslate Sentinel dies",
+  "subtitle.archaion.sentinel_hurt": "Deepslate Sentinel hurts",
+  "subtitle.archaion.sentinel_start_charging": "Deepslate Sentinel starts charging"
 }

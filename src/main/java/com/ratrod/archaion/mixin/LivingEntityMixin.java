@@ -15,12 +15,10 @@ public abstract class LivingEntityMixin {
     @Inject(method = "aiStep", at = @At("TAIL"))
     private void ac$tickActionManagers(CallbackInfo ci) {
         LivingEntity self = (LivingEntity) (Object) this;
+        if (self.level().isClientSide()) return;
+        if (self instanceof Mob mob && mob.isNoAi()) return;
         if (self instanceof ACEntity<?> acEntity) {
-            boolean isNoAi = self instanceof Mob mob && mob.isNoAi();
-            boolean serverSide = !self.level().isClientSide();
-            if (serverSide && !isNoAi || !serverSide && !isNoAi) {
-                acEntity.getActionManagers().forEach(ActionManager::tick);
-            }
+            acEntity.getActionManagers().forEach(ActionManager::tick);
         }
     }
 }

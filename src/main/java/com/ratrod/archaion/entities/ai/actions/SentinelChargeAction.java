@@ -48,6 +48,7 @@ public class SentinelChargeAction extends ManagedAction<DeepslateSentinelEntity>
         this.chargeDir = desired.lengthSqr() < 1.0E-6 ? directionFromYaw(entity.getYRot()) : desired.normalize();
 
         entity.chargeAnim.start();
+        entity.playSound(ACSounds.SENTINEL_START_CHARGING.get(), 2.0F, 1.0F);
     }
 
     @Override
@@ -76,7 +77,7 @@ public class SentinelChargeAction extends ManagedAction<DeepslateSentinelEntity>
                 applyBoom();
             }
             if (timer % 2 == 0) {
-                entity.playSound(ACSounds.ECHO_STAR_BLAST.get(), 2.0F, 1.4F + this.entity.level().getRandom().nextFloat() * 0.2F);
+                entity.playSound(ACSounds.ECHO_STAR_BLAST.get(), 1.0F, 1.4F + this.entity.level().getRandom().nextFloat() * 0.2F);
             }
 
         } else {
@@ -122,7 +123,7 @@ public class SentinelChargeAction extends ManagedAction<DeepslateSentinelEntity>
         double dx = entity.getX() - this.lastPos.x;
         double dz = entity.getZ() - this.lastPos.z;
         this.lastPos = entity.position();
-        if (dx * dx + dz * dz < 0.0005) {
+        if (dx * dx + dz * dz < 0.01) {
             return ++stuckTicks > 8;
         }
         stuckTicks = 0;

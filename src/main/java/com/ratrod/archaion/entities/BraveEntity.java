@@ -8,8 +8,12 @@ import com.ratrod.archaion.entities.ai.actions.BraveJumpOnAction;
 import com.ratrod.archaion.entities.ai.goals.BraveDistanceAwayGoal;
 import com.ratrod.archaion.registry.ACSounds;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -21,21 +25,30 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.golem.IronGolem;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.entity.projectile.ProjectileDeflection;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import org.jspecify.annotations.Nullable;
 
 import java.util.List;
+import java.util.UUID;
 
 public class BraveEntity extends Monster implements ACEntity<BraveEntity> {
+
+    public static final EntityDataAccessor<Boolean> IS_CHARGED = SynchedEntityData.defineId(BraveEntity.class, EntityDataSerializers.BOOLEAN);
 
     public final EntityAnimationManager animationManager = new EntityAnimationManager(this);
     public final ActionManager<BraveEntity> attackManager = new ActionManager<>(this);
 
     public final ACAnimation jumpingAnim = new ACAnimation(this);
     public final ACAnimation shootingAnim = new ACAnimation(this);
+
+    @Nullable private UUID ownerUUID;
 
     public BraveEntity(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
@@ -61,6 +74,74 @@ public class BraveEntity extends Monster implements ACEntity<BraveEntity> {
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
+    }
+
+    @Override
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(IS_CHARGED, false);
+    }
+
+    public boolean isCharged() {
+        return this.entityData.get(IS_CHARGED);
+    }
+
+    public void setCharged(boolean charged) {
+        this.entityData.set(IS_CHARGED, charged);
+    }
+
+    public void setOwnerUUID(@Nullable UUID ownerUUID) {
+        this.ownerUUID = ownerUUID;
+    }
+
+    @Nullable
+    public UUID getOwnerUUID() {
+        return ownerUUID;
+    }
+
+    @Nullable
+    public LivingEntity getOwner() {
+        if (this.ownerUUID == null) return null;
+        Entity entity = this.level().getEntity(this.ownerUUID);
+        return entity instanceof LivingEntity living ? living : null;
+    }
+
+    @Override
+    public void tick() {
+        if (!this.level().isClientSide() && this.ownerUUID != null) {
+            copyOwnerTarget();
+        }
+        super.tick();
+    }
+
+    private void copyOwnerTarget() {
+        LivingEntity owner = getOwner();
+        if (!(owner instanceof Mob ownerMob) || !owner.isAlive()) return;
+        LivingEntity ownerTarget = ownerMob.getTarget();
+        if (ownerTarget != null && ownerTarget.isAlive() && ownerTarget != this.getTarget()) {
+            this.setTarget(ownerTarget);
+        }
+    }
+
+    @Override
+    protected void readAdditionalSaveData(ValueInput input) {
+        super.readAdditionalSaveData(input);
+        this.setCharged(input.getBooleanOr("isCharged", false));
+        input.getString("ownerUUID").ifPresent(s -> this.ownerUUID = UUID.fromString(s));
+    }
+
+    @Override
+    protected void addAdditionalSaveData(ValueOutput output) {
+        super.addAdditionalSaveData(output);
+        output.putBoolean("isCharged", this.isCharged());
+        if (this.ownerUUID != null) {
+            output.putString("ownerUUID", this.ownerUUID.toString());
+        }
+    }
+
+    @Override
+    public ProjectileDeflection deflection(Projectile projectile) {
+        return this.isCharged() ? ProjectileDeflection.REVERSE : ProjectileDeflection.NONE;
     }
 
     public boolean mustRetreat(Vec3 target) {

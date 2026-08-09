@@ -7,6 +7,9 @@ import com.ratrod.archaion.entities.ai.ACEntity;
 import com.ratrod.archaion.entities.ai.actions.SentinelChargeAction;
 import com.ratrod.archaion.entities.ai.controls.pathnav.LargeEntityPathNavigation;
 import com.ratrod.archaion.entities.ai.goals.PickUpRidersGoal;
+import com.ratrod.archaion.registry.ACSounds;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
@@ -102,7 +105,6 @@ public class DeepslateSentinelEntity extends Monster implements ACEntity<Deepsla
 
     @Override
     protected Vec3 getPassengerAttachmentPoint(Entity passenger, EntityDimensions dimensions, float scale) {
-        // Single rider sits on the front.
         float forwardOffset = 0.5F;
         float height = dimensions.height() * scale;
         return new Vec3(0.0D, height, forwardOffset * scale).yRot(-this.getYRot() * ((float)Math.PI / 180F));
@@ -111,5 +113,25 @@ public class DeepslateSentinelEntity extends Monster implements ACEntity<Deepsla
     @Override
     public @Nullable LivingEntity getControllingPassenger() {
         return hasNearbyRidersToPickup(32) ? null : super.getControllingPassenger();
+    }
+
+    @Override
+    protected @Nullable SoundEvent getAmbientSound() {
+        return ACSounds.SENTINEL_AMBIENT.get();
+    }
+
+    @Override
+    protected float getSoundVolume() {
+        return 2.0F;
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return ACSounds.SENTINEL_HURT.get();
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return ACSounds.SENTINEL_DEATH.get();
     }
 }

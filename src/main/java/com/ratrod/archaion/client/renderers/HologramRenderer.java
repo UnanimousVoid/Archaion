@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
+import net.minecraft.util.Mth;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jspecify.annotations.Nullable;
@@ -37,12 +38,13 @@ public class HologramRenderer implements BlockEntityRenderer<HologramBlockEntity
         BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
         state.text = blockEntity.getText();
         state.textColor = blockEntity.getTextColor();
+        state.ageInTicks = blockEntity.clientTicks + partialTicks;
     }
 
     @Override
     public void submit(HologramRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
         int maxWidth = 160;
-        float height = 2F;
+        float height = 2F + Mth.sin(state.ageInTicks * 0.1F) * 0.1F;
         int light = 0xF000F0;
 
         if (state.text.isEmpty()) {

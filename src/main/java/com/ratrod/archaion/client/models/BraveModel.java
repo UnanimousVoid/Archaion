@@ -4,7 +4,7 @@ package com.ratrod.archaion.client.models;// Made with Blockbench 5.1.6
 
 
 import com.ratrod.archaion.Archaion;
-import com.ratrod.archaion.client.ACLivingEntityRenderState;
+import com.ratrod.archaion.client.BraveRenderState;
 import com.ratrod.archaion.client.animations.BraveAnimations;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -12,7 +12,7 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 
-public class BraveModel<S extends ACLivingEntityRenderState> extends ACAnimatedModel<S> {
+public class BraveModel<S extends BraveRenderState> extends ACAnimatedModel<S> {
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(Archaion.prefix("brave"), "main");
 	public static final ModelLayerLocation CHARGED_LAYER_LOCATION = new ModelLayerLocation(Archaion.prefix("chargedbrave"), "main");
 	private final ModelPart base;

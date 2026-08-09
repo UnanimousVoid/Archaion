@@ -33,6 +33,12 @@ public class ACSounds {
     public static final DeferredHolder<SoundEvent, SoundEvent> LOD_SPIN = register("lod_spin");
     public static final DeferredHolder<SoundEvent, SoundEvent> LOD_STEP = register("lod_step");
 
+    // Deepslate Sentinel
+    public static final DeferredHolder<SoundEvent, SoundEvent> SENTINEL_AMBIENT = register("sentinel_ambient");
+    public static final DeferredHolder<SoundEvent, SoundEvent> SENTINEL_HURT = register("sentinel_hurt");
+    public static final DeferredHolder<SoundEvent, SoundEvent> SENTINEL_DEATH = register("sentinel_death");
+    public static final DeferredHolder<SoundEvent, SoundEvent> SENTINEL_START_CHARGING = register("sentinel_start_charging");
+
     private static DeferredHolder<SoundEvent, SoundEvent> register(String name) {
         return SOUND_EVENT.register(name, () -> SoundEvent.createVariableRangeEvent(Archaion.prefix(name)));
     }

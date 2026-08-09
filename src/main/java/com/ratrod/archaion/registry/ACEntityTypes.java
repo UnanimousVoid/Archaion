@@ -2,6 +2,7 @@ package com.ratrod.archaion.registry;
 
 import com.ratrod.archaion.Archaion;
 import com.ratrod.archaion.entities.BraveEntity;
+import com.ratrod.archaion.entities.BraveSpawnProjectile;
 import com.ratrod.archaion.entities.DeepslateSentinelEntity;
 import com.ratrod.archaion.entities.EchoStarProjectile;
 import com.ratrod.archaion.entities.LastOfDeepslateEntity;
@@ -26,6 +27,12 @@ public class ACEntityTypes {
 
     public static final DeferredHolder<EntityType<?>, EntityType<BraveEntity>> BRAVE = ENTITY_TYPE.register("brave",
             () -> EntityType.Builder.of(BraveEntity::new, MobCategory.MONSTER).sized(0.6F, 1.77F).eyeHeight(1.3452F).clientTrackingRange(10).build(ResourceKey.create(Registries.ENTITY_TYPE, Archaion.prefix("brave"))));
+
+    public static final DeferredHolder<EntityType<?>, EntityType<BraveSpawnProjectile>> BRAVE_SPAWN_PROJECTILE = ENTITY_TYPE.register("brave_spawn_projectile",
+            () -> EntityType.Builder.<BraveSpawnProjectile>of(BraveSpawnProjectile::new, MobCategory.MISC)
+                    .sized(0.5F, 0.5F)
+                    .noSave()
+                    .build(ResourceKey.create(Registries.ENTITY_TYPE, Archaion.prefix("brave_spawn_projectile"))));
 
     public static final DeferredHolder<EntityType<?>, EntityType<Slated>> SLATED = ENTITY_TYPE.register("slated",
             () -> EntityType.Builder.of(Slated::new, MobCategory.MONSTER).sized(0.6F, 1.95F).eyeHeight(1.74F).passengerAttachments(2.0125F).ridingOffset(-0.7F).clientTrackingRange(8).build(ResourceKey.create(Registries.ENTITY_TYPE, Archaion.prefix("slated"))));

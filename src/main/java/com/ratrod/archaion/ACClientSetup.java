@@ -42,7 +42,9 @@ public class ACClientSetup {
                 LastOfDeepslateAnimations.SMASH_GROUND,
                 LastOfDeepslateAnimations.SPIN_SWING,
                 LastOfDeepslateAnimations.INTERCEPT_SHOOT,
-                LastOfDeepslateAnimations.ROLL
+                LastOfDeepslateAnimations.ROLL,
+                LastOfDeepslateAnimations.HURL_BRAVES,
+                LastOfDeepslateAnimations.BODY_SLAM
         ));
 
         ClientAnimationRegistry.register(ACEntityTypes.BRAVE.get(), List.of(
@@ -67,6 +69,7 @@ public class ACClientSetup {
         event.registerEntityRenderer(ACEntityTypes.WIGHT.get(), WightRenderer::new);
         event.registerEntityRenderer(ACEntityTypes.ECHO_STAR.get(), EchoStarProjectileRenderer::new);
         event.registerEntityRenderer(ACEntityTypes.BRAVE.get(), BraveRenderer::new);
+        event.registerEntityRenderer(ACEntityTypes.BRAVE_SPAWN_PROJECTILE.get(), BraveSpawnProjectileRenderer::new);
         event.registerEntityRenderer(ACEntityTypes.THROWN_ECHO_MACE.get(), ThrownEchoMaceRenderer::new);
         event.registerEntityRenderer(ACEntityTypes.THROWN_IMPACT_PEARL.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(ACEntityTypes.LOD_INTERCEPT_BLAST.get(), LODInterceptBlastRenderer::new);

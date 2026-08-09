@@ -1,5 +1,6 @@
 package com.ratrod.archaion.entities;
 
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
@@ -35,6 +36,12 @@ public class Wight extends Skeleton {
         }
 
         return arrow;
+    }
+
+    @Override
+    public boolean hurtServer(ServerLevel level, DamageSource source, float damage) {
+        float dmgResult = this.getVehicle() instanceof DeepslateSentinelEntity ? (damage * 0.5F) : damage;
+        return super.hurtServer(level, source, dmgResult);
     }
 
     @Override

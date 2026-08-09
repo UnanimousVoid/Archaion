@@ -19,7 +19,6 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -60,26 +59,6 @@ public class EchoStarProjectile extends ThrowableProjectile {
             }
         }
 
-        LivingEntity target = this.getHomingTarget();
-
-        if (target != null && target.isAlive()) {
-            Vec3 toTarget = target.getEyePosition().subtract(this.position());
-            double dist = toTarget.length();
-            if (dist > 0) {
-                Vec3 direction = toTarget.normalize();
-                Vec3 newVelocity = this.getDeltaMovement().add(direction.scale(0.025));
-
-                double newSpeed = newVelocity.length();
-
-                double maxSpeed = 0.7;
-                if (newSpeed > maxSpeed) {
-                    newVelocity = newVelocity.normalize().scale(maxSpeed);
-                }
-
-                this.setDeltaMovement(newVelocity);
-            }
-        }
-
         super.tick();
 
         if (tickCount >= 100) {
@@ -108,7 +87,7 @@ public class EchoStarProjectile extends ThrowableProjectile {
             float damage = 12.0F + this.powerBonus;
 
             for (LivingEntity target : server.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(2))) {
-                if (target != this.getOwner()) {
+                if (target != this.getOwner() && !isOwnedChargedBrave(target)) {
                     target.hurtServer(server, server.damageSources().explosion(this, this.getOwner()), damage);
                 }
             }
@@ -119,6 +98,11 @@ public class EchoStarProjectile extends ThrowableProjectile {
 
             this.discard();
         }
+    }
+
+    private boolean isOwnedChargedBrave(LivingEntity target) {
+        if (!(this.getOwner() instanceof LastOfDeepslateEntity lod)) return false;
+        return target instanceof BraveEntity brave && lod.getUUID().equals(brave.getOwnerUUID());
     }
 
     @Override

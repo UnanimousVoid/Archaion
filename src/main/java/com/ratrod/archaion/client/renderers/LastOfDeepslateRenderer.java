@@ -53,7 +53,7 @@ public class LastOfDeepslateRenderer extends MobRenderer<LastOfDeepslateEntity, 
     public void extractRenderState(LastOfDeepslateEntity entity, LastOfDeepslateRenderState state, float partialTicks) {
         super.extractRenderState(entity, state, partialTicks);
         state.animationManager = entity.getAnimationManager();
-        state.sleepingState = entity.getEntityData().get(LastOfDeepslateEntity.SLEEPING_STATE);
+        state.sleepingState = entity.getSleepingState();
     }
 
     @Override
