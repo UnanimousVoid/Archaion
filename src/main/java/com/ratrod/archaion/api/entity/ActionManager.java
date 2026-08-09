@@ -25,6 +25,8 @@ public class ActionManager<T extends Entity> {
         if (weight > 0) {
             this.actionBuilder.add(task, weight);
             this.dirty = true;
+        } else {
+            throw new IllegalStateException("Weight of a ManagedAction cannot be 0 or below.");
         }
     }
 

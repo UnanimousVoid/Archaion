@@ -90,7 +90,11 @@ public class ACLanguageProvider extends LanguageProvider {
                 Map.entry("lod_shoot", "Last of Deepslate shoots"),
                 Map.entry("lod_smash", "Last of Deepslate smashes"),
                 Map.entry("lod_spin", "Last of Deepslate spins"),
-                Map.entry("lod_step", "Last of Deepslate steps")
+                Map.entry("lod_step", "Last of Deepslate steps"),
+                Map.entry("sentinel_ambient", "Deepslate Sentinel hums"),
+                Map.entry("sentinel_death", "Deepslate Sentinel dies"),
+                Map.entry("sentinel_hurt", "Deepslate Sentinel hurts"),
+                Map.entry("sentinel_start_charging", "Deepslate Sentinel starts charging")
         );
         for (DeferredHolder<SoundEvent, ? extends SoundEvent> sound : ACSounds.SOUND_EVENT.getEntries()) {
             String path = sound.getId().getPath();

@@ -94,5 +94,29 @@
       "archaion:lod_step"
     ],
     "subtitle": "subtitle.archaion.lod_step"
+  },
+  "sentinel_ambient": {
+    "sounds": [
+      "archaion:sentinel_ambient"
+    ],
+    "subtitle": "subtitle.archaion.sentinel_ambient"
+  },
+  "sentinel_death": {
+    "sounds": [
+      "archaion:sentinel_death"
+    ],
+    "subtitle": "subtitle.archaion.sentinel_death"
+  },
+  "sentinel_hurt": {
+    "sounds": [
+      "archaion:sentinel_hurt"
+    ],
+    "subtitle": "subtitle.archaion.sentinel_hurt"
+  },
+  "sentinel_start_charging": {
+    "sounds": [
+      "archaion:sentinel_start_charging"
+    ],
+    "subtitle": "subtitle.archaion.sentinel_start_charging"
   }
 }

@@ -16,7 +16,7 @@ public class HologramBlockEntity extends BlockEntity {
     private static final String TAG_TEXT = "text";
 
     private String text = "";
-    private int clientTicks = 0;
+    public int clientTicks = 0;
 
     public HologramBlockEntity(BlockPos worldPosition, BlockState blockState) {
         super(ACBlockEntities.HOLOGRAM.get(), worldPosition, blockState);

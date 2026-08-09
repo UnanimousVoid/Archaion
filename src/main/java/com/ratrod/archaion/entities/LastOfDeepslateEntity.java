@@ -30,6 +30,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
@@ -43,6 +44,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.phys.AABB;
 import org.jspecify.annotations.Nullable;
 
 import java.util.List;
@@ -62,9 +64,12 @@ public class LastOfDeepslateEntity extends Monster implements ACEntity<LastOfDee
     public final ACAnimation swingSpinAnim = new ACAnimation(this);
     public final ACAnimation interceptShootAnim = new ACAnimation(this);
     public final ACAnimation rollingAnim = new ACAnimation(this);
-
+    public final ACAnimation hurlBravesAnim = new ACAnimation(this);
+    public final ACAnimation bodySlamAnim = new ACAnimation(this);
+    
     private int wakingStartTick = 0;
     private boolean deathAnimationPlayed = false;
+    private boolean hurlBravesTriggered = false;
     private final ServerBossEvent bossEvent;
 
     public LastOfDeepslateEntity(EntityType<? extends Monster> entityType, Level level) {
@@ -79,6 +84,8 @@ public class LastOfDeepslateEntity extends Monster implements ACEntity<LastOfDee
         this.attackManager.addAction(new LODShootAction(this), 100);
         this.attackManager.addAction(new LODInterceptShootAction(this), 500);
         this.attackManager.addAction(new LODRollAction(this), 15);
+        this.attackManager.addAction(new LODHurlBravesAction(this), 500);
+        this.attackManager.addAction(new LODBodySlamAction(this), 100);
     }
 
     @Override
@@ -133,9 +140,33 @@ public class LastOfDeepslateEntity extends Monster implements ACEntity<LastOfDee
     }
 
     @Override
+    public boolean canAttack(LivingEntity target) {
+        if (target instanceof BraveEntity brave && this.getUUID().equals(brave.getOwnerUUID())) {
+            return false;
+        }
+        return super.canAttack(target);
+    }
+
+    @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
         builder.define(SLEEPING_STATE, SleepingState.SLEEPING);
+    }
+
+    public SleepingState getSleepingState() {
+        return this.entityData.get(SLEEPING_STATE);
+    }
+
+    public void setSleepingState(SleepingState state) {
+        this.entityData.set(SLEEPING_STATE, state);
+    }
+
+    public boolean isHurlBravesTriggered() {
+        return hurlBravesTriggered;
+    }
+
+    public void setHurlBravesTriggered(boolean triggered) {
+        this.hurlBravesTriggered = triggered;
     }
 
     @Override
@@ -145,14 +176,14 @@ public class LastOfDeepslateEntity extends Monster implements ACEntity<LastOfDee
         if (!this.level().isClientSide()) {
             this.bossEvent.setProgress(this.getHealth() / this.getMaxHealth());
 
-            SleepingState currentState = this.entityData.get(SLEEPING_STATE);
+            SleepingState currentState = this.getSleepingState();
             int curWakingTick = this.tickCount - this.wakingStartTick;
 
             Predicate<Entity> predicate = EntitySelector.NO_CREATIVE_OR_SPECTATOR;
             boolean nearbyPlayers = level().getNearestPlayer(getX(), getY(), getZ(), 32, predicate) != null;
             if (nearbyPlayers) {
                 if (currentState == SleepingState.SLEEPING) {
-                    this.entityData.set(SLEEPING_STATE, SleepingState.WAKING);
+                    this.setSleepingState(SleepingState.WAKING);
                     this.playSound(ACSounds.LOD_ACTIVATE.get(), 3.0F, 1.0F);
                     this.wakingAnim.forceStart();
                     this.wakingStartTick = this.tickCount;
@@ -168,13 +199,13 @@ public class LastOfDeepslateEntity extends Monster implements ACEntity<LastOfDee
                     }
                 }
                 if (curWakingTick >= 80) {
-                    this.entityData.set(SLEEPING_STATE, SleepingState.AWAKE);
+                    this.setSleepingState(SleepingState.AWAKE);
                     this.setNoAi(false);
                 }
             }
 
         } else {
-            if (this.entityData.get(SLEEPING_STATE) != SleepingState.SLEEPING && tickCount % 8 == 0) {
+            if (this.getSleepingState() != SleepingState.SLEEPING && tickCount % 8 == 0) {
                 ParticleEmitterInfo info = new ParticleEmitterInfo(Archaion.prefix("lod_aura"));
                 AAALevel.addParticle(level(), info.position(this.position().add(this.getDeltaMovement().scale(3)).add(0, 0.5, 0)).scale(1.25F));
             }
@@ -186,8 +217,8 @@ public class LastOfDeepslateEntity extends Monster implements ACEntity<LastOfDee
         this.deathTime++;
 
         if (!deathAnimationPlayed) {
-            if (this.entityData.get(SLEEPING_STATE) != SleepingState.AWAKE) {
-                this.entityData.set(SLEEPING_STATE, SleepingState.AWAKE);
+            if (this.getSleepingState() != SleepingState.AWAKE) {
+                this.setSleepingState(SleepingState.AWAKE);
             }
             this.deathAnim.forceStart();
             deathAnimationPlayed = true;
@@ -200,13 +231,13 @@ public class LastOfDeepslateEntity extends Monster implements ACEntity<LastOfDee
 
     @Override
     public boolean isNoAi() {
-        return super.isNoAi() || this.entityData.get(SLEEPING_STATE) != SleepingState.AWAKE;
+        return super.isNoAi() || this.getSleepingState() != SleepingState.AWAKE;
     }
 
     @Override
     public void startSeenByPlayer(ServerPlayer player) {
         super.startSeenByPlayer(player);
-        if (this.entityData.get(SLEEPING_STATE) == SleepingState.AWAKE) {
+        if (this.getSleepingState() == SleepingState.AWAKE) {
             this.addBossBarPlayer(bossEvent, player, 0);
         }
     }
@@ -225,22 +256,36 @@ public class LastOfDeepslateEntity extends Monster implements ACEntity<LastOfDee
 
     @Override
     public boolean hurtServer(ServerLevel level, DamageSource source, float damage) {
-        if (this.entityData.get(SLEEPING_STATE) != SleepingState.AWAKE) return false;
+        if (this.getSleepingState() != SleepingState.AWAKE) return false;
+        int braves = this.countChargedBraves();
+        if (braves > 0) {
+            // Each owned charged Brave reduces incoming damage by 25%, floored at 20% of the hit.
+            damage *= Mth.clamp(1.0F - 0.25F * braves, 0.2F, 1.0F);
+        }
         return super.hurtServer(level, source, damage);
+    }
+
+    public int countChargedBraves() {
+        if (this.level().isClientSide()) return 0;
+        AABB box = this.getBoundingBox().inflate(512.0);
+        return this.level().getEntitiesOfClass(BraveEntity.class, box,
+                b -> b.isAlive() && b.isCharged() && this.getUUID().equals(b.getOwnerUUID())).size();
     }
 
     @Override
     protected void readAdditionalSaveData(ValueInput input) {
         super.readAdditionalSaveData(input);
         input.getInt("sleepState").ifPresent(num -> {
-            this.entityData.set(SLEEPING_STATE, SleepingState.values()[num]);
+            this.setSleepingState(SleepingState.values()[num]);
         });
+        this.hurlBravesTriggered = input.getBooleanOr("hurlBravesTriggered", false);
     }
 
     @Override
     protected void addAdditionalSaveData(ValueOutput output) {
         super.addAdditionalSaveData(output);
-        output.putInt("sleepState", this.entityData.get(SLEEPING_STATE).ordinal());
+        output.putInt("sleepState", this.getSleepingState().ordinal());
+        output.putBoolean("hurlBravesTriggered", this.hurlBravesTriggered);
     }
 
     @Override

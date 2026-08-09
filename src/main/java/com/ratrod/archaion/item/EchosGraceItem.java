@@ -10,7 +10,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -18,9 +17,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.item.ProjectileWeaponItem;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import org.jspecify.annotations.Nullable;
 
@@ -56,12 +55,11 @@ public class EchosGraceItem extends ProjectileWeaponItem {
                         projectiles.add(charge.copy());
                     }
 
-                    if (level instanceof ServerLevel) {
-                        ServerLevel serverLevel = (ServerLevel)level;
-                        this.shoot(serverLevel, player, player.getUsedItemHand(), itemStack, projectiles, pow * 2.0F, 1.0F, pow == 1.0F, (LivingEntity)null);
+                    if (level instanceof ServerLevel serverLevel) {
+                        this.shoot(serverLevel, player, player.getUsedItemHand(), itemStack, projectiles, pow * 2.0F, 1.0F, pow == 1.0F, null);
                     }
 
-                    level.playSound((Entity)null, player.getX(), player.getY(), player.getZ(), ACSounds.ECHO_STAR_BLAST, SoundSource.PLAYERS, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + pow * 0.5F);
+                    level.playSound(null, player.getX(), player.getY(), player.getZ(), ACSounds.LOD_SHOOT, SoundSource.PLAYERS, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + pow * 0.5F);
                     player.awardStat(Stats.ITEM_USED.get(this));
                     return true;
                 }
@@ -111,7 +109,7 @@ public class EchosGraceItem extends ProjectileWeaponItem {
     protected Projectile createProjectile(Level level, LivingEntity shooter, ItemStack weapon, ItemStack projectile, boolean isCrit) {
         EchoStarProjectile echoStar = new EchoStarProjectile(level, shooter, projectile);
         Holder<Enchantment> power = level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.POWER);
-        int powerLevel = EnchantmentHelper.getItemEnchantmentLevel(power, weapon);
+        int powerLevel = weapon.getEnchantmentLevel(power);
         if (powerLevel > 0) {
             echoStar.setPowerBonus(0.5F + 0.5F * powerLevel);
         }

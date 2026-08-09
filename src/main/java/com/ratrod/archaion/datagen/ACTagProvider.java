@@ -2,7 +2,6 @@ package com.ratrod.archaion.datagen;
 
 import com.ratrod.archaion.Archaion;
 import com.ratrod.archaion.registry.ACBlocks;
-import com.ratrod.archaion.registry.ACEntityTypes;
 import com.ratrod.archaion.registry.ACItems;
 import com.ratrod.archaion.registry.ACStructures;
 import net.minecraft.core.HolderLookup;
@@ -10,7 +9,6 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
 import net.minecraft.data.tags.StructureTagsProvider;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.tags.ItemTags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ItemTagsProvider;
@@ -37,7 +35,7 @@ public class ACTagProvider {
 
         @Override
         protected void addTags(HolderLookup.Provider pProvider) {
-            this.tag(EntityTypeTags.DEFLECTS_PROJECTILES).add(ACEntityTypes.BRAVE.get());
+            // Brave deflects only while charged — handled in BraveEntity.deflection(), no tag needed
         }
     }
 

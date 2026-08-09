@@ -30,8 +30,8 @@ public class ACMoveControl<T extends Mob & ACEntity> extends MoveControl {
             // Scale speed by how aligned the entity is with target direction.
             //  0° off → 100% speed
             // 45° off →  50% speed
-            // 90°+ off →  0% speed (rotate in place)
-            float alignment = Math.max(0.0F, 1.0F - yawDiff / 90.0F);
+            // 90°+ off → 25% crawl (keeps sliding along walls instead of freezing)
+            float alignment = Math.max(0.25F, 1.0F - yawDiff / 90.0F);
             double savedModifier = this.speedModifier;
             this.speedModifier *= alignment;
             super.tick();
