@@ -16,7 +16,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jspecify.annotations.Nullable;
 
 public class HologramBlock extends BaseEntityBlock {
-
     public static final MapCodec<HologramBlock> CODEC = simpleCodec(HologramBlock::new);
 
     public HologramBlock(Properties properties) {
@@ -40,6 +39,6 @@ public class HologramBlock extends BaseEntityBlock {
 
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
+        return Block.box(0.0D, 0.0D, 0.0D, 16.0D, 10.0D, 16.0D);
     }
 }

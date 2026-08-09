@@ -40,9 +40,25 @@ public class ACLanguageProvider extends LanguageProvider {
         this.add("misc.archaion.filled_map.ancient_keep", "Ancient Keep Map");
 
         this.add("misc.archaion.hologram.ancient_keep_0",
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. " +
-                        "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit " +
-                        "in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+                "Once, we were magnificent, we built monuments, fortresses, cities." + " " +
+                        "Once, we were thriving - the most advanced civilization." + " " +
+                        "One day it all fell down."
+        );
+
+        this.add("misc.archaion.hologram.ancient_keep_1",
+                "A powerful, whirlwind of destruction, it single handedly destroyed us." + " " +
+                        "A power beyond even our own." + " " +
+                        "A fate we could never outrun."
+        );
+
+        this.add("misc.archaion.hologram.ancient_keep_2",
+                "Legends echo throughout the Overworld, echoes of the past." + " " +
+                "Legends of the ones who helped make this world." + " " + "Legends of the First Golems."
+        );
+
+        this.add("misc.archaion.hologram.ancient_keep_3",
+                "We will recreate them, We have to try." + " " +
+                        "The end of our story." + " " + "Our last creation."
         );
 
         for (DeferredHolder<Item, ? extends Item> item : ACItems.ITEM.getEntries()) {
