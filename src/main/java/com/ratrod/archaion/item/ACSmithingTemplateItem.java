@@ -11,15 +11,36 @@ import net.minecraft.world.item.SmithingTemplateItem;
 import java.util.List;
 
 public class ACSmithingTemplateItem extends SmithingTemplateItem {
-    private static final ChatFormatting DESCRIPTION_FORMAT = ChatFormatting.BLUE;
-    private static final Component MACE_UPGRADE_APPLIES_TO = Component.translatable(Util.makeDescriptionId("item", Archaion.prefix("smithing_template.mace_upgrade.applies_to"))).withStyle(DESCRIPTION_FORMAT);
-    private static final Component MACE_UPGRADE_INGREDIENTS = Component.translatable(Util.makeDescriptionId("item", Archaion.prefix("smithing_template.mace_upgrade.ingredients"))).withStyle(DESCRIPTION_FORMAT);
-    private static final Component MACE_UPGRADE_BASE_SLOT_DESCRIPTION = Component.translatable(Util.makeDescriptionId("item", Archaion.prefix("smithing_template.mace_upgrade.base_slot_description")));
-    private static final Component MACE_UPGRADE_ADDITIONS_SLOT_DESCRIPTION = Component.translatable(Util.makeDescriptionId("item", Archaion.prefix("smithing_template.mace_upgrade.additions_slot_description")));
-    private static final Identifier EMPTY_SLOT_MACE = Archaion.prefix("container/slot/mace");
-    private static final Identifier EMPTY_SLOT_ECHO_SHARD = Archaion.prefix("container/slot/echo_shard");
 
-    public ACSmithingTemplateItem(Item.Properties properties) {
-        super(MACE_UPGRADE_APPLIES_TO, MACE_UPGRADE_INGREDIENTS, MACE_UPGRADE_BASE_SLOT_DESCRIPTION, MACE_UPGRADE_ADDITIONS_SLOT_DESCRIPTION, List.of(EMPTY_SLOT_MACE), List.of(EMPTY_SLOT_ECHO_SHARD), properties);
+    public ACSmithingTemplateItem(Component appliesTo, Component ingredients, Component baseSlotDescription, Component additionsSlotDescription, List<Identifier> baseSlotEmptyIcons, List<Identifier> additionsSlotEmptyIcons, Item.Properties properties) {
+        super(appliesTo, ingredients, baseSlotDescription, additionsSlotDescription, baseSlotEmptyIcons, additionsSlotEmptyIcons, properties);
+    }
+
+    public static ACSmithingTemplateItem maceUpgrade(Item.Properties properties) {
+        return new ACSmithingTemplateItem(
+                description("mace_upgrade", "applies_to"),
+                description("mace_upgrade", "ingredients"),
+                description("mace_upgrade", "base_slot_description"),
+                description("mace_upgrade", "additions_slot_description"),
+                List.of(Archaion.prefix("container/slot/mace")),
+                List.of(Archaion.prefix("container/slot/echo_shard")),
+                properties
+        );
+    }
+
+    public static ACSmithingTemplateItem echosGraceUpgrade(Item.Properties properties) {
+        return new ACSmithingTemplateItem(
+                description("echos_grace_upgrade", "applies_to"),
+                description("echos_grace_upgrade", "ingredients"),
+                description("echos_grace_upgrade", "base_slot_description"),
+                description("echos_grace_upgrade", "additions_slot_description"),
+                List.of(Archaion.prefix("container/slot/bow")),
+                List.of(Archaion.prefix("container/slot/echo_charge")),
+                properties
+        );
+    }
+
+    private static Component description(String upgrade, String suffix) {
+        return Component.translatable(Util.makeDescriptionId("item", Archaion.prefix("smithing_template." + upgrade + "." + suffix))).copy().withStyle(ChatFormatting.BLUE);
     }
 }

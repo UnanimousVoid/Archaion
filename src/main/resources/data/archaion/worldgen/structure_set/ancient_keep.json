@@ -7,8 +7,8 @@
   ],
   "placement": {
     "salt": 453678698,
-    "spacing": 64,
-    "separation": 48,
+    "spacing": 76,
+    "separation": 60,
     "spread_type": "linear",
     "type": "archaion:avoid_trial_chambers",
     "trial_chambers_min_distance": 16

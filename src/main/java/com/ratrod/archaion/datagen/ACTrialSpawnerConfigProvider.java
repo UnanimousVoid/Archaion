@@ -37,7 +37,7 @@ public class ACTrialSpawnerConfigProvider {
                 .lootTablesToEject(
                         WeightedList.<ResourceKey<LootTable>>builder()
                                 .add(ACLootTables.DEEPSLATE_SPAWNER_KEY, 2)
-                                .add(ACLootTables.DEEPSLATE_SPAWNER_MISC, 2)
+                                .add(ACLootTables.DEEPSLATE_SPAWNER_MISC, 3)
                                 .build()
                 )
                 .itemsToDropWhenOminous(ACLootTables.DEEPSLATE_SPAWNER_THROWABLES)
@@ -58,8 +58,8 @@ public class ACTrialSpawnerConfigProvider {
                 )
                 .lootTablesToEject(
                         WeightedList.<ResourceKey<LootTable>>builder()
-                                .add(ACLootTables.DEEPSLATE_SPAWNER_KEY, 1)
-                                .add(ACLootTables.DEEPSLATE_SPAWNER_MISC, 2)
+                                .add(ACLootTables.DEEPSLATE_SPAWNER_KEY, 2)
+                                .add(ACLootTables.DEEPSLATE_SPAWNER_MISC, 3)
                                 .build()
                 )
                 .itemsToDropWhenOminous(ACLootTables.DEEPSLATE_SPAWNER_THROWABLES)
@@ -79,8 +79,8 @@ public class ACTrialSpawnerConfigProvider {
                 )
                 .lootTablesToEject(
                         WeightedList.<ResourceKey<LootTable>>builder()
-                                .add(ACLootTables.DEEPSLATE_SPAWNER_KEY, 1)
-                                .add(ACLootTables.DEEPSLATE_SPAWNER_MISC, 2)
+                                .add(ACLootTables.DEEPSLATE_SPAWNER_KEY, 2)
+                                .add(ACLootTables.DEEPSLATE_SPAWNER_MISC, 3)
                                 .build()
                 )
                 .itemsToDropWhenOminous(ACLootTables.DEEPSLATE_SPAWNER_THROWABLES)
@@ -100,8 +100,8 @@ public class ACTrialSpawnerConfigProvider {
                 )
                 .lootTablesToEject(
                         WeightedList.<ResourceKey<LootTable>>builder()
-                                .add(ACLootTables.DEEPSLATE_SPAWNER_KEY, 1)
-                                .add(ACLootTables.DEEPSLATE_SPAWNER_MISC, 2)
+                                .add(ACLootTables.DEEPSLATE_SPAWNER_KEY, 2)
+                                .add(ACLootTables.DEEPSLATE_SPAWNER_MISC, 3)
                                 .build()
                 )
                 .itemsToDropWhenOminous(ACLootTables.DEEPSLATE_SPAWNER_THROWABLES)

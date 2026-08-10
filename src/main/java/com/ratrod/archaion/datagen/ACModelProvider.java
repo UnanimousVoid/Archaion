@@ -39,6 +39,7 @@ public class ACModelProvider extends ModelProvider {
         itemModels.generateFlatItem(ACItems.DEEPSLATE_SENTINEL_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ACItems.LAST_OF_DEEPSLATE_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ACItems.ECHO_MACE_UPGRADE_SMITHING_TEMPLATE.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ACItems.ECHOS_GRACE_UPGRADE_SMITHING_TEMPLATE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ACItems.BRAVE_ROD.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ACItems.BRAVE_ESSENCE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ACItems.IMPACT_PEARL.get(), ModelTemplates.FLAT_ITEM);

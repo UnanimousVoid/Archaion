@@ -6,7 +6,8 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:enchanted_golden_apple"
+          "name": "minecraft:enchanted_golden_apple",
+          "weight": 3
         },
         {
           "type": "minecraft:item",
@@ -22,7 +23,7 @@
             }
           ],
           "name": "minecraft:golden_apple",
-          "weight": 3
+          "weight": 5
         },
         {
           "type": "minecraft:item",
@@ -38,7 +39,7 @@
             }
           ],
           "name": "minecraft:diamond",
-          "weight": 2
+          "weight": 4
         },
         {
           "type": "minecraft:item",
@@ -54,7 +55,7 @@
             }
           ],
           "name": "minecraft:golden_carrot",
-          "weight": 4
+          "weight": 6
         },
         {
           "type": "minecraft:item",
@@ -70,7 +71,7 @@
             }
           ],
           "name": "minecraft:gold_ingot",
-          "weight": 4
+          "weight": 6
         },
         {
           "type": "minecraft:item",
@@ -86,7 +87,7 @@
             }
           ],
           "name": "archaion:echo_charge",
-          "weight": 3
+          "weight": 5
         },
         {
           "type": "minecraft:item",
@@ -100,7 +101,7 @@
             }
           ],
           "name": "minecraft:enchanted_book",
-          "weight": 3
+          "weight": 5
         },
         {
           "type": "minecraft:item",
@@ -118,7 +119,7 @@
             }
           ],
           "name": "minecraft:enchanted_book",
-          "weight": 2
+          "weight": 4
         },
         {
           "type": "minecraft:item",
@@ -136,7 +137,7 @@
             }
           ],
           "name": "minecraft:enchanted_book",
-          "weight": 2
+          "weight": 4
         },
         {
           "type": "minecraft:item",
@@ -154,10 +155,15 @@
             }
           ],
           "name": "minecraft:enchanted_book",
-          "weight": 2
+          "weight": 4
+        },
+        {
+          "type": "minecraft:item",
+          "name": "archaion:echos_grace_upgrade_smithing_template",
+          "weight": 3
         }
       ],
-      "rolls": 6.0
+      "rolls": 4.0
     }
   ],
   "random_sequence": "archaion:chests/deepslate_vault"

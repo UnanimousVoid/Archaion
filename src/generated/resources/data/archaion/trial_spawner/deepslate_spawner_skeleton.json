@@ -3,11 +3,11 @@
   "loot_tables_to_eject": [
     {
       "data": "archaion:spawner/deepslate_spawner_key",
-      "weight": 1
+      "weight": 2
     },
     {
       "data": "archaion:spawner/deepslate_spawner_misc",
-      "weight": 2
+      "weight": 3
     }
   ],
   "simultaneous_mobs_added_per_player": 0.5,

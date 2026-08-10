@@ -38,6 +38,14 @@ public class ACRecipeProvider extends RecipeProvider {
                 RecipeCategory.COMBAT,
                 ACItems.ECHO_MACE.get()
         ).unlocks("has_echo_shard", this.has(Items.ECHO_SHARD)).save(this.output, Archaion.prefix("echo_mace_upgrade_smithing").toString());
+
+        SmithingTransformRecipeBuilder.smithing(
+                Ingredient.of(ACItems.ECHOS_GRACE_UPGRADE_SMITHING_TEMPLATE.get()),
+                Ingredient.of(Items.BOW),
+                Ingredient.of(ACItems.ECHO_CHARGE.get()),
+                RecipeCategory.COMBAT,
+                ACItems.ECHOS_GRACE.get()
+        ).unlocks("has_echo_charge", this.has(ACItems.ECHO_CHARGE)).save(this.output, Archaion.prefix("echos_grace_upgrade_smithing").toString());
     }
 
     public static class Runner extends RecipeProvider.Runner {

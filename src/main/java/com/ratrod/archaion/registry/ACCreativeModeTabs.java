@@ -12,7 +12,7 @@ public class ACCreativeModeTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Archaion.MODID);
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> ARCHAION_TAB = CREATIVE_MODE_TABS.register("archaion_tab",
-            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ACBlocks.REINFORCED_DEEPSLATE_BRICKS.get()))
+            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ACItems.ECHO_MACE.get()))
                     .title(Component.translatable("creativetab.archaion_tab"))
                     .displayItems((pParameters, pOutput) -> {
                         ACItems.ITEM.getEntries().stream()

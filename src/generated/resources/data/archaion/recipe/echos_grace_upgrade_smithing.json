@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "archaion:echo_charge",
+  "base": "minecraft:bow",
+  "result": {
+    "id": "archaion:echos_grace"
+  },
+  "template": "archaion:echos_grace_upgrade_smithing_template"
+}
