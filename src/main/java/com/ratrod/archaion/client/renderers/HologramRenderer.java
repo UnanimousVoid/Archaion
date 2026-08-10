@@ -44,7 +44,7 @@ public class HologramRenderer implements BlockEntityRenderer<HologramBlockEntity
     @Override
     public void submit(HologramRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState camera) {
         int maxWidth = 160;
-        float height = 2F + Mth.sin(state.ageInTicks * 0.1F) * 0.1F;
+        float height = 1.5F + Mth.sin(state.ageInTicks * 0.1F) * 0.1F;
         int light = 0xF000F0;
 
         if (state.text.isEmpty()) {
@@ -79,14 +79,13 @@ public class HologramRenderer implements BlockEntityRenderer<HologramBlockEntity
             }
             float totalHeight = lines.size() * this.font.lineHeight;
             float x = -maxLineWidth / 2.0F;
-            float y = -totalHeight / 2.0F;
+            float y = -totalHeight;
 
             for (FormattedCharSequence line : lines) {
                 float lineX = x + (maxLineWidth - this.font.width(line)) / 2.0F;
                 submitNodeCollector.submitText(poseStack, lineX, y, line, true, Font.DisplayMode.SEE_THROUGH, light, color, 0, outlineColor);
                 y += this.font.lineHeight;
             }
-
             poseStack.popPose();
 
             poseStack.pushPose();

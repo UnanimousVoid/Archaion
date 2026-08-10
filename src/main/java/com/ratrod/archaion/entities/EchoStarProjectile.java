@@ -84,9 +84,9 @@ public class EchoStarProjectile extends ThrowableProjectile {
     public void damageArea() {
         if (!level().isClientSide()) {
             ServerLevel server = (ServerLevel) level();
-            float damage = 12.0F + this.powerBonus;
+            float damage = 25.0F + this.powerBonus;
 
-            for (LivingEntity target : server.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(2))) {
+            for (LivingEntity target : server.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(3))) {
                 if (target != this.getOwner() && !isOwnedChargedBrave(target)) {
                     target.hurtServer(server, server.damageSources().explosion(this, this.getOwner()), damage);
                 }

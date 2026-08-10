@@ -100,12 +100,11 @@ public class LastOfDeepslateEntity extends Monster implements ACEntity<LastOfDee
 
     public static AttributeSupplier.Builder createAttributes() {
         return Monster.createMonsterAttributes()
-                .add(Attributes.MAX_HEALTH, 500.0D)
+                .add(Attributes.MAX_HEALTH, 600.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.25D)
-                .add(Attributes.ATTACK_DAMAGE, 35.0D)
+                .add(Attributes.ATTACK_DAMAGE, 45.0D)
                 .add(Attributes.FOLLOW_RANGE, 64.0D)
-                .add(Attributes.ARMOR, 10.0D)
-                .add(Attributes.ARMOR_TOUGHNESS, 8.0D)
+                .add(Attributes.ARMOR, 15.0D)
                 .add(Attributes.STEP_HEIGHT, 1.5D)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 2.0D);
     }

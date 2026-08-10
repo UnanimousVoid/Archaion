@@ -45,33 +45,48 @@ public class ACLanguageProvider extends LanguageProvider {
 
         this.add("misc.archaion.filled_map.ancient_keep", "Ancient Keep Map");
 
-        this.add("misc.archaion.hologram.ancient_keep_0",
-                "Once, we were magnificent, we built monuments, fortresses, cities." + " " +
-                        "Once, we were thriving - the most advanced civilization." + " " +
-                        "One day it all fell down."
-        );
+        this.add("misc.archaion.hologram.ancient_keep_0", this.hologram(
+                "Once, we built wonders.",
+                "Cities. Thrones. Monuments that touched the sky.",
+                "Then came the ruin.",
+                "And all our wonders became graves."
+        ));
 
-        this.add("misc.archaion.hologram.ancient_keep_1",
-                "A powerful, whirlwind of destruction, it single handedly destroyed us." + " " +
-                        "A power beyond even our own." + " " +
-                        "A fate we could never outrun."
-        );
+        this.add("misc.archaion.hologram.ancient_keep_1", this.hologram(
+                "We fled beneath the stone.",
+                "It followed.",
+                "We sealed the deep.",
+                "It found us.",
+                "",
+                "There was nowhere left to run."
+        ));
 
-        this.add("misc.archaion.hologram.ancient_keep_2",
-                "Legends echo throughout the Overworld, echoes of the past." + " " +
-                "Legends of the ones who helped make this world." + " " + "Legends of the First Golems."
-        );
+        this.add("misc.archaion.hologram.ancient_keep_2", this.hologram(
+                "Then we remembered the Firsts.",
+                "Guardians older than our oldest ruins.",
+                "Made by hands that were not ours.",
+                "",
+                "We never knew how they were made.",
+                "We only knew what they were made for."
+        ));
 
-        this.add("misc.archaion.hologram.ancient_keep_3",
-                "We will recreate them, We have to try." + " " +
-                        "The end of our story." + " " + "Our last creation."
-        );
+        this.add("misc.archaion.hologram.ancient_keep_3", this.hologram(
+                "Not a First.",
+                "But made from their memory.",
+                "Made to stand against the end.",
+                "",
+                "The First came before us.",
+                "This one came after.",
+                "",
+                "Our Last."
+        ));
 
         for (DeferredHolder<Item, ? extends Item> item : ACItems.ITEM.getEntries()) {
             if (!(item.get() instanceof BlockItem) && !(item.get() instanceof SmithingTemplateItem) && !(item.get() instanceof EchosGraceItem)) {
                 this.addItem(item, WordUtils.capitalize(item.getId().getPath().replace("_", " ")));
             }
         }
+
         for (DeferredHolder<Block, ? extends Block> block : ACBlocks.BLOCK.getEntries()) {
             this.addBlock(block, WordUtils.capitalize(block.getId().getPath().replace("_", " ")));
         }
@@ -102,6 +117,7 @@ public class ACLanguageProvider extends LanguageProvider {
                 Map.entry("sentinel_hurt", "Deepslate Sentinel hurts"),
                 Map.entry("sentinel_start_charging", "Deepslate Sentinel starts charging")
         );
+
         for (DeferredHolder<SoundEvent, ? extends SoundEvent> sound : ACSounds.SOUND_EVENT.getEntries()) {
             String path = sound.getId().getPath();
             this.add("subtitle." + Archaion.MODID + "." + path, subtitles.getOrDefault(path, toSubtitle(path)));
@@ -116,5 +132,9 @@ public class ACLanguageProvider extends LanguageProvider {
             subtitle.append(' ').append(parts[i]);
         }
         return subtitle.toString();
+    }
+
+    private String hologram(String... lines) {
+        return String.join("\n", lines);
     }
 }
