@@ -13,6 +13,7 @@ import net.minecraft.client.model.geom.builders.*;
 public class LastOfDeepslateModel<S extends LastOfDeepslateRenderState> extends ACAnimatedModel<S> {
 
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(Archaion.prefix("lastofdeepslatemodel"), "main");
+    public static final ModelLayerLocation CHARGED_LAYER_LOCATION = new ModelLayerLocation(Archaion.prefix("chargedlastofdeepslate"), "main");
     private final ModelPart root;
     private final ModelPart bod;
     private final ModelPart upperbod;
@@ -47,37 +48,37 @@ public class LastOfDeepslateModel<S extends LastOfDeepslateRenderState> extends 
         this.legl = this.root.getChild("legl");
     }
 
-    public static LayerDefinition createBodyLayer() {
+    public static LayerDefinition createBodyLayer(CubeDeformation deform) {
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
 
         PartDefinition root = partdefinition.addOrReplaceChild("root", CubeListBuilder.create(), PartPose.offset(3.0F, -33.75F, -2.4167F));
 
-        PartDefinition bod = root.addOrReplaceChild("bod", CubeListBuilder.create().texOffs(290, 200).addBox(-19.0F, -14.0F, -10.0F, 38.0F, 15.0F, 20.0F, new CubeDeformation(0.0F)), PartPose.offset(-3.0F, 31.75F, 2.4167F));
+        PartDefinition bod = root.addOrReplaceChild("bod", CubeListBuilder.create().texOffs(290, 200).addBox(-19.0F, -14.0F, -10.0F, 38.0F, 15.0F, 20.0F, deform), PartPose.offset(-3.0F, 31.75F, 2.4167F));
 
         PartDefinition upperbod = bod.addOrReplaceChild("upperbod", CubeListBuilder.create(), PartPose.offset(0.0F, -13.0F, 0.0F));
 
-        PartDefinition centeredbod = upperbod.addOrReplaceChild("centeredbod", CubeListBuilder.create().texOffs(130, 0).addBox(-32.0F, -34.0F, -32.0F, 16.0F, 64.0F, 64.0F, new CubeDeformation(0.0F))
-                .texOffs(130, 128).addBox(16.0F, -34.0F, -32.0F, 16.0F, 64.0F, 64.0F, new CubeDeformation(0.0F))
-                .texOffs(290, 0).addBox(-16.0F, 14.0F, -32.0F, 32.0F, 16.0F, 42.0F, new CubeDeformation(0.0F))
-                .texOffs(0, 256).addBox(-16.0F, -34.0F, -32.0F, 32.0F, 16.0F, 64.0F, new CubeDeformation(0.0F))
-                .texOffs(0, 161).addBox(-16.0F, -18.0F, 1.0F, 32.0F, 48.0F, 31.0F, new CubeDeformation(0.0F))
-                .texOffs(292, 335).addBox(-16.0F, -46.0F, -30.0F, 32.0F, 12.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -30.0F, 0.0F));
+        PartDefinition centeredbod = upperbod.addOrReplaceChild("centeredbod", CubeListBuilder.create().texOffs(130, 0).addBox(-32.0F, -34.0F, -32.0F, 16.0F, 64.0F, 64.0F, deform)
+                .texOffs(130, 128).addBox(16.0F, -34.0F, -32.0F, 16.0F, 64.0F, 64.0F, deform)
+                .texOffs(290, 0).addBox(-16.0F, 14.0F, -32.0F, 32.0F, 16.0F, 42.0F, deform)
+                .texOffs(0, 256).addBox(-16.0F, -34.0F, -32.0F, 32.0F, 16.0F, 64.0F, deform)
+                .texOffs(0, 161).addBox(-16.0F, -18.0F, 1.0F, 32.0F, 48.0F, 31.0F, deform)
+                .texOffs(292, 335).addBox(-16.0F, -46.0F, -30.0F, 32.0F, 12.0F, 16.0F, deform), PartPose.offset(0.0F, -30.0F, 0.0F));
 
-        PartDefinition core = centeredbod.addOrReplaceChild("core", CubeListBuilder.create().texOffs(290, 58).addBox(-22.0F, -20.0F, -14.0F, 44.0F, 43.0F, 22.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -3.0F, -22.0F));
+        PartDefinition core = centeredbod.addOrReplaceChild("core", CubeListBuilder.create().texOffs(290, 58).addBox(-22.0F, -20.0F, -14.0F, 44.0F, 43.0F, 22.0F, deform), PartPose.offset(0.0F, -3.0F, -22.0F));
 
-        PartDefinition armr = centeredbod.addOrReplaceChild("armr", CubeListBuilder.create().texOffs(192, 256).addBox(-24.0F, -20.0F, -14.0F, 22.0F, 102.0F, 28.0F, new CubeDeformation(0.0F))
-                .texOffs(290, 123).addBox(-37.0F, -4.0F, -14.0F, 13.0F, 49.0F, 28.0F, new CubeDeformation(0.0F)), PartPose.offset(-38.0F, -26.0F, 0.0F));
+        PartDefinition armr = centeredbod.addOrReplaceChild("armr", CubeListBuilder.create().texOffs(192, 256).addBox(-24.0F, -20.0F, -14.0F, 22.0F, 102.0F, 28.0F, deform)
+                .texOffs(290, 123).addBox(-37.0F, -4.0F, -14.0F, 13.0F, 49.0F, 28.0F, deform), PartPose.offset(-38.0F, -26.0F, 0.0F));
 
         PartDefinition palmr = armr.addOrReplaceChild("palmr", CubeListBuilder.create(), PartPose.offset(-14.0F, 73.0F, 0.0F));
 
-        PartDefinition arml = centeredbod.addOrReplaceChild("arml", CubeListBuilder.create().texOffs(0, 0).addBox(2.0F, -34.0F, -16.0F, 33.0F, 129.0F, 32.0F, new CubeDeformation(0.0F)), PartPose.offset(38.0F, -26.0F, 0.0F));
+        PartDefinition arml = centeredbod.addOrReplaceChild("arml", CubeListBuilder.create().texOffs(0, 0).addBox(2.0F, -34.0F, -16.0F, 33.0F, 129.0F, 32.0F, deform), PartPose.offset(38.0F, -26.0F, 0.0F));
 
         PartDefinition palml = arml.addOrReplaceChild("palml", CubeListBuilder.create(), PartPose.offset(19.0F, 83.0F, 0.0F));
 
-        PartDefinition legr = root.addOrReplaceChild("legr", CubeListBuilder.create().texOffs(292, 235).addBox(-17.0F, -2.0F, -12.0F, 22.0F, 28.0F, 22.0F, new CubeDeformation(0.0F)), PartPose.offset(-20.0F, 31.75F, 2.4167F));
+        PartDefinition legr = root.addOrReplaceChild("legr", CubeListBuilder.create().texOffs(292, 235).addBox(-17.0F, -2.0F, -12.0F, 22.0F, 28.0F, 22.0F, deform), PartPose.offset(-20.0F, 31.75F, 2.4167F));
 
-        PartDefinition legl = root.addOrReplaceChild("legl", CubeListBuilder.create().texOffs(292, 235).addBox(-6.0F, -2.0F, -11.0F, 22.0F, 28.0F, 22.0F, new CubeDeformation(0.0F)), PartPose.offset(15.0F, 31.75F, 2.4167F));
+        PartDefinition legl = root.addOrReplaceChild("legl", CubeListBuilder.create().texOffs(292, 235).addBox(-6.0F, -2.0F, -11.0F, 22.0F, 28.0F, 22.0F, deform), PartPose.offset(15.0F, 31.75F, 2.4167F));
 
         return LayerDefinition.create(meshdefinition, 512, 512);
     }

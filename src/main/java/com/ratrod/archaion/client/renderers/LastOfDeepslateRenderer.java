@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.ratrod.archaion.Archaion;
 import com.ratrod.archaion.client.LastOfDeepslateRenderState;
 import com.ratrod.archaion.client.models.LastOfDeepslateModel;
+import com.ratrod.archaion.client.renderers.layer.LastOfDeepslateChargedLayer;
 import com.ratrod.archaion.entities.LastOfDeepslateEntity;
 import com.ratrod.archaion.entities.ai.SleepingState;
 import net.minecraft.client.renderer.SubmitNodeCollector;
@@ -32,6 +33,7 @@ public class LastOfDeepslateRenderer extends MobRenderer<LastOfDeepslateEntity, 
                         false
                 )
         );
+        this.addLayer(new LastOfDeepslateChargedLayer(this, context.getModelSet()));
     }
 
     @Override
@@ -54,6 +56,7 @@ public class LastOfDeepslateRenderer extends MobRenderer<LastOfDeepslateEntity, 
         super.extractRenderState(entity, state, partialTicks);
         state.animationManager = entity.getAnimationManager();
         state.sleepingState = entity.getSleepingState();
+        state.hasChargedBraves = entity.hasChargedBraves();
     }
 
     @Override

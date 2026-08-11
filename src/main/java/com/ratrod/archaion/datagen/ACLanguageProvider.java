@@ -28,8 +28,21 @@ public class ACLanguageProvider extends LanguageProvider {
     protected void addTranslations() {
         this.add("creativetab.archaion_tab", "Archaion");
 
-        this.add(ACItems.ECHOS_GRACE.get(), "Echo's Grace");
+        this.advancement("root", "Archaion", "Descend into the deep, where the Last sleeps.");
+        this.advancement("obtain_map", "Whispers in the Ruins", "Find an Ancient Keep map in an Ancient City.");
+        this.advancement("enter_ancient_keep", "Breaching the Keep", "Step inside the Ancient Keep.");
 
+        this.advancement("obtain_brave_rod", "The not-so Brave", "Collect a Brave Rod from a fallen Brave.");
+        this.advancement("craft_impact_pearl", "A Pearl of Courage", "Craft an Impact Pearl.");
+
+        this.advancement("obtain_echo_key", "Unlocking the Deep", "Claim an Echo Key from a Deepslate Spawner.");
+        this.advancement("open_deepslate_vault", "Riches of the Forgotten", "Unlock a Deepslate Vault and take its Echo Charge.");
+        this.advancement("craft_echos_grace", "Grace of the Echoes", "Forge Echo's Grace from a Bow, an Echo Charge, and its template.");
+
+        this.advancement("kill_last_of_deepslate", "The Last of Deepslate", "Defeat the Last of Deepslate, guardian of the Ancient Keep.");
+        this.advancement("craft_echo_mace", "Echoing Wrath", "Forge the Echo Mace from a Mace, an Echo Shard, and its template.");
+
+        this.add(ACItems.ECHOS_GRACE.get(), "Echo's Grace");
 
         this.add(ACItems.ECHO_MACE_UPGRADE_SMITHING_TEMPLATE.get(), "Echo Mace Upgrade");
         this.add("item.archaion.smithing_template.mace_upgrade.applies_to", "Mace");
@@ -136,5 +149,10 @@ public class ACLanguageProvider extends LanguageProvider {
 
     private String hologram(String... lines) {
         return String.join("\n", lines);
+    }
+
+    private void advancement(String path, String title, String description) {
+        this.add("advancements." + path + ".title", title);
+        this.add("advancements." + path + ".description", description);
     }
 }

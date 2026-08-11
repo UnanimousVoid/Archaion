@@ -1,5 +1,6 @@
 package com.ratrod.archaion.client.renderers.layer;
 
+import com.ratrod.archaion.Archaion;
 import com.ratrod.archaion.client.BraveRenderState;
 import com.ratrod.archaion.client.models.BraveModel;
 import net.minecraft.client.model.geom.EntityModelSet;
@@ -9,7 +10,7 @@ import net.minecraft.resources.Identifier;
 
 public class BraveChargedLayer extends EnergySwirlLayer<BraveRenderState, BraveModel<BraveRenderState>> {
 
-    private static final Identifier POWER_LOCATION = Identifier.withDefaultNamespace("textures/entity/creeper/creeper_armor.png");
+    private static final Identifier POWER_LOCATION = Archaion.prefix("textures/entity/brave_charged.png");
     private final BraveModel<BraveRenderState> model;
 
     public BraveChargedLayer(RenderLayerParent<BraveRenderState, BraveModel<BraveRenderState>> renderer, EntityModelSet modelSet) {

@@ -36,6 +36,7 @@ public class ACDataGenerators {
         generator.addProvider(true, new ACLootTableProvider(packOutput, lookupProvider));
         generator.addProvider(true, new ACLootModifierProvider(packOutput, lookupProvider));
         generator.addProvider(true, new ACRecipeProvider.Runner(packOutput, lookupProvider));
+        generator.addProvider(true, new ACAdvancementProvider(packOutput, lookupProvider));
 
         RegistrySetBuilder registrySetBuilder = new RegistrySetBuilder()
                 .add(Registries.TRIAL_SPAWNER_CONFIG, ACTrialSpawnerConfigProvider::bootstrap);

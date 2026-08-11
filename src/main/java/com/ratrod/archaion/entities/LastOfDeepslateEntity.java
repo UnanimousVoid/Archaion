@@ -18,6 +18,7 @@ import mod.chloeprime.aaaparticles.api.common.ParticleEmitterInfo;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
@@ -53,6 +54,7 @@ import java.util.function.Predicate;
 public class LastOfDeepslateEntity extends Monster implements ACEntity<LastOfDeepslateEntity> {
 
     public static final EntityDataAccessor<SleepingState> SLEEPING_STATE = SynchedEntityData.defineId(LastOfDeepslateEntity.class, ACEntityDataSerializers.SLEEPING_STATE.get());
+    public static final EntityDataAccessor<Boolean> HAS_CHARGED_BRAVES = SynchedEntityData.defineId(LastOfDeepslateEntity.class, EntityDataSerializers.BOOLEAN);
 
     private final EntityAnimationManager animationManager = new EntityAnimationManager(this);
     private final ActionManager<LastOfDeepslateEntity> attackManager = new ActionManager<>(this);
@@ -93,8 +95,8 @@ public class LastOfDeepslateEntity extends Monster implements ACEntity<LastOfDee
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(2, new GoToTargetGoal(this, 1.2F, this.getBbWidth() * 1.5F));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 0.0F));
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
-        this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
+        this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
     }
 
@@ -150,6 +152,15 @@ public class LastOfDeepslateEntity extends Monster implements ACEntity<LastOfDee
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
         builder.define(SLEEPING_STATE, SleepingState.SLEEPING);
+        builder.define(HAS_CHARGED_BRAVES, false);
+    }
+
+    public boolean hasChargedBraves() {
+        return this.entityData.get(HAS_CHARGED_BRAVES);
+    }
+
+    public void setHasChargedBraves(boolean hasChargedBraves) {
+        this.entityData.set(HAS_CHARGED_BRAVES, hasChargedBraves);
     }
 
     public SleepingState getSleepingState() {
@@ -173,6 +184,7 @@ public class LastOfDeepslateEntity extends Monster implements ACEntity<LastOfDee
         super.tick();
 
         if (!this.level().isClientSide()) {
+            this.setHasChargedBraves(this.countChargedBraves() > 0);
             this.bossEvent.setProgress(this.getHealth() / this.getMaxHealth());
 
             SleepingState currentState = this.getSleepingState();
@@ -222,7 +234,7 @@ public class LastOfDeepslateEntity extends Monster implements ACEntity<LastOfDee
             this.deathAnim.forceStart();
             deathAnimationPlayed = true;
         }
-        if (this.deathTime >= 80 && !this.level().isClientSide() && !this.isRemoved()) {
+        if (this.deathTime >= 60 && !this.level().isClientSide() && !this.isRemoved()) {
             this.level().broadcastEntityEvent(this, (byte)60);
             this.remove(Entity.RemovalReason.KILLED);
         }
@@ -258,8 +270,7 @@ public class LastOfDeepslateEntity extends Monster implements ACEntity<LastOfDee
         if (this.getSleepingState() != SleepingState.AWAKE) return false;
         int braves = this.countChargedBraves();
         if (braves > 0) {
-            // Each owned charged Brave reduces incoming damage by 25%, floored at 20% of the hit.
-            damage *= Mth.clamp(1.0F - 0.25F * braves, 0.2F, 1.0F);
+            damage *= Mth.clamp(1.0F - (0.275F * braves), 0.0F, 1.0F);
         }
         return super.hurtServer(level, source, damage);
     }
@@ -267,8 +278,7 @@ public class LastOfDeepslateEntity extends Monster implements ACEntity<LastOfDee
     public int countChargedBraves() {
         if (this.level().isClientSide()) return 0;
         AABB box = this.getBoundingBox().inflate(512.0);
-        return this.level().getEntitiesOfClass(BraveEntity.class, box,
-                b -> b.isAlive() && b.isCharged() && this.getUUID().equals(b.getOwnerUUID())).size();
+        return this.level().getEntitiesOfClass(BraveEntity.class, box, b -> b.isAlive() && b.isCharged() && this.getUUID().equals(b.getOwnerUUID())).size();
     }
 
     @Override

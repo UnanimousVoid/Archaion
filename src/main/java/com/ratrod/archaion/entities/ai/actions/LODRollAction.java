@@ -56,7 +56,7 @@ public class LODRollAction extends ManagedAction<LastOfDeepslateEntity> {
     public boolean onTick() {
         timer++;
 
-        boolean charging = timer > 30 && timer < 120;
+        boolean charging = timer > 32 && timer < 120;
         LivingEntity target = entity.getTarget();
 
         if (target != null && target.isAlive()) {

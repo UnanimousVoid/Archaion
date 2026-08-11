@@ -107,23 +107,6 @@ public class BraveEntity extends Monster implements ACEntity<BraveEntity> {
     }
 
     @Override
-    public void tick() {
-        if (!this.level().isClientSide() && this.ownerUUID != null) {
-            copyOwnerTarget();
-        }
-        super.tick();
-    }
-
-    private void copyOwnerTarget() {
-        LivingEntity owner = getOwner();
-        if (!(owner instanceof Mob ownerMob) || !owner.isAlive()) return;
-        LivingEntity ownerTarget = ownerMob.getTarget();
-        if (ownerTarget != null && ownerTarget.isAlive() && ownerTarget != this.getTarget()) {
-            this.setTarget(ownerTarget);
-        }
-    }
-
-    @Override
     protected void readAdditionalSaveData(ValueInput input) {
         super.readAdditionalSaveData(input);
         this.setCharged(input.getBooleanOr("isCharged", false));

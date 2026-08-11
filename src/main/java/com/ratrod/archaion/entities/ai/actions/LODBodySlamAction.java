@@ -39,10 +39,10 @@ public class LODBodySlamAction extends ManagedAction<LastOfDeepslateEntity> {
     @Override
     public boolean onTick() {
         timer++;
-        if (timer == 26) {
+        if (timer == 17) {
             this.applyBodySlam();
         }
-        return timer < 50;
+        return timer < 30;
     }
 
     private void applyBodySlam() {

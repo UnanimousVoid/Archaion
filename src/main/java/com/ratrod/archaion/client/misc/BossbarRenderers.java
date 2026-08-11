@@ -15,7 +15,6 @@ public class BossbarRenderers {
     protected static final Identifier BARS_LOCATION = Archaion.prefix("textures/gui/hud_misc.png");
 
     public static void renderLastOfDeepslate(CustomizeGuiOverlayEvent.BossEventProgress event) {
-        event.setIncrement(42);
 
         GuiGraphicsExtractor guiGraphics = event.getGuiGraphics();
         Minecraft mc = Minecraft.getInstance();
@@ -47,5 +46,7 @@ public class BossbarRenderers {
             }
         }
         guiGraphics.text(mc.font, name, textX, textY, textColor);
+
+        event.setIncrement(42);
     }
 }

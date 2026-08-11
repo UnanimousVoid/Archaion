@@ -81,7 +81,8 @@ public class ACClientSetup {
 
     @SubscribeEvent
     static void onRegisterLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
-        event.registerLayerDefinition(LastOfDeepslateModel.LAYER_LOCATION, LastOfDeepslateModel::createBodyLayer);
+        event.registerLayerDefinition(LastOfDeepslateModel.LAYER_LOCATION, () -> LastOfDeepslateModel.createBodyLayer(CubeDeformation.NONE));
+        event.registerLayerDefinition(LastOfDeepslateModel.CHARGED_LAYER_LOCATION, () -> LastOfDeepslateModel.createBodyLayer(new CubeDeformation(2.0F)));
         event.registerLayerDefinition(BraveModel.LAYER_LOCATION, () -> BraveModel.createBodyLayer(CubeDeformation.NONE));
         event.registerLayerDefinition(BraveModel.CHARGED_LAYER_LOCATION, () -> BraveModel.createBodyLayer(new CubeDeformation(2.0F)));
         event.registerLayerDefinition(DeepslateSentinelModel.LAYER_LOCATION, DeepslateSentinelModel::createBodyLayer);

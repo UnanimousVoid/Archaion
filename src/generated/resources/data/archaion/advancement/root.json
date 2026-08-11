@@ -1,0 +1,26 @@
+{
+  "criteria": {
+    "impossible": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "background": "archaion:block/reinforced_deepslate_bricks",
+    "description": {
+      "translate": "advancements.root.description"
+    },
+    "icon": {
+      "id": "archaion:reinforced_deepslate_bricks"
+    },
+    "title": {
+      "translate": "advancements.root.title"
+    }
+  },
+  "requirements": [
+    [
+      "impossible"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
