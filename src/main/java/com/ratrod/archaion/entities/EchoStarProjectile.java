@@ -27,6 +27,7 @@ public class EchoStarProjectile extends ThrowableProjectile {
 
     private static final EntityDataAccessor<Optional<EntityReference<LivingEntity>>> HOMING_TARGET_ID = SynchedEntityData.defineId(EchoStarProjectile.class, EntityDataSerializers.OPTIONAL_LIVING_ENTITY_REFERENCE);
 
+    private float baseDamage = 25.0F;
     private float powerBonus;
 
     public EchoStarProjectile(EntityType<? extends ThrowableProjectile> entityType, Level level) {
@@ -81,10 +82,14 @@ public class EchoStarProjectile extends ThrowableProjectile {
         this.powerBonus = powerBonus;
     }
 
+    public void setBaseDamage(float baseDamage) {
+        this.baseDamage = baseDamage;
+    }
+
     public void damageArea() {
         if (!level().isClientSide()) {
             ServerLevel server = (ServerLevel) level();
-            float damage = 25.0F + this.powerBonus;
+            float damage = this.baseDamage + this.powerBonus;
 
             for (LivingEntity target : server.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(3))) {
                 if (target != this.getOwner() && !isOwnedChargedBrave(target)) {

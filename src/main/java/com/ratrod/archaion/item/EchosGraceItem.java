@@ -110,9 +110,8 @@ public class EchosGraceItem extends ProjectileWeaponItem {
         EchoStarProjectile echoStar = new EchoStarProjectile(level, shooter, projectile);
         Holder<Enchantment> power = level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.POWER);
         int powerLevel = weapon.getEnchantmentLevel(power);
-        if (powerLevel > 0) {
-            echoStar.setPowerBonus(0.5F + 0.5F * powerLevel);
-        }
+        echoStar.setBaseDamage(12.0F);
+        echoStar.setPowerBonus(powerLevel);
         return echoStar;
     }
 
