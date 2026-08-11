@@ -6,9 +6,11 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.Mth;
 import net.neoforged.neoforge.client.event.CustomizeGuiOverlayEvent;
 
 import java.awt.*;
+import java.util.Map;
 
 public class BossbarRenderers {
 
@@ -30,7 +32,7 @@ public class BossbarRenderers {
 
         // Full Bar
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED, BARS_LOCATION, x, y, 0, 32, (int)(192 * progress), 32, 256, 256);
-
+        
         // Text (Imitate Outline Rendering)
         Component name = event.getBossEvent().getName();
         int nameWidth = mc.font.width(name);
@@ -46,6 +48,14 @@ public class BossbarRenderers {
             }
         }
         guiGraphics.text(mc.font, name, textX, textY, textColor);
+
+        // BossBar Data
+        Map<String,Integer> values = ClientBossBarData.getValues(event.getBossEvent().getId());
+        boolean charged = values.getOrDefault("hasChargedBraves", 0) == 1;
+        if (charged) {
+            float yy = Mth.sin(Minecraft.getInstance().player.tickCount * 0.075F) * 4;
+            guiGraphics.blit(RenderPipelines.GUI_TEXTURED, BARS_LOCATION, x, y + (int)yy, 0, 96, 192, 32, 256, 256);
+        }
 
         event.setIncrement(42);
     }

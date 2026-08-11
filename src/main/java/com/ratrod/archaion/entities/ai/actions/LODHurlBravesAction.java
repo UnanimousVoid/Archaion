@@ -52,21 +52,25 @@ public class LODHurlBravesAction extends ManagedAction<LastOfDeepslateEntity> {
 
         float yaw = entity.getYHeadRot() * Mth.DEG_TO_RAD;
         Vec3 flatLook = new Vec3(-Mth.sin(yaw), 0, Mth.cos(yaw));
-        Vec3 center = entity.position().add(flatLook.yRot(-25F * Mth.DEG_TO_RAD).scale(8).add(0, 5.5, 0));
+        Vec3 center = entity.position().add(flatLook.yRot(-25F * Mth.DEG_TO_RAD).scale(6).add(0, 5.5, 0));
 
         entity.playSound(ACSounds.LOD_SHOOT.get(), 5.0F, 0.8F);
 
         ParticleEmitterInfo info = new ParticleEmitterInfo(Archaion.prefix("echo_blast"));
         AAALevel.addParticle(entity.level(), info.position(center).scale(6.0F));
 
-        for (int i = 0; i < 3; i++) {
+        int players = entity.countNearbyPlayers();
+        int braveCount = Math.max(3, 3 + 2 * (players - 1));
+        entity.setHurlBravesTarget(braveCount);
+
+        for (int i = 0; i < braveCount; i++) {
             BraveSpawnProjectile projectile = ACEntityTypes.BRAVE_SPAWN_PROJECTILE.get().create(serverLevel, EntitySpawnReason.TRIGGERED);
             projectile.moveOrInterpolateTo(center);
             projectile.setOwner(entity);
             projectile.setNoGravity(false);
-            float xR = -45 + (-1 + entity.getRandom().nextFloat() * 2) * 15;
+            float xR = -10 + (-1 + entity.getRandom().nextFloat() * 2) * 15;
             float yR = (-1 + entity.getRandom().nextFloat() * 2) * 25;
-            projectile.shootFromRotation(entity, entity.getXRot() + xR, entity.getYRot() + yR, 0, 1.5F, 0.0F);
+            projectile.shootFromRotation(entity, entity.getXRot() + xR, entity.getYRot() + yR, 0, 2.0F, 0.0F);
             serverLevel.addFreshEntity(projectile);
         }
     }

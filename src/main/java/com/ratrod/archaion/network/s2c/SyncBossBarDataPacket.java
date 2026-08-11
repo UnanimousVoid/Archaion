@@ -9,9 +9,11 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
-public record SyncBossBarDataPacket(UUID bossBarId, int bossIdx) implements CustomPacketPayload {
+public record SyncBossBarDataPacket(UUID bossBarId, int bossIdx, Map<String, Integer> values) implements CustomPacketPayload {
     public static final Type<SyncBossBarDataPacket> TYPE = new Type<>(Archaion.prefix("sync_boss_bar_data"));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, SyncBossBarDataPacket> CODEC = StreamCodec.composite(
@@ -19,6 +21,8 @@ public record SyncBossBarDataPacket(UUID bossBarId, int bossIdx) implements Cust
             SyncBossBarDataPacket::bossBarId,
             ByteBufCodecs.INT,
             SyncBossBarDataPacket::bossIdx,
+            ByteBufCodecs.map(HashMap::new, ByteBufCodecs.STRING_UTF8, ByteBufCodecs.INT, 16),
+            SyncBossBarDataPacket::values,
             SyncBossBarDataPacket::new
     );
 
@@ -28,6 +32,6 @@ public record SyncBossBarDataPacket(UUID bossBarId, int bossIdx) implements Cust
     }
 
     public static void handle(SyncBossBarDataPacket packet, IPayloadContext context) {
-        ClientBossBarData.setBossIdx(packet.bossBarId(), packet.bossIdx());
+        ClientBossBarData.setBossData(packet.bossBarId(), packet.bossIdx(), packet.values());
     }
 }

@@ -10,7 +10,9 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
@@ -23,6 +25,7 @@ public class LODRollAction extends ManagedAction<LastOfDeepslateEntity> {
 
     private Vec3 rollDir = Vec3.ZERO;
     private Vec3 lastPos = Vec3.ZERO;
+    private LivingEntity lockedTarget;
     private int stuckTicks;
     private int escapeSide = 1;
     private boolean huggingWall;
@@ -48,6 +51,7 @@ public class LODRollAction extends ManagedAction<LastOfDeepslateEntity> {
         this.stuckTicks = 0;
         this.escapeSide = 1;
         this.huggingWall = false;
+        this.lockedTarget = furthestPlayer();
         entity.rollingAnim.start();
         entity.playSound(ACSounds.LOD_ACTION_START.get(), 3.0F, 1.0F);
     }
@@ -57,7 +61,11 @@ public class LODRollAction extends ManagedAction<LastOfDeepslateEntity> {
         timer++;
 
         boolean charging = timer > 32 && timer < 120;
-        LivingEntity target = entity.getTarget();
+
+        if (lockedTarget == null || !lockedTarget.isAlive()) {
+            lockedTarget = furthestPlayer();
+        }
+        LivingEntity target = lockedTarget;
 
         if (target != null && target.isAlive()) {
             if (charging && isStuck()) {
@@ -92,6 +100,24 @@ public class LODRollAction extends ManagedAction<LastOfDeepslateEntity> {
     @Override
     public void onStop() {
         entity.rollingAnim.stop();
+        lockedTarget = null;
+    }
+
+    private LivingEntity furthestPlayer() {
+        if (entity.level().isClientSide()) return null;
+        List<Player> players = entity.level().getEntitiesOfClass(Player.class, entity.getBoundingBox().inflate(64.0), EntitySelector.NO_CREATIVE_OR_SPECTATOR);
+        Player furthest = null;
+        if (entity.getTarget() instanceof Player pt) furthest = pt;
+        double maxDist = -1.0;
+        for (Player player : players) {
+            if (!player.isAlive()) continue;
+            double dist = entity.distanceToSqr(player);
+            if (dist > maxDist) {
+                maxDist = dist;
+                furthest = player;
+            }
+        }
+        return furthest;
     }
 
     private void applyBoom() {
@@ -133,8 +159,7 @@ public class LODRollAction extends ManagedAction<LastOfDeepslateEntity> {
         huggingWall = false;
         Vec3 from = entity.position().add(0, entity.getBbHeight() * 0.5, 0);
         double probe = entity.getBbWidth() * 0.5 + wallProbeMargin;
-        BlockHitResult hit = entity.level().clip(
-                new ClipContext(from, from.add(dir.scale(probe)), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, entity));
+        BlockHitResult hit = entity.level().clip(new ClipContext(from, from.add(dir.scale(probe)), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, entity));
 
         if (hit.getType() == HitResult.Type.BLOCK && hit.getDirection().getAxis().isHorizontal()) {
             Vec3 normal = hit.getDirection().getUnitVec3();

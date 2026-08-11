@@ -44,7 +44,7 @@ public class LODShootAction extends ManagedAction<LastOfDeepslateEntity> {
 
             float yaw = entity.getYHeadRot() * Mth.DEG_TO_RAD;
             Vec3 flatLook = new Vec3(-Mth.sin(yaw), 0, Mth.cos(yaw));
-            Vec3 center = entity.position().add(flatLook.yRot(-25F * Mth.DEG_TO_RAD).scale(8).add(0, 5.5, 0));
+            Vec3 center = entity.position().add(flatLook.yRot(-25F * Mth.DEG_TO_RAD).scale(6).add(0, 5.5, 0));
 
             ParticleEmitterInfo info = new ParticleEmitterInfo(Archaion.prefix("echo_blast"));
             AAALevel.addParticle(entity.level(), info.position(center).scale(6.0F));

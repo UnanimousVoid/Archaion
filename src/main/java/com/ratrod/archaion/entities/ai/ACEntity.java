@@ -15,6 +15,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ACEntity<L extends LivingEntity> {
     default float getRotationFreedom() {
@@ -42,8 +43,19 @@ public interface ACEntity<L extends LivingEntity> {
     }
 
     default void addBossBarPlayer(ServerBossEvent bossEvent, ServerPlayer player, int bossIdx) {
+        this.addBossBarPlayer(bossEvent, player, bossIdx, Map.of());
+    }
+
+    default void addBossBarPlayer(ServerBossEvent bossEvent, ServerPlayer player, int bossIdx, Map<String, Integer> values) {
         bossEvent.addPlayer(player);
-        ACNetwork.sendToPlayer(player, new SyncBossBarDataPacket(bossEvent.getId(), bossIdx));
+        ACNetwork.sendToPlayer(player, new SyncBossBarDataPacket(bossEvent.getId(), bossIdx, values));
+    }
+
+    default void syncBossBarData(ServerBossEvent bossEvent, int bossIdx, Map<String, Integer> values) {
+        SyncBossBarDataPacket packet = new SyncBossBarDataPacket(bossEvent.getId(), bossIdx, values);
+        for (ServerPlayer player : bossEvent.getPlayers()) {
+            ACNetwork.sendToPlayer(player, packet);
+        }
     }
 
     default void removeBossBarPlayer(ServerBossEvent bossEvent, ServerPlayer player) {

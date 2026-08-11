@@ -33,7 +33,7 @@ public class Wight extends Skeleton {
         AbstractArrow arrow = super.getArrow(projectile, power, firingWeapon);
         if (arrow instanceof Arrow) {
             ((Arrow)arrow).addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 300));
-            arrow.setBaseDamage(4);
+            arrow.setBaseDamage(6);
         }
 
         return arrow;

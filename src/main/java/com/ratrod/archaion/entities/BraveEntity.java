@@ -6,6 +6,7 @@ import com.ratrod.archaion.api.entity.ActionManager;
 import com.ratrod.archaion.entities.ai.ACEntity;
 import com.ratrod.archaion.entities.ai.actions.BraveJumpOnAction;
 import com.ratrod.archaion.entities.ai.goals.BraveDistanceAwayGoal;
+import com.ratrod.archaion.entities.ai.goals.BraveSpreadTargetGoal;
 import com.ratrod.archaion.registry.ACSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -24,7 +25,6 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.golem.IronGolem;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ProjectileDeflection;
 import net.minecraft.world.level.Level;
@@ -64,14 +64,14 @@ public class BraveEntity extends Monster implements ACEntity<BraveEntity> {
                 .add(Attributes.MOVEMENT_SPEED, 0.35F)
                 .add(Attributes.MAX_HEALTH, 55.0)
                 .add(Attributes.FOLLOW_RANGE, 48.0)
-                .add(Attributes.ATTACK_DAMAGE, 5.0);
+                .add(Attributes.ATTACK_DAMAGE, 12.0);
     }
 
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(2, new BraveDistanceAwayGoal(this, 1.2D, 18.0D));
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
+        this.goalSelector.addGoal(2, new BraveDistanceAwayGoal(this, 1.1D, 18.0D));
+        this.targetSelector.addGoal(1, new BraveSpreadTargetGoal(this));
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
     }
