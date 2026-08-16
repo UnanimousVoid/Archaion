@@ -124,7 +124,7 @@ public class Grimoray extends Monster implements ACEntity<Grimoray> {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(1, new GrimorayFlightGoal(this, 0.35, 4.0, 6.0));
+        this.goalSelector.addGoal(1, new GrimorayFlightGoal(this, 0.35, 3.0, 6.0));
         this.goalSelector.addGoal(2, new LookAtPlayerGoal(this, Player.class, 8.0F));
 //        this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
