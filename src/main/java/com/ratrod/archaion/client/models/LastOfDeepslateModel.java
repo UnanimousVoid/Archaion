@@ -1,7 +1,7 @@
 package com.ratrod.archaion.client.models;
 
 import com.ratrod.archaion.Archaion;
-import com.ratrod.archaion.client.LastOfDeepslateRenderState;
+import com.ratrod.archaion.client.renderers.renderstate.LastOfDeepslateRenderState;
 import com.ratrod.archaion.client.animations.LastOfDeepslateAnimations;
 import com.ratrod.archaion.entities.ai.SleepingState;
 import net.minecraft.client.animation.KeyframeAnimation;

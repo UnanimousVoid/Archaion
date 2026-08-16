@@ -1,6 +1,6 @@
 package com.ratrod.archaion.item;
 
-import com.ratrod.archaion.entities.ThrownEchoMace;
+import com.ratrod.archaion.entities.projectile.ThrownEchoMace;
 import com.ratrod.archaion.registry.ACSounds;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;

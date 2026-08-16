@@ -1,6 +1,6 @@
 package com.ratrod.archaion.item;
 
-import com.ratrod.archaion.entities.EchoStarProjectile;
+import com.ratrod.archaion.entities.projectile.EchoStarProjectile;
 import com.ratrod.archaion.registry.ACItems;
 import com.ratrod.archaion.registry.ACSounds;
 import net.minecraft.core.Holder;

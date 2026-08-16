@@ -1,6 +1,6 @@
 package com.ratrod.archaion.item;
 
-import com.ratrod.archaion.entities.ThrownImpactPearl;
+import com.ratrod.archaion.entities.projectile.ThrownImpactPearl;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;

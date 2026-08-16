@@ -1,6 +1,6 @@
 package com.ratrod.archaion.entities.ai.goals;
 
-import com.ratrod.archaion.entities.BraveEntity;
+import com.ratrod.archaion.entities.Brave;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
@@ -12,10 +12,10 @@ import java.util.List;
 
 public class BraveSpreadTargetGoal extends TargetGoal {
 
-    private final BraveEntity brave;
+    private final Brave brave;
     private int recheckDelay;
 
-    public BraveSpreadTargetGoal(BraveEntity brave) {
+    public BraveSpreadTargetGoal(Brave brave) {
         super(brave, false);
         this.brave = brave;
     }
@@ -59,7 +59,7 @@ public class BraveSpreadTargetGoal extends TargetGoal {
         players.removeIf(p -> !p.isAlive() || !this.brave.canAttack(p));
         if (players.isEmpty()) return;
 
-        List<BraveEntity> owned = this.brave.level().getEntitiesOfClass(BraveEntity.class, owner.getBoundingBox().inflate(512.0), b -> b.isAlive() && b.isCharged() && owner.getUUID().equals(b.getOwnerUUID()));
+        List<Brave> owned = this.brave.level().getEntitiesOfClass(Brave.class, owner.getBoundingBox().inflate(512.0), b -> b.isAlive() && b.isCharged() && owner.getUUID().equals(b.getOwnerUUID()));
         owned.sort(Comparator.comparingInt(Entity::getId));
         int slot = owned.indexOf(this.brave);
         if (slot < 0) return;

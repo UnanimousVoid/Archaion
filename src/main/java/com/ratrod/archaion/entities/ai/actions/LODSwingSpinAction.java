@@ -2,7 +2,7 @@ package com.ratrod.archaion.entities.ai.actions;
 
 import com.ratrod.archaion.Archaion;
 import com.ratrod.archaion.api.entity.ManagedAction;
-import com.ratrod.archaion.entities.LastOfDeepslateEntity;
+import com.ratrod.archaion.entities.LastOfDeepslate;
 import com.ratrod.archaion.entities.ai.ACEntity;
 import com.ratrod.archaion.registry.ACSounds;
 import mod.chloeprime.aaaparticles.api.common.AAALevel;
@@ -14,10 +14,10 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
-public class LODSwingSpinAction extends ManagedAction<LastOfDeepslateEntity> {
+public class LODSwingSpinAction extends ManagedAction<LastOfDeepslate> {
 
 
-    public LODSwingSpinAction(LastOfDeepslateEntity entity) {
+    public LODSwingSpinAction(LastOfDeepslate entity) {
         super(entity);
     }
 

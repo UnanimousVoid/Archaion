@@ -1,6 +1,6 @@
 package com.ratrod.archaion.client.models;
 
-import com.ratrod.archaion.client.ACLivingEntityRenderState;
+import com.ratrod.archaion.client.renderers.renderstate.ACLivingEntityRenderState;
 import com.ratrod.archaion.client.animations.ClientAnimationRegistry;
 import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.animation.KeyframeAnimation;

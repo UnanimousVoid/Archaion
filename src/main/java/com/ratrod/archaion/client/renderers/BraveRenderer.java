@@ -1,10 +1,10 @@
 package com.ratrod.archaion.client.renderers;
 
 import com.ratrod.archaion.Archaion;
-import com.ratrod.archaion.client.BraveRenderState;
+import com.ratrod.archaion.client.renderers.renderstate.BraveRenderState;
 import com.ratrod.archaion.client.models.BraveModel;
 import com.ratrod.archaion.client.renderers.layer.BraveChargedLayer;
-import com.ratrod.archaion.entities.BraveEntity;
+import com.ratrod.archaion.entities.Brave;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.LivingEntityEmissiveLayer;
@@ -12,7 +12,7 @@ import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 
-public class BraveRenderer extends MobRenderer<BraveEntity, BraveRenderState, BraveModel<BraveRenderState>> {
+public class BraveRenderer extends MobRenderer<Brave, BraveRenderState, BraveModel<BraveRenderState>> {
 
     private static final Identifier TEXTURE_LOCATION = Archaion.prefix("textures/entity/brave.png");
     private static final Identifier GLOW_TEXTURE = Archaion.prefix("textures/entity/brave_glow.png");
@@ -43,7 +43,7 @@ public class BraveRenderer extends MobRenderer<BraveEntity, BraveRenderState, Br
     }
 
     @Override
-    public void extractRenderState(BraveEntity entity, BraveRenderState state, float partialTicks) {
+    public void extractRenderState(Brave entity, BraveRenderState state, float partialTicks) {
         super.extractRenderState(entity, state, partialTicks);
         state.animationManager = entity.getAnimationManager();
         state.isCharged = entity.isCharged();

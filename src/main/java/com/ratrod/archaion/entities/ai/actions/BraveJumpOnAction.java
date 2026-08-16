@@ -1,7 +1,7 @@
 package com.ratrod.archaion.entities.ai.actions;
 
 import com.ratrod.archaion.api.entity.ManagedAction;
-import com.ratrod.archaion.entities.BraveEntity;
+import com.ratrod.archaion.entities.Brave;
 import com.ratrod.archaion.entities.ai.ACEntity;
 import com.ratrod.archaion.registry.ACSounds;
 import net.minecraft.server.level.ServerLevel;
@@ -15,9 +15,9 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
-public class BraveJumpOnAction extends ManagedAction<BraveEntity> {
+public class BraveJumpOnAction extends ManagedAction<Brave> {
 
-    public BraveJumpOnAction(BraveEntity entity) {
+    public BraveJumpOnAction(Brave entity) {
         super(entity);
     }
 

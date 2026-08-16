@@ -1,7 +1,7 @@
 package com.ratrod.archaion.client.renderers.layer;
 
 import com.ratrod.archaion.Archaion;
-import com.ratrod.archaion.client.LastOfDeepslateRenderState;
+import com.ratrod.archaion.client.renderers.renderstate.LastOfDeepslateRenderState;
 import com.ratrod.archaion.client.models.LastOfDeepslateModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
@@ -19,7 +19,7 @@ public class LastOfDeepslateChargedLayer extends EnergySwirlLayer<LastOfDeepslat
     }
 
     protected boolean isPowered(LastOfDeepslateRenderState state) {
-        return state.hasChargedBraves;
+        return state.hasChargedArchaics;
     }
 
     protected float xOffset(float t) {

@@ -35,7 +35,7 @@ public class ACTagProvider {
 
         @Override
         protected void addTags(HolderLookup.Provider pProvider) {
-            // Brave deflects only while charged — handled in BraveEntity.deflection(), no tag needed
+            // Brave deflects only while charged — handled in Brave.deflection(), no tag needed
         }
     }
 

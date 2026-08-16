@@ -4,7 +4,7 @@ package com.ratrod.archaion.client.models;// Made with Blockbench 5.1.6
 
 
 import com.ratrod.archaion.Archaion;
-import com.ratrod.archaion.client.BraveRenderState;
+import com.ratrod.archaion.client.renderers.renderstate.BraveRenderState;
 import com.ratrod.archaion.client.animations.BraveAnimations;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;

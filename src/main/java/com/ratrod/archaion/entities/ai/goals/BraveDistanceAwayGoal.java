@@ -1,6 +1,6 @@
 package com.ratrod.archaion.entities.ai.goals;
 
-import com.ratrod.archaion.entities.BraveEntity;
+import com.ratrod.archaion.entities.Brave;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.phys.Vec3;
@@ -8,12 +8,12 @@ import net.minecraft.world.phys.Vec3;
 import java.util.EnumSet;
 
 public class BraveDistanceAwayGoal extends Goal {
-    private final BraveEntity entity;
+    private final Brave entity;
     private final double speedModifier;
     private final double desiredDistance;
     private int pathRecalcTicks;
 
-    public BraveDistanceAwayGoal(BraveEntity entity, double speedModifier, double desiredDistance) {
+    public BraveDistanceAwayGoal(Brave entity, double speedModifier, double desiredDistance) {
         this.entity = entity;
         this.speedModifier = speedModifier;
         this.desiredDistance = desiredDistance;

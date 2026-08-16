@@ -3,6 +3,7 @@ package com.ratrod.archaion.client.renderers;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import com.ratrod.archaion.block.HologramBlockEntity;
+import com.ratrod.archaion.client.renderers.renderstate.HologramRenderState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.SubmitNodeCollector;
@@ -99,7 +100,7 @@ public class HologramRenderer implements BlockEntityRenderer<HologramBlockEntity
             float halfAngle = (float) Math.toRadians(60.0);
             float radius = 2;
 
-            submitNodeCollector.submitCustomGeometry(poseStack, RenderTypes.debugQuads(), (pose, consumer) -> {
+            submitNodeCollector.submitCustomGeometry(poseStack, RenderTypes.translucentMovingBlock(), (pose, consumer) -> {
                 for (int i = 0; i < segments; i++) {
                     float angleA = -halfAngle + (2 * halfAngle) * (i / (float) segments);
                     float angleB = -halfAngle + (2 * halfAngle) * ((i + 1) / (float) segments);
@@ -109,17 +110,18 @@ public class HologramRenderer implements BlockEntityRenderer<HologramBlockEntity
                     float xB = (float) Math.sin(angleB) * radius;
                     float yB = (float) Math.cos(angleB) * radius;
 
-                    consumer.addVertex(pose, 0.0F, 0.0F, 0.0F).setColor(r, g, b, alpha);
-                    consumer.addVertex(pose, xA, yA, 0.0F).setColor(r, g, b, 0.0F);
-                    consumer.addVertex(pose, xB, yB, 0.0F).setColor(r, g, b, 0.0F);
-                    consumer.addVertex(pose, xB, yB, 0.0F).setColor(r, g, b, 0.0F);
+                    consumer.addVertex(pose, 0.0F, 0.0F, 0.0F).setColor(r, g, b, alpha).setUv(0.0F, 0.0F).setLight(light);
+                    consumer.addVertex(pose, xA, yA, 0.0F).setColor(r, g, b, 0.0F).setUv(0.0F, 0.0F).setLight(light);
+                    consumer.addVertex(pose, xB, yB, 0.0F).setColor(r, g, b, 0.0F).setUv(0.0F, 0.0F).setLight(light);
+                    consumer.addVertex(pose, xB, yB, 0.0F).setColor(r, g, b, 0.0F).setUv(0.0F, 0.0F).setLight(light);
                 }
             });
+
             poseStack.popPose();
         }
     }
 
-    private static int applyAlpha(int argb, float alpha) {
+    public static int applyAlpha(int argb, float alpha) {
         int a = (int) (0xFF * Math.clamp(alpha, 0.0F, 1.0F));
         return (argb & 0x00FFFFFF) | (a << 24);
     }

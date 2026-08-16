@@ -83,6 +83,12 @@
     ],
     "subtitle": "subtitle.archaion.lod_smash"
   },
+  "lod_spawn_archaics": {
+    "sounds": [
+      "archaion:lod_spawn_archaics"
+    ],
+    "subtitle": "subtitle.archaion.lod_spawn_archaics"
+  },
   "lod_spin": {
     "sounds": [
       "archaion:lod_spin"
@@ -94,6 +100,12 @@
       "archaion:lod_step"
     ],
     "subtitle": "subtitle.archaion.lod_step"
+  },
+  "lod_warn_archaics": {
+    "sounds": [
+      "archaion:lod_warn_archaics"
+    ],
+    "subtitle": "subtitle.archaion.lod_warn_archaics"
   },
   "sentinel_ambient": {
     "sounds": [

@@ -1,11 +1,14 @@
 package com.ratrod.archaion.datagen;
 
 import com.ratrod.archaion.Archaion;
-import com.ratrod.archaion.block.DeepslateSpawnerBlock;
-import com.ratrod.archaion.block.DeepslateVaultBlock;
+import com.ratrod.archaion.api.trial.ACTrialSpawnerBlock;
+import com.ratrod.archaion.api.trial.TrialSpawnerVariant;
+import com.ratrod.archaion.api.trial.TrialVaultBlock;
+import com.ratrod.archaion.api.trial.TrialVaultVariant;
 import com.ratrod.archaion.block.ReinforcedBarBlock;
 import com.ratrod.archaion.client.item.EchosGracePull;
 import com.ratrod.archaion.registry.ACBlocks;
+import com.ratrod.archaion.registry.ACTrialVariants;
 import com.ratrod.archaion.registry.ACItems;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
@@ -36,6 +39,7 @@ public class ACModelProvider extends ModelProvider {
         itemModels.generateFlatItem(ACItems.SLATED_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ACItems.WIGHT_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ACItems.BRAVE_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ACItems.GRIMORAY_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ACItems.DEEPSLATE_SENTINEL_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ACItems.LAST_OF_DEEPSLATE_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ACItems.ECHO_MACE_UPGRADE_SMITHING_TEMPLATE.get(), ModelTemplates.FLAT_ITEM);
@@ -44,6 +48,7 @@ public class ACModelProvider extends ModelProvider {
         itemModels.generateFlatItem(ACItems.BRAVE_ESSENCE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ACItems.IMPACT_PEARL.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ACItems.ECHO_CHARGE.get(), ModelTemplates.FLAT_ITEM);
+
         ItemModel.Unbaked bowModel = ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(ACItems.ECHOS_GRACE.get()));
         ItemModel.Unbaked pulling0 = ItemModelUtils.plainModel(itemModels.createFlatItemModel(ACItems.ECHOS_GRACE.get(), "_pulling_0", ModelTemplates.BOW));
         ItemModel.Unbaked pulling1 = ItemModelUtils.plainModel(itemModels.createFlatItemModel(ACItems.ECHOS_GRACE.get(), "_pulling_1", ModelTemplates.BOW));
@@ -73,10 +78,14 @@ public class ACModelProvider extends ModelProvider {
         blockModels.family(ACBlocks.REINFORCED_DEEPSLATE_BRICKS.get()).stairs(ACBlocks.REINFORCED_DEEPSLATE_BRICK_STAIRS.get()).slab(ACBlocks.REINFORCED_DEEPSLATE_BRICK_SLAB.get()).wall(ACBlocks.REINFORCED_DEEPSLATE_BRICK_WALL.get());
         blockModels.family(ACBlocks.REINFORCED_DEEPSLATE_TILES.get()).stairs(ACBlocks.REINFORCED_DEEPSLATE_TILE_STAIRS.get()).slab(ACBlocks.REINFORCED_DEEPSLATE_TILE_SLAB.get()).wall(ACBlocks.REINFORCED_DEEPSLATE_TILE_WALL.get());
 
-        createDeepslateVault(blockModels);
-        createDeepslateSpawner(blockModels);
-
         createDeepslateHologram(blockModels);
+
+        for (TrialSpawnerVariant variant : ACTrialVariants.spawners()) {
+            createTrialSpawner(blockModels, variant.block().get());
+        }
+        for (TrialVaultVariant variant : ACTrialVariants.vaults()) {
+            createTrialVault(blockModels, variant.block().get());
+        }
     }
 
     private void createDeepslateHologram(BlockModelGenerators blockModels) {
@@ -85,16 +94,14 @@ public class ACModelProvider extends ModelProvider {
         blockModels.registerSimpleItemModel(ACBlocks.DEEPSLATE_HOLOGRAM.get(), model);
     }
 
-    private void createDeepslateSpawner(BlockModelGenerators blockModels) {
-        DeepslateSpawnerBlock block = ACBlocks.DEEPSLATE_SPAWNER.get();
-
+    private void createTrialSpawner(BlockModelGenerators blockModels, ACTrialSpawnerBlock block) {
         Identifier inactiveModel = ModelLocationUtils.getModelLocation(block);
         Identifier activeModel = ModelLocationUtils.getModelLocation(block, "_active");
         Identifier ejectingModel = ModelLocationUtils.getModelLocation(block, "_ejecting_reward");
 
         blockModels.blockStateOutput.accept(
                 MultiVariantGenerator.dispatch(block)
-                        .with(PropertyDispatch.initial(DeepslateSpawnerBlock.STATE).generate(state -> switch (state) {
+                        .with(PropertyDispatch.initial(ACTrialSpawnerBlock.STATE).generate(state -> switch (state) {
                             case INACTIVE, COOLDOWN -> BlockModelGenerators.plainVariant(inactiveModel);
                             case WAITING_FOR_PLAYERS, ACTIVE, WAITING_FOR_REWARD_EJECTION -> BlockModelGenerators.plainVariant(activeModel);
                             case EJECTING_REWARD -> BlockModelGenerators.plainVariant(ejectingModel);
@@ -102,8 +109,7 @@ public class ACModelProvider extends ModelProvider {
         );
     }
 
-    private void createDeepslateVault(BlockModelGenerators blockModels) {
-        DeepslateVaultBlock block = ACBlocks.DEEPSLATE_VAULT.get();
+    private void createTrialVault(BlockModelGenerators blockModels, TrialVaultBlock block) {
         blockModels.blockStateOutput.accept(
                 MultiVariantGenerator.dispatch(block)
                         .with(PropertyDispatch.initial(VaultBlock.STATE).generate(state -> switch (state) {

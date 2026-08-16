@@ -2,7 +2,7 @@ package com.ratrod.archaion.entities.ai.actions;
 
 import com.ratrod.archaion.Archaion;
 import com.ratrod.archaion.api.entity.ManagedAction;
-import com.ratrod.archaion.entities.DeepslateSentinelEntity;
+import com.ratrod.archaion.entities.DeepslateSentinel;
 import com.ratrod.archaion.registry.ACSounds;
 import mod.chloeprime.aaaparticles.api.common.AAALevel;
 import mod.chloeprime.aaaparticles.api.common.ParticleEmitterInfo;
@@ -16,13 +16,13 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
-public class SentinelChargeAction extends ManagedAction<DeepslateSentinelEntity> {
+public class SentinelChargeAction extends ManagedAction<DeepslateSentinel> {
 
     private Vec3 chargeDir = Vec3.ZERO;
     private Vec3 lastPos = Vec3.ZERO;
     private int stuckTicks;
 
-    public SentinelChargeAction(DeepslateSentinelEntity entity) {
+    public SentinelChargeAction(DeepslateSentinel entity) {
         super(entity);
     }
 

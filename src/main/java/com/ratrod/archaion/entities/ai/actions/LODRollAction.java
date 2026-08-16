@@ -2,7 +2,7 @@ package com.ratrod.archaion.entities.ai.actions;
 
 import com.ratrod.archaion.Archaion;
 import com.ratrod.archaion.api.entity.ManagedAction;
-import com.ratrod.archaion.entities.LastOfDeepslateEntity;
+import com.ratrod.archaion.entities.LastOfDeepslate;
 import com.ratrod.archaion.registry.ACSounds;
 import mod.chloeprime.aaaparticles.api.common.AAALevel;
 import mod.chloeprime.aaaparticles.api.common.ParticleEmitterInfo;
@@ -10,9 +10,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
@@ -21,7 +19,7 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
-public class LODRollAction extends ManagedAction<LastOfDeepslateEntity> {
+public class LODRollAction extends ManagedAction<LastOfDeepslate> {
 
     private Vec3 rollDir = Vec3.ZERO;
     private Vec3 lastPos = Vec3.ZERO;
@@ -30,7 +28,7 @@ public class LODRollAction extends ManagedAction<LastOfDeepslateEntity> {
     private int escapeSide = 1;
     private boolean huggingWall;
 
-    public LODRollAction(LastOfDeepslateEntity entity) {
+    public LODRollAction(LastOfDeepslate entity) {
         super(entity);
     }
 
@@ -40,7 +38,7 @@ public class LODRollAction extends ManagedAction<LastOfDeepslateEntity> {
         if (target == null || !target.isAlive()) return false;
         if (!entity.hasLineOfSight(target)) return false;
         if (entity.getY() + entity.getBbHeight() < target.getY()) return false;
-        return true;
+        return entity.getArchaicSystem().getPhasesTriggered() >= 1;
     }
 
     @Override
@@ -51,7 +49,7 @@ public class LODRollAction extends ManagedAction<LastOfDeepslateEntity> {
         this.stuckTicks = 0;
         this.escapeSide = 1;
         this.huggingWall = false;
-        this.lockedTarget = furthestPlayer();
+        this.lockedTarget = entity.getTarget();
         entity.rollingAnim.start();
         entity.playSound(ACSounds.LOD_ACTION_START.get(), 3.0F, 1.0F);
     }
@@ -63,15 +61,14 @@ public class LODRollAction extends ManagedAction<LastOfDeepslateEntity> {
         boolean charging = timer > 32 && timer < 120;
 
         if (lockedTarget == null || !lockedTarget.isAlive()) {
-            lockedTarget = furthestPlayer();
+            return false;
         }
-        LivingEntity target = lockedTarget;
 
-        if (target != null && target.isAlive()) {
+        if (lockedTarget != null && lockedTarget.isAlive()) {
             if (charging && isStuck()) {
                 this.rollDir = directionFromYaw(yawOf(this.rollDir) + escapeSide * 30.0F);
             } else {
-                steerHeading(target);
+                steerHeading(lockedTarget);
             }
 
             if (charging) {
@@ -101,23 +98,6 @@ public class LODRollAction extends ManagedAction<LastOfDeepslateEntity> {
     public void onStop() {
         entity.rollingAnim.stop();
         lockedTarget = null;
-    }
-
-    private LivingEntity furthestPlayer() {
-        if (entity.level().isClientSide()) return null;
-        List<Player> players = entity.level().getEntitiesOfClass(Player.class, entity.getBoundingBox().inflate(64.0), EntitySelector.NO_CREATIVE_OR_SPECTATOR);
-        Player furthest = null;
-        if (entity.getTarget() instanceof Player pt) furthest = pt;
-        double maxDist = -1.0;
-        for (Player player : players) {
-            if (!player.isAlive()) continue;
-            double dist = entity.distanceToSqr(player);
-            if (dist > maxDist) {
-                maxDist = dist;
-                furthest = player;
-            }
-        }
-        return furthest;
     }
 
     private void applyBoom() {

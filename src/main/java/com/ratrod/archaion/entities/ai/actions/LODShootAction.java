@@ -2,8 +2,8 @@ package com.ratrod.archaion.entities.ai.actions;
 
 import com.ratrod.archaion.Archaion;
 import com.ratrod.archaion.api.entity.ManagedAction;
-import com.ratrod.archaion.entities.EchoStarProjectile;
-import com.ratrod.archaion.entities.LastOfDeepslateEntity;
+import com.ratrod.archaion.entities.LastOfDeepslate;
+import com.ratrod.archaion.entities.projectile.EchoStarProjectile;
 import com.ratrod.archaion.registry.ACEntityTypes;
 import com.ratrod.archaion.registry.ACSounds;
 import mod.chloeprime.aaaparticles.api.common.AAALevel;
@@ -13,9 +13,9 @@ import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 
-public class LODShootAction extends ManagedAction<LastOfDeepslateEntity> {
+public class LODShootAction extends ManagedAction<LastOfDeepslate> {
 
-    public LODShootAction(LastOfDeepslateEntity entity) {
+    public LODShootAction(LastOfDeepslate entity) {
         super(entity);
     }
 

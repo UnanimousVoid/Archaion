@@ -30,8 +30,10 @@ public class ACSounds {
     public static final DeferredHolder<SoundEvent, SoundEvent> LOD_HURT = register("lod_hurt");
     public static final DeferredHolder<SoundEvent, SoundEvent> LOD_SHOOT = register("lod_shoot");
     public static final DeferredHolder<SoundEvent, SoundEvent> LOD_SMASH = register("lod_smash");
+    public static final DeferredHolder<SoundEvent, SoundEvent> LOD_SPAWN_ARCHAICS = register("lod_spawn_archaics");
     public static final DeferredHolder<SoundEvent, SoundEvent> LOD_SPIN = register("lod_spin");
     public static final DeferredHolder<SoundEvent, SoundEvent> LOD_STEP = register("lod_step");
+    public static final DeferredHolder<SoundEvent, SoundEvent> LOD_WARN_ARCHAICS = register("lod_warn_archaics");
 
     // Deepslate Sentinel
     public static final DeferredHolder<SoundEvent, SoundEvent> SENTINEL_AMBIENT = register("sentinel_ambient");

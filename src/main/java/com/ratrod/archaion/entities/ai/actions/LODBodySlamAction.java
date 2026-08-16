@@ -2,7 +2,7 @@ package com.ratrod.archaion.entities.ai.actions;
 
 import com.ratrod.archaion.Archaion;
 import com.ratrod.archaion.api.entity.ManagedAction;
-import com.ratrod.archaion.entities.LastOfDeepslateEntity;
+import com.ratrod.archaion.entities.LastOfDeepslate;
 import com.ratrod.archaion.entities.ai.ACEntity;
 import com.ratrod.archaion.registry.ACSounds;
 import mod.chloeprime.aaaparticles.api.common.AAALevel;
@@ -14,9 +14,9 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
-public class LODBodySlamAction extends ManagedAction<LastOfDeepslateEntity> {
+public class LODBodySlamAction extends ManagedAction<LastOfDeepslate> {
 
-    public LODBodySlamAction(LastOfDeepslateEntity entity) {
+    public LODBodySlamAction(LastOfDeepslate entity) {
         super(entity);
     }
 
@@ -39,10 +39,10 @@ public class LODBodySlamAction extends ManagedAction<LastOfDeepslateEntity> {
     @Override
     public boolean onTick() {
         timer++;
-        if (timer == 17) {
+        if (timer == 30) {
             this.applyBodySlam();
         }
-        return timer < 30;
+        return timer < 50;
     }
 
     private void applyBodySlam() {
@@ -58,7 +58,7 @@ public class LODBodySlamAction extends ManagedAction<LastOfDeepslateEntity> {
         List<LivingEntity> targets = entity.level().getEntitiesOfClass(LivingEntity.class, area, e -> e != entity && e.isAlive() && entity.canAttack(e));
 
         for (LivingEntity target : targets) {
-            entity.attackTarget(serverLevel, target, 1.5F, ACEntity.Operation.MULTIPLY);
+            entity.attackTarget(serverLevel, target, 1.2F, ACEntity.Operation.MULTIPLY);
             Vec3 knockback = target.position().subtract(entity.position()).normalize().scale(2.0).add(0, 0.8, 0);
             target.setDeltaMovement(target.getDeltaMovement().add(knockback));
             target.hurtMarked = true;

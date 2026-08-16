@@ -2,7 +2,8 @@ package com.ratrod.archaion.client.renderers;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import com.ratrod.archaion.entities.ThrownEchoMace;
+import com.ratrod.archaion.client.renderers.renderstate.ThrownEchoMaceRenderState;
+import com.ratrod.archaion.entities.projectile.ThrownEchoMace;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

@@ -4,6 +4,7 @@ import com.ratrod.archaion.api.client.animation.EntityAnimationManager;
 import com.ratrod.archaion.api.entity.ActionManager;
 import com.ratrod.archaion.misc.mixinhelpers.IMixinMob;
 import com.ratrod.archaion.network.ACNetwork;
+import com.ratrod.archaion.network.BossBarDataOutput;
 import com.ratrod.archaion.network.s2c.RemoveBossBarDataPacket;
 import com.ratrod.archaion.network.s2c.SyncBossBarDataPacket;
 import it.unimi.dsi.fastutil.Pair;
@@ -43,12 +44,25 @@ public interface ACEntity<L extends LivingEntity> {
     }
 
     default void addBossBarPlayer(ServerBossEvent bossEvent, ServerPlayer player, int bossIdx) {
-        this.addBossBarPlayer(bossEvent, player, bossIdx, Map.of());
+        this.addBossBarPlayer(bossEvent, player, bossIdx, this.bossBarValues());
     }
 
     default void addBossBarPlayer(ServerBossEvent bossEvent, ServerPlayer player, int bossIdx, Map<String, Integer> values) {
         bossEvent.addPlayer(player);
         ACNetwork.sendToPlayer(player, new SyncBossBarDataPacket(bossEvent.getId(), bossIdx, values));
+    }
+
+    default Map<String, Integer> bossBarValues() {
+        BossBarDataOutput output = new BossBarDataOutput();
+        this.writeBossBarData(output);
+        return output.build();
+    }
+
+    default void writeBossBarData(BossBarDataOutput output) {
+    }
+
+    default void syncBossBarData(ServerBossEvent bossEvent, int bossIdx) {
+        this.syncBossBarData(bossEvent, bossIdx, this.bossBarValues());
     }
 
     default void syncBossBarData(ServerBossEvent bossEvent, int bossIdx, Map<String, Integer> values) {

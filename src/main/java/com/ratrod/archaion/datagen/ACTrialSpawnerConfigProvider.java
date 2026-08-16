@@ -86,6 +86,27 @@ public class ACTrialSpawnerConfigProvider {
                 .itemsToDropWhenOminous(ACLootTables.DEEPSLATE_SPAWNER_THROWABLES)
                 .build());
 
+        ctx.register(ACTrialSpawnerConfigs.DEEPSLATE_SPAWNER_GRIMORAY, TrialSpawnerConfig.builder()
+                .spawnRange(6)
+                .totalMobs(4.0F)
+                .simultaneousMobs(1.0F)
+                .totalMobsAddedPerPlayer(1)
+                .simultaneousMobsAddedPerPlayer(0.5F)
+                .ticksBetweenSpawn(200)
+                .spawnPotentialsDefinition(
+                        WeightedList.<SpawnData>builder()
+                                .add(spawnData(ACEntityTypes.GRIMORAY.get()))
+                                .build()
+                )
+                .lootTablesToEject(
+                        WeightedList.<ResourceKey<LootTable>>builder()
+                                .add(ACLootTables.DEEPSLATE_SPAWNER_KEY, 2)
+                                .add(ACLootTables.DEEPSLATE_SPAWNER_MISC, 3)
+                                .build()
+                )
+                .itemsToDropWhenOminous(ACLootTables.DEEPSLATE_SPAWNER_THROWABLES)
+                .build());
+
         ctx.register(ACTrialSpawnerConfigs.DEEPSLATE_SPAWNER_SENTINEL, TrialSpawnerConfig.builder()
                 .spawnRange(4)
                 .totalMobs(2.0F)
@@ -108,17 +129,17 @@ public class ACTrialSpawnerConfigProvider {
                 .build());
     }
 
-    private static <T extends Entity> SpawnData spawnData(EntityType<T> type) {
+    public static <T extends Entity> SpawnData spawnData(EntityType<T> type) {
         CompoundTag tag = new CompoundTag();
         tag.putString("id", BuiltInRegistries.ENTITY_TYPE.getKey(type).toString());
         return new SpawnData(tag, Optional.empty(), Optional.empty());
     }
 
-    private static <T extends Entity> SpawnData spawnDataWithEquipment(EntityType<T> type, ResourceKey<LootTable> equipmentLootTable) {
+    public static <T extends Entity> SpawnData spawnDataWithEquipment(EntityType<T> type, ResourceKey<LootTable> equipmentLootTable) {
         return customSpawnDataWithEquipment(type, tag -> {}, equipmentLootTable);
     }
 
-    private static <T extends Entity> SpawnData customSpawnDataWithEquipment(EntityType<T> type, Consumer<CompoundTag> tagModifier, @Nullable ResourceKey<LootTable> equipmentLootTable) {
+    public static <T extends Entity> SpawnData customSpawnDataWithEquipment(EntityType<T> type, Consumer<CompoundTag> tagModifier, @Nullable ResourceKey<LootTable> equipmentLootTable) {
         CompoundTag tag = new CompoundTag();
         tag.putString("id", BuiltInRegistries.ENTITY_TYPE.getKey(type).toString());
         tagModifier.accept(tag);

@@ -1,6 +1,7 @@
 package com.ratrod.archaion.registry;
 
 import com.ratrod.archaion.Archaion;
+import com.ratrod.archaion.entities.GrimorayType;
 import com.ratrod.archaion.entities.ai.SleepingState;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -15,5 +16,9 @@ public class ACEntityDataSerializers {
 
     public static final DeferredHolder<EntityDataSerializer<?>, EntityDataSerializer<SleepingState>> SLEEPING_STATE = ENTITY_DATA_SERIALIZERS.register("sleeping_state",
             () -> EntityDataSerializer.forValueType(StreamCodec.of(FriendlyByteBuf::writeEnum, buf -> buf.readEnum(SleepingState.class)))
+    );
+
+    public static final DeferredHolder<EntityDataSerializer<?>, EntityDataSerializer<GrimorayType>> GRIMORAY_TYPE = ENTITY_DATA_SERIALIZERS.register("grimoray_type",
+            () -> EntityDataSerializer.forValueType(StreamCodec.of(FriendlyByteBuf::writeEnum, buf -> buf.readEnum(GrimorayType.class)))
     );
 }

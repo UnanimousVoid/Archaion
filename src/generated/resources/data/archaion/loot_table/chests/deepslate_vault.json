@@ -14,6 +14,18 @@
           "functions": [
             {
               "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "archaion:echo_charge",
+          "weight": 5
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
                 "max": 4.0,
@@ -55,7 +67,7 @@
             }
           ],
           "name": "minecraft:golden_carrot",
-          "weight": 6
+          "weight": 5
         },
         {
           "type": "minecraft:item",
@@ -71,7 +83,7 @@
             }
           ],
           "name": "minecraft:gold_ingot",
-          "weight": 6
+          "weight": 5
         },
         {
           "type": "minecraft:item",
@@ -80,14 +92,31 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 8.0,
-                "min": 4.0
+                "max": 2.0,
+                "min": 1.0
               },
               "function": "minecraft:set_count"
             }
           ],
-          "name": "archaion:echo_charge",
-          "weight": 5
+          "name": "minecraft:diamond_block"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "enchantments": {
+                "minecraft:density": {
+                  "type": "minecraft:uniform",
+                  "max": 5.0,
+                  "min": 1.0
+                }
+              },
+              "function": "minecraft:set_enchantments"
+            }
+          ],
+          "name": "minecraft:enchanted_book",
+          "weight": 3
         },
         {
           "type": "minecraft:item",
@@ -101,7 +130,7 @@
             }
           ],
           "name": "minecraft:enchanted_book",
-          "weight": 5
+          "weight": 3
         },
         {
           "type": "minecraft:item",
@@ -112,14 +141,14 @@
                 "minecraft:unbreaking": {
                   "type": "minecraft:uniform",
                   "max": 3.0,
-                  "min": 2.0
+                  "min": 1.0
                 }
               },
               "function": "minecraft:set_enchantments"
             }
           ],
           "name": "minecraft:enchanted_book",
-          "weight": 4
+          "weight": 3
         },
         {
           "type": "minecraft:item",
@@ -130,14 +159,14 @@
                 "minecraft:sharpness": {
                   "type": "minecraft:uniform",
                   "max": 5.0,
-                  "min": 2.0
+                  "min": 1.0
                 }
               },
               "function": "minecraft:set_enchantments"
             }
           ],
           "name": "minecraft:enchanted_book",
-          "weight": 4
+          "weight": 3
         },
         {
           "type": "minecraft:item",
@@ -148,14 +177,14 @@
                 "minecraft:power": {
                   "type": "minecraft:uniform",
                   "max": 5.0,
-                  "min": 2.0
+                  "min": 1.0
                 }
               },
               "function": "minecraft:set_enchantments"
             }
           ],
           "name": "minecraft:enchanted_book",
-          "weight": 4
+          "weight": 3
         },
         {
           "type": "minecraft:item",
@@ -163,7 +192,7 @@
           "weight": 3
         }
       ],
-      "rolls": 4.0
+      "rolls": 5.0
     }
   ],
   "random_sequence": "archaion:chests/deepslate_vault"

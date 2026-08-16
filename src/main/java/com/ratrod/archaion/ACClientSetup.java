@@ -1,12 +1,15 @@
 package com.ratrod.archaion;
 
+import com.ratrod.archaion.api.trial.ACTrialRegistry;
 import com.ratrod.archaion.client.animations.BraveAnimations;
 import com.ratrod.archaion.client.animations.ClientAnimationRegistry;
 import com.ratrod.archaion.client.animations.DeepslateSentinelAnimations;
+import com.ratrod.archaion.client.animations.GrimorayAnimations;
 import com.ratrod.archaion.client.animations.LastOfDeepslateAnimations;
 import com.ratrod.archaion.client.item.EchosGracePull;
 import com.ratrod.archaion.client.models.BraveModel;
 import com.ratrod.archaion.client.models.DeepslateSentinelModel;
+import com.ratrod.archaion.client.models.GrimorayModel;
 import com.ratrod.archaion.client.models.LastOfDeepslateModel;
 import com.ratrod.archaion.client.renderers.*;
 import com.ratrod.archaion.registry.ACBlockEntities;
@@ -34,7 +37,6 @@ public class ACClientSetup {
 
     @SubscribeEvent
     static void onClientSetup(FMLClientSetupEvent event) {
-
         ClientAnimationRegistry.register(ACEntityTypes.LAST_OF_DEEPSLATE.get(), List.of(
                 LastOfDeepslateAnimations.DYING,
                 LastOfDeepslateAnimations.WAKING,
@@ -43,7 +45,7 @@ public class ACClientSetup {
                 LastOfDeepslateAnimations.SPIN_SWING,
                 LastOfDeepslateAnimations.INTERCEPT_SHOOT,
                 LastOfDeepslateAnimations.ROLL,
-                LastOfDeepslateAnimations.HURL_BRAVES,
+                LastOfDeepslateAnimations.SUMMON_ARCHAICS,
                 LastOfDeepslateAnimations.BODY_SLAM
         ));
 
@@ -54,6 +56,10 @@ public class ACClientSetup {
 
         ClientAnimationRegistry.register(ACEntityTypes.DEEPSLATE_SENTINEL.get(), List.of(
                 DeepslateSentinelAnimations.CHARGE
+        ));
+
+        ClientAnimationRegistry.register(ACEntityTypes.GRIMORAY.get(), List.of(
+                GrimorayAnimations.SHOOT
         ));
     }
 
@@ -69,23 +75,29 @@ public class ACClientSetup {
         event.registerEntityRenderer(ACEntityTypes.WIGHT.get(), WightRenderer::new);
         event.registerEntityRenderer(ACEntityTypes.ECHO_STAR.get(), EchoStarProjectileRenderer::new);
         event.registerEntityRenderer(ACEntityTypes.BRAVE.get(), BraveRenderer::new);
-        event.registerEntityRenderer(ACEntityTypes.BRAVE_SPAWN_PROJECTILE.get(), BraveSpawnProjectileRenderer::new);
         event.registerEntityRenderer(ACEntityTypes.THROWN_ECHO_MACE.get(), ThrownEchoMaceRenderer::new);
         event.registerEntityRenderer(ACEntityTypes.THROWN_IMPACT_PEARL.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(ACEntityTypes.LOD_INTERCEPT_BLAST.get(), LODInterceptBlastRenderer::new);
         event.registerEntityRenderer(ACEntityTypes.DEEPSLATE_SENTINEL.get(), DeepslateSentinelRenderer::new);
+        event.registerEntityRenderer(ACEntityTypes.GRIMORAY.get(), GrimorayRenderer::new);
+        event.registerEntityRenderer(ACEntityTypes.GRIMORAY_SPELL.get(), GrimoraySpellProjectileRenderer::new);
 
-        event.registerBlockEntityRenderer(ACBlockEntities.DEEPSLATE_TRIAL_SPAWNER.get(), DeepslateSpawnerRenderer::new);
         event.registerBlockEntityRenderer(ACBlockEntities.HOLOGRAM.get(), HologramRenderer::new);
+        event.registerBlockEntityRenderer(ACTrialRegistry.TRIAL_SPAWNER.get(), TrialSpawnerRenderer::new);
     }
 
     @SubscribeEvent
     static void onRegisterLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(LastOfDeepslateModel.LAYER_LOCATION, () -> LastOfDeepslateModel.createBodyLayer(CubeDeformation.NONE));
         event.registerLayerDefinition(LastOfDeepslateModel.CHARGED_LAYER_LOCATION, () -> LastOfDeepslateModel.createBodyLayer(new CubeDeformation(2.0F)));
+
         event.registerLayerDefinition(BraveModel.LAYER_LOCATION, () -> BraveModel.createBodyLayer(CubeDeformation.NONE));
         event.registerLayerDefinition(BraveModel.CHARGED_LAYER_LOCATION, () -> BraveModel.createBodyLayer(new CubeDeformation(2.0F)));
-        event.registerLayerDefinition(DeepslateSentinelModel.LAYER_LOCATION, DeepslateSentinelModel::createBodyLayer);
+
+        event.registerLayerDefinition(DeepslateSentinelModel.LAYER_LOCATION, () -> DeepslateSentinelModel.createBodyLayer(CubeDeformation.NONE));
+        event.registerLayerDefinition(DeepslateSentinelModel.CHARGED_LAYER_LOCATION, () -> DeepslateSentinelModel.createBodyLayer(new CubeDeformation(2.0F)));
+
+        event.registerLayerDefinition(GrimorayModel.LAYER_LOCATION, GrimorayModel::createBodyLayer);
     }
 
 }

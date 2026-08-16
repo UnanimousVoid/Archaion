@@ -1,6 +1,6 @@
 package com.ratrod.archaion.client.renderers;
 
-import com.ratrod.archaion.entities.EchoStarProjectile;
+import com.ratrod.archaion.entities.projectile.EchoStarProjectile;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

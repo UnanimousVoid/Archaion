@@ -1,6 +1,6 @@
 package com.ratrod.archaion.entities.ai.goals;
 
-import com.ratrod.archaion.entities.DeepslateSentinelEntity;
+import com.ratrod.archaion.entities.DeepslateSentinel;
 import com.ratrod.archaion.entities.Wight;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -12,13 +12,13 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class PickUpRidersGoal extends Goal {
-    private final DeepslateSentinelEntity sentinel;
+    private final DeepslateSentinel sentinel;
     private final double speedModifier;
     private final double searchRadius;
     private Entity target;
     private int pathRecalcTicks;
 
-    public PickUpRidersGoal(DeepslateSentinelEntity sentinel, double speedModifier, double searchRadius) {
+    public PickUpRidersGoal(DeepslateSentinel sentinel, double speedModifier, double searchRadius) {
         this.sentinel = sentinel;
         this.speedModifier = speedModifier;
         this.searchRadius = searchRadius;
@@ -58,7 +58,7 @@ public class PickUpRidersGoal extends Goal {
             Vec3 targetPos = this.target.position();
             this.sentinel.getNavigation().moveTo(targetPos.x, targetPos.y, targetPos.z, this.speedModifier);
         }
-        if (this.sentinel.distanceToSqr(this.target) < 5.0D) {
+        if (this.sentinel.distanceToSqr(this.target) < 6.0D) {
             this.target.startRiding(this.sentinel);
         }
     }

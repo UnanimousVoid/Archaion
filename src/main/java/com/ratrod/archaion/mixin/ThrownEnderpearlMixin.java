@@ -1,6 +1,6 @@
 package com.ratrod.archaion.mixin;
 
-import com.ratrod.archaion.entities.ThrownImpactPearl;
+import com.ratrod.archaion.entities.projectile.ThrownImpactPearl;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.projectile.throwableitemprojectile.ThrownEnderpearl;
 import net.minecraft.world.phys.HitResult;

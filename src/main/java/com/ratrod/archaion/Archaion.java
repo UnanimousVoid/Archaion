@@ -33,6 +33,8 @@ public class Archaion {
         ACStructureProcessorTypes.STRUCTURE_PROCESSOR.register(modEventBus);
         ACLootModifiers.GLOBAL_LOOT_MODIFIER_SERIALIZERS.register(modEventBus);
 
+        ACTrialVariants.initialize();
+
     }
 
     public static Identifier prefix(String path) {

@@ -1,7 +1,7 @@
 package com.ratrod.archaion.client.renderers.layer;
 
 import com.ratrod.archaion.Archaion;
-import com.ratrod.archaion.client.BraveRenderState;
+import com.ratrod.archaion.client.renderers.renderstate.BraveRenderState;
 import com.ratrod.archaion.client.models.BraveModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
