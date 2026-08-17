@@ -28,6 +28,8 @@ public class ACLanguageProvider extends LanguageProvider {
     protected void addTranslations() {
         this.add("creativetab.archaion_tab", "Archaion");
 
+        this.add("effect.archaion.armor_break", "Armor Break");
+
         this.advancement("root", "Archaion", "Descend into the deep, where the Last sleeps.");
         this.advancement("obtain_map", "Whispers in the Ruins", "Find an Ancient Keep map in an Ancient City.");
         this.advancement("enter_ancient_keep", "Breaching the Keep", "Step inside the Ancient Keep.");

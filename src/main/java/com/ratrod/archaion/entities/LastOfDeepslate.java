@@ -15,6 +15,7 @@ import com.ratrod.archaion.entities.ai.goals.LODAttackableRandomTargetGoal;
 import com.ratrod.archaion.entities.ai.systems.ArchaicRaid;
 import com.ratrod.archaion.item.EchoChargeItem;
 import com.ratrod.archaion.network.BossBarDataOutput;
+import com.ratrod.archaion.registry.ACEffects;
 import com.ratrod.archaion.registry.ACEntityDataSerializers;
 import com.ratrod.archaion.registry.ACSounds;
 import mod.chloeprime.aaaparticles.api.common.AAALevel;
@@ -40,6 +41,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
@@ -92,7 +94,7 @@ public class LastOfDeepslate extends Monster implements ACEntity<LastOfDeepslate
         this.attackManager.addAction(new LODInterceptShootAction(this), 500);
         this.attackManager.addAction(new LODRollAction(this), 15);
         this.attackManager.addAction(new LODSpawnArchaicsAction(this), 500);
-        this.attackManager.addAction(new LODBodySlamAction(this), 100);
+        this.attackManager.addAction(new LODBodySlamAction(this), 1000);
     }
 
     public ArchaicRaid getArchaicSystem() {
@@ -264,6 +266,19 @@ public class LastOfDeepslate extends Monster implements ACEntity<LastOfDeepslate
         }
 
         return super.hurtServer(level, source, damage);
+    }
+
+    @Override
+    public boolean doHurtTarget(ServerLevel level, Entity target) {
+        boolean result = super.doHurtTarget(level, target);
+        if (result && target instanceof LivingEntity living) {
+            int phases = this.archaicSystem.getPhasesTriggered();
+            int amplifier = phases >= 2 ? 1 : (phases >= 1 ? 0 : -1);
+            if (amplifier >= 0) {
+                living.addEffect(new MobEffectInstance(ACEffects.ARMOR_BREAK, 200, amplifier));
+            }
+        }
+        return result;
     }
 
     @Override

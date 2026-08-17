@@ -78,6 +78,7 @@ public class ACClientSetup {
         event.registerEntityRenderer(ACEntityTypes.THROWN_ECHO_MACE.get(), ThrownEchoMaceRenderer::new);
         event.registerEntityRenderer(ACEntityTypes.THROWN_IMPACT_PEARL.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(ACEntityTypes.LOD_INTERCEPT_BLAST.get(), LODInterceptBlastRenderer::new);
+        event.registerEntityRenderer(ACEntityTypes.LOD_SLAM.get(), LODSlamRenderer::new);
         event.registerEntityRenderer(ACEntityTypes.DEEPSLATE_SENTINEL.get(), DeepslateSentinelRenderer::new);
         event.registerEntityRenderer(ACEntityTypes.GRIMORAY.get(), GrimorayRenderer::new);
         event.registerEntityRenderer(ACEntityTypes.GRIMORAY_SPELL.get(), GrimoraySpellProjectileRenderer::new);

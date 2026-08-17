@@ -4,6 +4,7 @@ import com.ratrod.archaion.Archaion;
 import com.ratrod.archaion.api.entity.ManagedAction;
 import com.ratrod.archaion.entities.LastOfDeepslate;
 import com.ratrod.archaion.entities.ai.ACEntity;
+import com.ratrod.archaion.entities.projectile.LODSlamEffect;
 import com.ratrod.archaion.registry.ACSounds;
 import mod.chloeprime.aaaparticles.api.common.AAALevel;
 import mod.chloeprime.aaaparticles.api.common.ParticleEmitterInfo;
@@ -52,6 +53,8 @@ public class LODBodySlamAction extends ManagedAction<LastOfDeepslate> {
 
         ParticleEmitterInfo info = new ParticleEmitterInfo(Archaion.prefix("lod_boom_ground"));
         AAALevel.addParticle(serverLevel, info.position(entity.position().add(0, 0.5, 0)).scale(4.0F));
+
+        LODSlamEffect.summonRing(serverLevel, entity.position(), entity);
 
         AABB area = AABB.ofSize(entity.position(), 16, 10, 16);
 

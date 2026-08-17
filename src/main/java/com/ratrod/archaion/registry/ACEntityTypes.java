@@ -5,6 +5,7 @@ import com.ratrod.archaion.entities.*;
 import com.ratrod.archaion.entities.projectile.EchoStarProjectile;
 import com.ratrod.archaion.entities.projectile.GrimoraySpellProjectile;
 import com.ratrod.archaion.entities.projectile.LODInterceptBlast;
+import com.ratrod.archaion.entities.projectile.LODSlamEffect;
 import com.ratrod.archaion.entities.projectile.ThrownEchoMace;
 import com.ratrod.archaion.entities.projectile.ThrownImpactPearl;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -67,4 +68,11 @@ public class ACEntityTypes {
                     .noSave()
                     .noSummon()
                     .build(ResourceKey.create(Registries.ENTITY_TYPE, Archaion.prefix("lod_intercept_blast"))));
+
+    public static final DeferredHolder<EntityType<?>, EntityType<LODSlamEffect>> LOD_SLAM = ENTITY_TYPE.register("lod_slam",
+            () -> EntityType.Builder.<LODSlamEffect>of(LODSlamEffect::new, MobCategory.MISC)
+                    .sized(0.1F, 0.1F)
+                    .noSave()
+                    .noSummon()
+                    .build(ResourceKey.create(Registries.ENTITY_TYPE, Archaion.prefix("lod_slam"))));
 }
