@@ -87,12 +87,12 @@ public class ACTrialSpawnerConfigProvider {
                 .build());
 
         ctx.register(ACTrialSpawnerConfigs.DEEPSLATE_SPAWNER_GRIMORAY, TrialSpawnerConfig.builder()
-                .spawnRange(6)
+                .spawnRange(8)
                 .totalMobs(4.0F)
                 .simultaneousMobs(1.0F)
                 .totalMobsAddedPerPlayer(1)
                 .simultaneousMobsAddedPerPlayer(0.5F)
-                .ticksBetweenSpawn(200)
+                .ticksBetweenSpawn(50)
                 .spawnPotentialsDefinition(
                         WeightedList.<SpawnData>builder()
                                 .add(spawnData(ACEntityTypes.GRIMORAY.get()))

@@ -21,6 +21,15 @@
       }
     },
     {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "archaion:ancient_keep/ancient_library",
+        "processors": "archaion:ancient_keep/ancient_keep_decay",
+        "projection": "rigid"
+      }
+    },
+    {
       "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
@@ -34,15 +43,6 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "archaion:ancient_keep/storage_room",
-        "processors": "archaion:ancient_keep/ancient_keep_decay",
-        "projection": "rigid"
-      }
-    },
-    {
-      "weight": 1,
-      "element": {
-        "element_type": "minecraft:single_pool_element",
-        "location": "archaion:ancient_keep/water_room",
         "processors": "archaion:ancient_keep/ancient_keep_decay",
         "projection": "rigid"
       }
@@ -75,7 +75,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 2,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "archaion:ancient_keep/sentinel_barracks",
@@ -84,7 +84,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 2,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "archaion:ancient_keep/sentinel_crossroad",
