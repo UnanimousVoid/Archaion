@@ -58,6 +58,7 @@ public class ACLanguageProvider extends LanguageProvider {
         this.add("item.archaion.smithing_template.echos_grace_upgrade.base_slot_description", "Add a Bow");
         this.add("item.archaion.smithing_template.echos_grace_upgrade.additions_slot_description", "Add an Echo Charge");
 
+        this.add("tooltip.archaion.last_of_deepslate.echo_charge_required", "[ %s Echo Charges required ]");
         this.add("misc.archaion.filled_map.ancient_keep", "Ancient Keep Map");
 
         this.add("misc.archaion.hologram.ancient_keep_0", this.hologram(
@@ -127,6 +128,7 @@ public class ACLanguageProvider extends LanguageProvider {
                 Map.entry("lod_smash", "Last of Deepslate smashes"),
                 Map.entry("lod_spin", "Last of Deepslate spins"),
                 Map.entry("lod_step", "Last of Deepslate steps"),
+                Map.entry("lod_theme", "Last of Deepslate theme"),
                 Map.entry("sentinel_ambient", "Deepslate Sentinel hums"),
                 Map.entry("sentinel_death", "Deepslate Sentinel dies"),
                 Map.entry("sentinel_hurt", "Deepslate Sentinel hurts"),

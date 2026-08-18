@@ -82,6 +82,7 @@
   "misc.archaion.hologram.ancient_keep_1": "We fled beneath the stone.\nIt followed.\nWe sealed the deep.\nIt found us.\n\nThere was nowhere left to run.",
   "misc.archaion.hologram.ancient_keep_2": "Then we remembered the Firsts.\nGuardians older than our oldest ruins.\nMade by hands that were not ours.\n\nWe never knew how they were made.\nWe only knew what they were made for.",
   "misc.archaion.hologram.ancient_keep_3": "Not a First.\nBut made from their memory.\nMade to stand against the end.\n\nThe First came before us.\nThis one came after.\n\nOur Last.",
+
   "subtitle.archaion.brave_ambient": "Brave ambient",
   "subtitle.archaion.brave_death": "Brave death",
   "subtitle.archaion.brave_hurt": "Brave hurt",
@@ -99,9 +100,11 @@
   "subtitle.archaion.lod_spawn_archaics": "Lod spawn archaics",
   "subtitle.archaion.lod_spin": "Last of Deepslate spins",
   "subtitle.archaion.lod_step": "Last of Deepslate steps",
+  "subtitle.archaion.lod_theme": "Last of Deepslate theme",
   "subtitle.archaion.lod_warn_archaics": "Lod warn archaics",
   "subtitle.archaion.sentinel_ambient": "Deepslate Sentinel hums",
   "subtitle.archaion.sentinel_death": "Deepslate Sentinel dies",
   "subtitle.archaion.sentinel_hurt": "Deepslate Sentinel hurts",
-  "subtitle.archaion.sentinel_start_charging": "Deepslate Sentinel starts charging"
+  "subtitle.archaion.sentinel_start_charging": "Deepslate Sentinel starts charging",
+  "tooltip.archaion.last_of_deepslate.echo_charge_required": "[ %s Echo Charges required ]"
 }

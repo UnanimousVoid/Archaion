@@ -55,9 +55,9 @@ public class LODSpawnArchaicsAction extends ManagedAction<LastOfDeepslate> {
         int summonPhase = entity.getArchaicSystem().getPhasesTriggered();
         this.statMultiplier = summonPhase >= 2 ? 1.2F : 1.1F;
         int players = entity.getArchaicSystem().countNearbyPlayers();
-        int spawnCount = Math.max(7, 7 + 4 * (players - 1));
+        int spawnCount = Math.max(4, 4 + 4 * (players - 1));
         if (summonPhase >= 2) {
-            spawnCount = Math.max(10, 10 + 4 * (players - 1));
+            spawnCount = Math.max(5, 5 + 5 * (players - 1));
         }
 
         int base = spawnCount / 3;
@@ -66,7 +66,8 @@ public class LODSpawnArchaicsAction extends ManagedAction<LastOfDeepslate> {
         this.batchSizes[1] = base + (rem >= 2 ? 1 : 0);
         this.batchSizes[2] = base;
         this.batchIndex = 0;
-        int existingTotal = entity.getArchaicSystem().countChargedArchaics() > 0 ? entity.getArchaicSystem().getArchaicsIntended() : 0;
+        int alivePhase = entity.getArchaicSystem().countChargedArchaics();
+        int existingTotal = Math.max(alivePhase, 0);
         entity.getArchaicSystem().setArchaicsIntended(existingTotal + spawnCount);
 
         entity.spawnArchaicsAnim.forceStart();

@@ -27,7 +27,11 @@ public class LODBodySlamAction extends ManagedAction<LastOfDeepslate> {
         if (target == null || !target.isAlive()) return false;
         if (!entity.hasLineOfSight(target)) return false;
         if (entity.getY() + entity.getBbHeight() < target.getY()) return false;
-        return entity.distanceTo(target) <= entity.getBbWidth() * 1.5F;
+        float r = 1.5F;
+        if (entity.getArchaicSystem().getPhasesTriggered() >= 1) {
+            r = 3.5F;
+        }
+        return entity.distanceTo(target) <= entity.getBbWidth() * r;
     }
 
     @Override
@@ -54,7 +58,9 @@ public class LODBodySlamAction extends ManagedAction<LastOfDeepslate> {
         ParticleEmitterInfo info = new ParticleEmitterInfo(Archaion.prefix("lod_boom_ground"));
         AAALevel.addParticle(serverLevel, info.position(entity.position().add(0, 0.5, 0)).scale(4.0F));
 
-        LODSlamEffect.summonRing(serverLevel, entity.position(), entity);
+        if (entity.getArchaicSystem().getPhasesTriggered() >= 1) {
+            LODSlamEffect.summonRing(serverLevel, entity.position(), entity);
+        }
 
         AABB area = AABB.ofSize(entity.position(), 16, 10, 16);
 

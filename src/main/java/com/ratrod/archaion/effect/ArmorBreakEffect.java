@@ -8,7 +8,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 
 public class ArmorBreakEffect extends MobEffect {
 
-    private static final double REDUCTION_PER_LEVEL = 0.075;
+    private static final double REDUCTION_PER_LEVEL = 0.05;
 
     public ArmorBreakEffect(MobEffectCategory category, int color) {
         super(category, color);

@@ -1,12 +1,11 @@
 package com.ratrod.archaion;
 
 import com.ratrod.archaion.api.trial.ACTrialRegistry;
-import com.ratrod.archaion.client.animations.BraveAnimations;
-import com.ratrod.archaion.client.animations.ClientAnimationRegistry;
-import com.ratrod.archaion.client.animations.DeepslateSentinelAnimations;
-import com.ratrod.archaion.client.animations.GrimorayAnimations;
-import com.ratrod.archaion.client.animations.LastOfDeepslateAnimations;
+import com.ratrod.archaion.client.animations.*;
 import com.ratrod.archaion.client.item.EchosGracePull;
+import com.ratrod.archaion.client.misc.ClientEchoChargeRequiredTooltip;
+import com.ratrod.archaion.client.misc.EchoChargeRequiredTooltip;
+import com.ratrod.archaion.client.misc.LastOfDeepslateTooltipRenderer;
 import com.ratrod.archaion.client.models.BraveModel;
 import com.ratrod.archaion.client.models.DeepslateSentinelModel;
 import com.ratrod.archaion.client.models.GrimorayModel;
@@ -22,6 +21,8 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterClientTooltipComponentFactoriesEvent;
+import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.event.RegisterRangeSelectItemModelPropertyEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
@@ -99,6 +100,16 @@ public class ACClientSetup {
         event.registerLayerDefinition(DeepslateSentinelModel.CHARGED_LAYER_LOCATION, () -> DeepslateSentinelModel.createBodyLayer(new CubeDeformation(2.0F)));
 
         event.registerLayerDefinition(GrimorayModel.LAYER_LOCATION, GrimorayModel::createBodyLayer);
+    }
+
+    @SubscribeEvent
+    static void onRegisterGuiLayers(RegisterGuiLayersEvent event) {
+        event.registerAboveAll(Archaion.prefix("last_of_deepslate_tooltip"), LastOfDeepslateTooltipRenderer::render);
+    }
+
+    @SubscribeEvent
+    static void onRegisterTooltipComponents(RegisterClientTooltipComponentFactoriesEvent event) {
+        event.register(EchoChargeRequiredTooltip.class, ClientEchoChargeRequiredTooltip::new);
     }
 
 }

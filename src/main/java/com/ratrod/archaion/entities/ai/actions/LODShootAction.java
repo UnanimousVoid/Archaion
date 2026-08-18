@@ -39,7 +39,7 @@ public class LODShootAction extends ManagedAction<LastOfDeepslate> {
     public boolean onTick() {
         timer++;
 
-        if (timer == 22) {
+        if (timer == 21 || timer == 23 || timer == 25) {
             entity.playSound(ACSounds.LOD_SHOOT.get(), 5.0F, 1.0F);
 
             float yaw = entity.getYHeadRot() * Mth.DEG_TO_RAD;
@@ -49,7 +49,7 @@ public class LODShootAction extends ManagedAction<LastOfDeepslate> {
             ParticleEmitterInfo info = new ParticleEmitterInfo(Archaion.prefix("echo_blast"));
             AAALevel.addParticle(entity.level(), info.position(center).scale(6.0F));
 
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 4; i++) {
                 EchoStarProjectile projectile = ACEntityTypes.ECHO_STAR.get().create(entity.level(), EntitySpawnReason.TRIGGERED);
                 projectile.moveOrInterpolateTo(center);
                 projectile.setOwner(entity);

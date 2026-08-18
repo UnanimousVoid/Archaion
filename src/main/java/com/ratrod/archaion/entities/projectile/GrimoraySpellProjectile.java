@@ -10,6 +10,7 @@ import mod.chloeprime.aaaparticles.api.common.ParticleEmitterInfo;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.AreaEffectCloud;
@@ -53,6 +54,7 @@ public class GrimoraySpellProjectile extends ThrowableProjectile {
                 cloud.setWaitTime(10);
                 cloud.addEffect(new MobEffectInstance(MobEffects.POISON, 100, 0));
                 serverLevel.addFreshEntity(cloud);
+                this.playSound(SoundEvents.SQUID_DEATH, 1.5f, 1.0f);
             }
             case HARMING -> {
                 int r = 2;
@@ -60,6 +62,7 @@ public class GrimoraySpellProjectile extends ThrowableProjectile {
                 for (LivingEntity target : serverLevel.getEntitiesOfClass(LivingEntity.class, area, e -> e != this.getOwner() && !(e instanceof Grimoray) && e.isAffectedByPotions())) {
                     MobEffects.INSTANT_DAMAGE.value().applyInstantenousEffect(serverLevel, this, this.getOwner(), target, 0, 1.0);
                 }
+                this.playSound(SoundEvents.SQUID_DEATH, 1.5f, 0.8f);
             }
             case HEALING -> {
             }

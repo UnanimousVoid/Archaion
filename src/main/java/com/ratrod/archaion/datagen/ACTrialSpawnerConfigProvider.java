@@ -59,7 +59,7 @@ public class ACTrialSpawnerConfigProvider {
                 .lootTablesToEject(
                         WeightedList.<ResourceKey<LootTable>>builder()
                                 .add(ACLootTables.DEEPSLATE_SPAWNER_KEY, 2)
-                                .add(ACLootTables.DEEPSLATE_SPAWNER_MISC, 3)
+                                .add(ACLootTables.DEEPSLATE_SPAWNER_MISC, 4)
                                 .build()
                 )
                 .itemsToDropWhenOminous(ACLootTables.DEEPSLATE_SPAWNER_THROWABLES)
@@ -88,10 +88,10 @@ public class ACTrialSpawnerConfigProvider {
 
         ctx.register(ACTrialSpawnerConfigs.DEEPSLATE_SPAWNER_GRIMORAY, TrialSpawnerConfig.builder()
                 .spawnRange(6)
-                .totalMobs(4.0F)
-                .simultaneousMobs(1.0F)
-                .totalMobsAddedPerPlayer(1)
-                .simultaneousMobsAddedPerPlayer(0.5F)
+                .totalMobs(6.0F)
+                .simultaneousMobs(2.0F)
+                .totalMobsAddedPerPlayer(2)
+                .simultaneousMobsAddedPerPlayer(1F)
                 .ticksBetweenSpawn(200)
                 .spawnPotentialsDefinition(
                         WeightedList.<SpawnData>builder()

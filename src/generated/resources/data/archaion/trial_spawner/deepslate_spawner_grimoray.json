@@ -10,8 +10,6 @@
       "weight": 3
     }
   ],
-  "simultaneous_mobs": 1.0,
-  "simultaneous_mobs_added_per_player": 0.5,
   "spawn_potentials": [
     {
       "data": {
@@ -23,7 +21,5 @@
     }
   ],
   "spawn_range": 6,
-  "ticks_between_spawn": 200,
-  "total_mobs": 4.0,
-  "total_mobs_added_per_player": 1.0
+  "ticks_between_spawn": 200
 }

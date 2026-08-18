@@ -2,6 +2,7 @@ package com.ratrod.archaion.entities.projectile;
 
 import com.ratrod.archaion.Archaion;
 import com.ratrod.archaion.registry.ACEntityTypes;
+import com.ratrod.archaion.registry.ACSounds;
 import mod.chloeprime.aaaparticles.api.common.AAALevel;
 import mod.chloeprime.aaaparticles.api.common.ParticleEmitterInfo;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -84,7 +85,7 @@ public class LODSlamEffect extends Entity {
 
             LODSlamEffect slam = ACEntityTypes.LOD_SLAM.get().create(serverLevel, EntitySpawnReason.TRIGGERED);
 
-            slam.moveOrInterpolateTo(originPos.add(dir.scale(12.0)));
+            slam.moveOrInterpolateTo(originPos.add(dir.scale(6.0)));
             slam.slamDirection = dir;
             slam.generation = 1;
             slam.source = source;
@@ -95,7 +96,7 @@ public class LODSlamEffect extends Entity {
 
     private void spawnChild() {
         ServerLevel serverLevel = (ServerLevel) this.level();
-        this.place(serverLevel, this.position().add(this.slamDirection.scale(2.0)), this.slamDirection, this.generation + 1);
+        this.place(serverLevel, this.position().add(this.slamDirection.scale(4.0)), this.slamDirection, this.generation + 1);
     }
 
     private void place(ServerLevel serverLevel, Vec3 pos, Vec3 dir, int gen) {
@@ -112,6 +113,7 @@ public class LODSlamEffect extends Entity {
         this.damaged = true;
         ServerLevel serverLevel = (ServerLevel) this.level();
         Entity cause = this.source != null ? this.source : this;
+        this.playSound(ACSounds.LOD_SMASH.get(), 1.2F, 1.8F);
         AABB area = AABB.ofSize(this.position(), 3.0, 12.0, 3.0);
         List<LivingEntity> targets = serverLevel.getEntitiesOfClass(LivingEntity.class, area, e -> e != cause && e.isAlive() && canTarget(e));
         for (LivingEntity target : targets) {

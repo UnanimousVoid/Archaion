@@ -13,7 +13,10 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
@@ -22,6 +25,7 @@ import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
@@ -48,9 +52,6 @@ public class Grimoray extends Monster implements ACEntity<Grimoray> {
         this.setNoGravity(true);
         this.moveControl = new ACMoveControl<>(this);
         this.navigation = new FlyingPathNavigation(this, level);
-
-        GrimorayType[] types = GrimorayType.values();
-        this.entityData.set(GRIMORAY_TYPE, types[this.random.nextInt(types.length)]);
 
         this.attackManager.addAction(new GrimorayShootAction(this), 100);
     }
@@ -128,6 +129,14 @@ public class Grimoray extends Monster implements ACEntity<Grimoray> {
         this.goalSelector.addGoal(2, new LookAtPlayerGoal(this, Player.class, 8.0F));
 //        this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
+    }
+
+    @Override
+    public @Nullable SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, EntitySpawnReason spawnReason, @Nullable SpawnGroupData groupData) {
+        SpawnGroupData spawnGroupData = super.finalizeSpawn(level, difficulty, spawnReason, groupData);
+        GrimorayType[] types = GrimorayType.values();
+        this.entityData.set(GRIMORAY_TYPE, types[this.random.nextInt(types.length)]);
+        return spawnGroupData;
     }
 
     @Override
