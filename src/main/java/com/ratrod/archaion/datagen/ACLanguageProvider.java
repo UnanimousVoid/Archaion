@@ -129,6 +129,7 @@ public class ACLanguageProvider extends LanguageProvider {
                 Map.entry("lod_spin", "Last of Deepslate spins"),
                 Map.entry("lod_step", "Last of Deepslate steps"),
                 Map.entry("lod_theme", "Last of Deepslate theme"),
+                Map.entry("lod_echo_charge_interact", "Last of Deepslate interaction"),
                 Map.entry("sentinel_ambient", "Deepslate Sentinel hums"),
                 Map.entry("sentinel_death", "Deepslate Sentinel dies"),
                 Map.entry("sentinel_hurt", "Deepslate Sentinel hurts"),

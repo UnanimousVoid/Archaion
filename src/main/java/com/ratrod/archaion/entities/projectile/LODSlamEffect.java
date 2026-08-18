@@ -62,7 +62,7 @@ public class LODSlamEffect extends Entity {
 
         if (this.level().isClientSide() || this.isRemoved()) return;
 
-        if (this.tickCount == 2 && this.generation < 7) {
+        if (this.tickCount == 2 && this.generation < 10) {
             this.spawnChild();
         }
 
@@ -75,8 +75,10 @@ public class LODSlamEffect extends Entity {
     public static void summonRing(ServerLevel serverLevel, Vec3 originPos, @Nullable Entity source) {
         int count = 12;
 
+        double rotationOffset = serverLevel.getRandom().nextDouble() * Math.PI * 2.0;
+
         for (int i = 0; i < count; i++) {
-            double angle = (Math.PI * 2.0 * i) / count;
+            double angle = ((Math.PI * 2.0 * i) / count) + rotationOffset;
 
             double dx = Math.cos(angle);
             double dz = Math.sin(angle);
@@ -85,7 +87,7 @@ public class LODSlamEffect extends Entity {
 
             LODSlamEffect slam = ACEntityTypes.LOD_SLAM.get().create(serverLevel, EntitySpawnReason.TRIGGERED);
 
-            slam.moveOrInterpolateTo(originPos.add(dir.scale(6.0)));
+            slam.moveOrInterpolateTo(originPos.add(dir.scale(4.0)));
             slam.slamDirection = dir;
             slam.generation = 1;
             slam.source = source;

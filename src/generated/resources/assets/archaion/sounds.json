@@ -65,6 +65,12 @@
     ],
     "subtitle": "subtitle.archaion.lod_death"
   },
+  "lod_echo_charge_interact": {
+    "sounds": [
+      "archaion:lod_echo_charge_interact"
+    ],
+    "subtitle": "subtitle.archaion.lod_echo_charge_interact"
+  },
   "lod_hurt": {
     "sounds": [
       "archaion:lod_hurt"

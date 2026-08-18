@@ -82,7 +82,6 @@
   "misc.archaion.hologram.ancient_keep_1": "We fled beneath the stone.\nIt followed.\nWe sealed the deep.\nIt found us.\n\nThere was nowhere left to run.",
   "misc.archaion.hologram.ancient_keep_2": "Then we remembered the Firsts.\nGuardians older than our oldest ruins.\nMade by hands that were not ours.\n\nWe never knew how they were made.\nWe only knew what they were made for.",
   "misc.archaion.hologram.ancient_keep_3": "Not a First.\nBut made from their memory.\nMade to stand against the end.\n\nThe First came before us.\nThis one came after.\n\nOur Last.",
-
   "subtitle.archaion.brave_ambient": "Brave ambient",
   "subtitle.archaion.brave_death": "Brave death",
   "subtitle.archaion.brave_hurt": "Brave hurt",
@@ -94,6 +93,7 @@
   "subtitle.archaion.lod_activate_smash": "Last of Deepslate crashes down",
   "subtitle.archaion.lod_ambient": "Last of Deepslate groans",
   "subtitle.archaion.lod_death": "Last of Deepslate dies",
+  "subtitle.archaion.lod_echo_charge_interact": "Last of Deepslate interaction",
   "subtitle.archaion.lod_hurt": "Last of Deepslate hurts",
   "subtitle.archaion.lod_shoot": "Last of Deepslate shoots",
   "subtitle.archaion.lod_smash": "Last of Deepslate smashes",

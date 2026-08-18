@@ -2,6 +2,7 @@ package com.ratrod.archaion.entities.projectile;
 
 import com.ratrod.archaion.Archaion;
 import com.ratrod.archaion.entities.LastOfDeepslate;
+import com.ratrod.archaion.entities.ai.SleepingState;
 import com.ratrod.archaion.registry.ACEntityTypes;
 import com.ratrod.archaion.registry.ACSounds;
 import mod.chloeprime.aaaparticles.api.common.AAALevel;
@@ -61,12 +62,24 @@ public class EchoStarProjectile extends ThrowableProjectile {
     @Override
     protected void onHitBlock(BlockHitResult hitResult) {
         super.onHitBlock(hitResult);
-        this.damageArea();
+        if (!level().isClientSide()) {
+            this.damageArea();
+        }
     }
 
     @Override
     protected void onHitEntity(EntityHitResult hitResult) {
-        this.damageArea();
+        super.onHitEntity(hitResult);
+        if (!level().isClientSide()) {
+            if (hitResult.getEntity() instanceof LastOfDeepslate lod) {
+                if (lod.getSleepingState() == SleepingState.SLEEPING) {
+                    lod.feedEchoCharge();
+                    this.discard();
+                    return;
+                }
+            }
+            this.damageArea();
+        }
     }
 
     public void setPowerBonus(float powerBonus) {
@@ -78,22 +91,20 @@ public class EchoStarProjectile extends ThrowableProjectile {
     }
 
     public void damageArea() {
-        if (!level().isClientSide()) {
-            ServerLevel server = (ServerLevel) level();
-            float damage = this.baseDamage + this.powerBonus;
+        ServerLevel server = (ServerLevel) level();
+        float damage = this.baseDamage + this.powerBonus;
 
-            for (LivingEntity target : server.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(3))) {
-                if (target != this.getOwner() && canHurt(target)) {
-                    target.hurtServer(server, server.damageSources().explosion(this, this.getOwner()), damage);
-                }
+        for (LivingEntity target : server.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(3))) {
+            if (target != this.getOwner() && canHurt(target)) {
+                target.hurtServer(server, server.damageSources().explosion(this, this.getOwner()), damage);
             }
-
-            this.playSound(ACSounds.ECHO_STAR_BLAST.get(), 4.0F, 1.0F);
-            ParticleEmitterInfo info = new ParticleEmitterInfo(Archaion.prefix("lod_boom_group"));
-            AAALevel.addParticle(level(), true, info.position(this.position().add(0, 0.5, 0)).scale(1.5F));
-
-            this.discard();
         }
+
+        this.playSound(ACSounds.ECHO_STAR_BLAST.get(), 4.0F, 1.0F);
+        ParticleEmitterInfo info = new ParticleEmitterInfo(Archaion.prefix("lod_boom_group"));
+        AAALevel.addParticle(level(), true, info.position(this.position().add(0, 0.5, 0)).scale(1.5F));
+
+        this.discard();
     }
 
     private boolean canHurt(LivingEntity target) {

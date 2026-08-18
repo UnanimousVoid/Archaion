@@ -360,15 +360,24 @@ public class LastOfDeepslate extends Monster implements ACEntity<LastOfDeepslate
         ItemStack stack = player.getItemInHand(hand);
         if (this.getSleepingState() == SleepingState.SLEEPING && stack.getItem() instanceof EchoChargeItem) {
             stack.shrink(1);
-            this.setEchoChargesFed(this.getEchoChargesFed() + 1);
-            this.playSound(ACSounds.LOD_AMBIENT.get(), 3.0F, 1.0F);
-            int requiredEchoCharges = 4;
-            if (this.getEchoChargesFed() >= requiredEchoCharges) {
-                this.beginWaking();
-            }
+            this.feedEchoCharge();
             return InteractionResult.SUCCESS;
         }
         return super.mobInteract(player, hand);
+    }
+
+    public void feedEchoCharge() {
+        this.setEchoChargesFed(this.getEchoChargesFed() + 1);
+        this.playSound(ACSounds.LOD_AMBIENT.get(), 3.0F, 1.0F);
+        int requiredEchoCharges = 4;
+        if (this.getEchoChargesFed() >= requiredEchoCharges) {
+            this.beginWaking();
+        }
+
+        this.playSound(ACSounds.LOD_ECHO_CHARGE_INTERACT.get(), 3.0F, 1.0F);
+        ParticleEmitterInfo info = new ParticleEmitterInfo(Archaion.prefix("lod_feed_charge"));
+        AAALevel.addParticle(level(), info.position(this.position().add(this.getDeltaMovement().scale(3)).add(0, 0.5, 0)).scale(1.75F));
+
     }
 
     private void beginWaking() {
