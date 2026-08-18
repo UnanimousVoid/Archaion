@@ -192,9 +192,17 @@ public class LastOfDeepslate extends Monster implements ACEntity<LastOfDeepslate
             }
 
         } else {
-            if (this.getSleepingState() != SleepingState.SLEEPING && tickCount % 8 == 0) {
-                ParticleEmitterInfo info = new ParticleEmitterInfo(Archaion.prefix("lod_aura"));
-                AAALevel.addParticle(level(), info.position(this.position().add(this.getDeltaMovement().scale(3)).add(0, 0.5, 0)).scale(1.25F));
+            if (this.getSleepingState() != SleepingState.SLEEPING) {
+                if (tickCount % 8 == 0) {
+                    ParticleEmitterInfo info = new ParticleEmitterInfo(Archaion.prefix("lod_aura"));
+                    AAALevel.addParticle(level(), info.position(this.position().add(this.getDeltaMovement().scale(3)).add(0, 0.5, 0)).scale(1.25F));
+                }
+
+                float hpRatio = this.getHealth() / this.getMaxHealth();
+                if (tickCount % 12 == 0 && hpRatio <= 0.33F) {
+                    ParticleEmitterInfo info = new ParticleEmitterInfo(Archaion.prefix("lod_smoking"));
+                    AAALevel.addParticle(level(), info.bindOnEntity(this).position(0, 3, 0).scale(1.5F));
+                }
             }
         }
     }

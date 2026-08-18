@@ -6,7 +6,6 @@ import com.ratrod.archaion.client.renderers.layer.LastOfDeepslateChargedLayer;
 import com.ratrod.archaion.client.renderers.renderstate.LastOfDeepslateRenderState;
 import com.ratrod.archaion.entities.LastOfDeepslate;
 import com.ratrod.archaion.entities.ai.SleepingState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.LivingEntityEmissiveLayer;
@@ -18,6 +17,9 @@ public class LastOfDeepslateRenderer extends MobRenderer<LastOfDeepslate, LastOf
 
     private static final Identifier TEXTURE = Archaion.prefix("textures/entity/last_of_deepslate.png");
     private static final Identifier GLOW_TEXTURE = Archaion.prefix("textures/entity/last_of_deepslate_glow.png");
+
+    private static final Identifier TEXTURE_CRACKED = Archaion.prefix("textures/entity/last_of_deepslate_cracked.png");
+
 
     public LastOfDeepslateRenderer(EntityRendererProvider.Context context) {
         super(context, new LastOfDeepslateModel<>(context.bakeLayer(LastOfDeepslateModel.LAYER_LOCATION)), 5F);
@@ -50,12 +52,11 @@ public class LastOfDeepslateRenderer extends MobRenderer<LastOfDeepslate, LastOf
         state.animationManager = entity.getAnimationManager();
         state.sleepingState = entity.getSleepingState();
         state.hasChargedArchaics = entity.hasChargedArchaics();
-        state.pos = entity.getPosition(partialTicks);
-        state.playerPos = Minecraft.getInstance().player.getPosition(partialTicks);
+        state.hpRatio = entity.getHealth() / entity.getMaxHealth();
     }
 
     @Override
     public Identifier getTextureLocation(LastOfDeepslateRenderState state) {
-        return TEXTURE;
+        return state.hpRatio <= 0.66 ? TEXTURE_CRACKED : TEXTURE;
     }
 }
