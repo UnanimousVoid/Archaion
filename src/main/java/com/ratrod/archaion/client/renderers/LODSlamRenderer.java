@@ -1,0 +1,24 @@
+package com.ratrod.archaion.client.renderers;
+
+import com.ratrod.archaion.entities.projectile.LODSlamEffect;
+import net.minecraft.client.renderer.culling.Frustum;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
+
+public class LODSlamRenderer extends EntityRenderer<LODSlamEffect, EntityRenderState> {
+
+    public LODSlamRenderer(EntityRendererProvider.Context context) {
+        super(context);
+    }
+
+    @Override
+    public EntityRenderState createRenderState() {
+        return new EntityRenderState();
+    }
+
+    @Override
+    public boolean shouldRender(LODSlamEffect entity, Frustum culler, double camX, double camY, double camZ) {
+        return false;
+    }
+}

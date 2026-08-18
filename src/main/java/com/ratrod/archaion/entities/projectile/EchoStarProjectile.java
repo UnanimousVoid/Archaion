@@ -83,7 +83,7 @@ public class EchoStarProjectile extends ThrowableProjectile {
             float damage = this.baseDamage + this.powerBonus;
 
             for (LivingEntity target : server.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(3))) {
-                if (target != this.getOwner() && !canHurt(target)) {
+                if (target != this.getOwner() && canHurt(target)) {
                     target.hurtServer(server, server.damageSources().explosion(this, this.getOwner()), damage);
                 }
             }

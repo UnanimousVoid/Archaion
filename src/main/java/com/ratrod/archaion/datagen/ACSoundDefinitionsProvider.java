@@ -4,6 +4,7 @@ import com.ratrod.archaion.Archaion;
 import com.ratrod.archaion.registry.ACSounds;
 import net.minecraft.data.PackOutput;
 import net.minecraft.sounds.SoundEvent;
+import net.neoforged.neoforge.common.data.SoundDefinition;
 import net.neoforged.neoforge.common.data.SoundDefinitionsProvider;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
@@ -15,9 +16,14 @@ public class ACSoundDefinitionsProvider extends SoundDefinitionsProvider {
     @Override
     public void registerSounds() {
         for (DeferredHolder<SoundEvent, ? extends SoundEvent> sound : ACSounds.SOUND_EVENT.getEntries()) {
-            add(sound.value(), definition()
-                    .with(sound(sound.getId()))
-                    .subtitle("subtitle." + Archaion.MODID + "." + sound.getId().getPath()));
+
+            SoundDefinition.Sound definition = sound(sound.getId());
+
+            if (sound.getId().equals(ACSounds.LOD_THEME.getId())) {
+                definition = definition.stream();
+            }
+
+            add(sound.value(), definition().with(definition).subtitle("subtitle." + Archaion.MODID + "." + sound.getId().getPath()));
         }
     }
 }

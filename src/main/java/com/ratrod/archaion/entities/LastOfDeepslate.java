@@ -14,7 +14,10 @@ import com.ratrod.archaion.entities.ai.goals.GoToTargetGoal;
 import com.ratrod.archaion.entities.ai.goals.LODAttackableRandomTargetGoal;
 import com.ratrod.archaion.entities.ai.systems.ArchaicRaid;
 import com.ratrod.archaion.item.EchoChargeItem;
+import com.ratrod.archaion.network.ACNetwork;
 import com.ratrod.archaion.network.BossBarDataOutput;
+import com.ratrod.archaion.network.s2c.BossMusicPacket;
+import com.ratrod.archaion.registry.ACEffects;
 import com.ratrod.archaion.registry.ACEntityDataSerializers;
 import com.ratrod.archaion.registry.ACSounds;
 import mod.chloeprime.aaaparticles.api.common.AAALevel;
@@ -40,6 +43,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
@@ -52,11 +56,13 @@ import net.minecraft.world.level.storage.ValueOutput;
 import org.jspecify.annotations.Nullable;
 
 import java.util.List;
+import java.util.Map;
 
 public class LastOfDeepslate extends Monster implements ACEntity<LastOfDeepslate> {
 
     public static final EntityDataAccessor<SleepingState> SLEEPING_STATE = SynchedEntityData.defineId(LastOfDeepslate.class, ACEntityDataSerializers.SLEEPING_STATE.get());
     public static final EntityDataAccessor<Boolean> HAS_CHARGED_ARCHAICS = SynchedEntityData.defineId(LastOfDeepslate.class, EntityDataSerializers.BOOLEAN);
+    public static final EntityDataAccessor<Integer> ECHO_CHARGES_FED = SynchedEntityData.defineId(LastOfDeepslate.class, EntityDataSerializers.INT);
 
     private final EntityAnimationManager animationManager = new EntityAnimationManager(this);
     private final ActionManager<LastOfDeepslate> attackManager = new ActionManager<>(this);
@@ -76,8 +82,6 @@ public class LastOfDeepslate extends Monster implements ACEntity<LastOfDeepslate
 
     private int wakingStartTick = 0;
     private boolean deathAnimationPlayed = false;
-
-    private int echoChargesFed = 0;
 
     public LastOfDeepslate(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
@@ -116,7 +120,7 @@ public class LastOfDeepslate extends Monster implements ACEntity<LastOfDeepslate
         return Monster.createMonsterAttributes()
                 .add(Attributes.MAX_HEALTH, 600.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.25D)
-                .add(Attributes.ATTACK_DAMAGE, 45.0D)
+                .add(Attributes.ATTACK_DAMAGE, 40.0D)
                 .add(Attributes.FOLLOW_RANGE, 64.0D)
                 .add(Attributes.ARMOR, 15.0D)
                 .add(Attributes.STEP_HEIGHT, 1.5D)
@@ -203,6 +207,9 @@ public class LastOfDeepslate extends Monster implements ACEntity<LastOfDeepslate
             if (this.getSleepingState() != SleepingState.AWAKE) {
                 this.setSleepingState(SleepingState.AWAKE);
             }
+            bossEvent.getPlayers().forEach(player -> {
+                ACNetwork.sendToPlayer(player, new BossMusicPacket(false));
+            });
             this.deathAnim.forceStart();
             deathAnimationPlayed = true;
         }
@@ -231,6 +238,18 @@ public class LastOfDeepslate extends Monster implements ACEntity<LastOfDeepslate
     }
 
     @Override
+    public void addBossBarPlayer(ServerBossEvent bossEvent, ServerPlayer player, int bossIdx, Map<String, Integer> values) {
+        ACEntity.super.addBossBarPlayer(bossEvent, player, bossIdx, values);
+        ACNetwork.sendToPlayer(player, new BossMusicPacket(true));
+    }
+
+    @Override
+    public void removeBossBarPlayer(ServerBossEvent bossEvent, ServerPlayer player) {
+        ACEntity.super.removeBossBarPlayer(bossEvent, player);
+        ACNetwork.sendToPlayer(player, new BossMusicPacket(false));
+    }
+
+    @Override
     public void stopSeenByPlayer(ServerPlayer player) {
         super.stopSeenByPlayer(player);
         this.removeBossBarPlayer(bossEvent, player);
@@ -252,11 +271,9 @@ public class LastOfDeepslate extends Monster implements ACEntity<LastOfDeepslate
         int aliveArchaics = this.archaicSystem.countChargedArchaics();
         damage *= this.archaicSystem.getArchaicProtectionMultiplier(aliveArchaics);
 
-        float threshold = this.getMaxHealth() * 0.05F;
+        float threshold = this.getMaxHealth() * 0.03F;
         if (damage > threshold) {
-            float excess = damage - threshold;
-            float multiplier = 0.2F + 0.8F / (1.0F + excess / threshold);
-            damage *= multiplier;
+            damage *= this.getAntiBurstMultiplier(damage, threshold);
         }
 
         if (this.archaicSystem.hasFatalDamageCap(source, aliveArchaics)) {
@@ -266,15 +283,44 @@ public class LastOfDeepslate extends Monster implements ACEntity<LastOfDeepslate
         return super.hurtServer(level, source, damage);
     }
 
+    public float getAntiBurstMultiplier(float damage, float threshold) {
+        int players = Math.max(1, this.archaicSystem.countNearbyPlayers());
+        float floor = Math.max(0.05F, 0.2F - 0.03F * (players - 1));
+        float excess = damage - threshold;
+        return floor + (1.0F - floor) / (1.0F + excess / threshold);
+    }
+
+    @Override
+    public boolean doHurtTarget(ServerLevel level, Entity target) {
+        boolean result = super.doHurtTarget(level, target);
+        if (result && target instanceof LivingEntity living) {
+            int phases = this.archaicSystem.getPhasesTriggered();
+            int amplifier = phases >= 2 ? 1 : (phases == 1 ? 0 : -1);
+            if (amplifier >= 0) {
+                living.addEffect(new MobEffectInstance(ACEffects.ARMOR_BREAK, 200, amplifier));
+            }
+        }
+        return result;
+    }
+
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
         builder.define(SLEEPING_STATE, SleepingState.SLEEPING);
         builder.define(HAS_CHARGED_ARCHAICS, false);
+        builder.define(ECHO_CHARGES_FED, 0);
     }
 
     public boolean hasChargedArchaics() {
         return this.entityData.get(HAS_CHARGED_ARCHAICS);
+    }
+
+    public int getEchoChargesFed() {
+        return this.entityData.get(ECHO_CHARGES_FED);
+    }
+
+    public void setEchoChargesFed(int echoChargesFed) {
+        this.entityData.set(ECHO_CHARGES_FED, echoChargesFed);
     }
 
     public void setHasChargedArchaics(boolean hasChargedArchaics) {
@@ -296,7 +342,7 @@ public class LastOfDeepslate extends Monster implements ACEntity<LastOfDeepslate
             this.setSleepingState(SleepingState.values()[num]);
         });
         this.archaicSystem.load(input);
-        this.echoChargesFed = input.getIntOr("echoChargesFed", 0);
+        this.setEchoChargesFed(input.getIntOr("echoChargesFed", 0));
 
         if (!(attackManager.getCurrentAction() instanceof LODSpawnArchaicsAction)) attackManager.stopCurrentAction();
     }
@@ -306,7 +352,7 @@ public class LastOfDeepslate extends Monster implements ACEntity<LastOfDeepslate
         super.addAdditionalSaveData(output);
         output.putInt("sleepState", this.getSleepingState().ordinal());
         this.archaicSystem.save(output);
-        output.putInt("echoChargesFed", this.echoChargesFed);
+        output.putInt("echoChargesFed", this.getEchoChargesFed());
     }
 
     @Override
@@ -314,10 +360,10 @@ public class LastOfDeepslate extends Monster implements ACEntity<LastOfDeepslate
         ItemStack stack = player.getItemInHand(hand);
         if (this.getSleepingState() == SleepingState.SLEEPING && stack.getItem() instanceof EchoChargeItem) {
             stack.shrink(1);
-            this.echoChargesFed++;
+            this.setEchoChargesFed(this.getEchoChargesFed() + 1);
             this.playSound(ACSounds.LOD_AMBIENT.get(), 3.0F, 1.0F);
             int requiredEchoCharges = 4;
-            if (this.echoChargesFed >= requiredEchoCharges) {
+            if (this.getEchoChargesFed() >= requiredEchoCharges) {
                 this.beginWaking();
             }
             return InteractionResult.SUCCESS;

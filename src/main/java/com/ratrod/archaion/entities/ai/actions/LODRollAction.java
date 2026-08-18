@@ -3,6 +3,7 @@ package com.ratrod.archaion.entities.ai.actions;
 import com.ratrod.archaion.Archaion;
 import com.ratrod.archaion.api.entity.ManagedAction;
 import com.ratrod.archaion.entities.LastOfDeepslate;
+import com.ratrod.archaion.entities.ai.ACEntity;
 import com.ratrod.archaion.registry.ACSounds;
 import mod.chloeprime.aaaparticles.api.common.AAALevel;
 import mod.chloeprime.aaaparticles.api.common.ParticleEmitterInfo;
@@ -111,7 +112,7 @@ public class LODRollAction extends ManagedAction<LastOfDeepslate> {
         AABB area = AABB.ofSize(entity.position(), bbWidth, 3, bbWidth);
         List<LivingEntity> targets = level.getEntitiesOfClass(LivingEntity.class, area, e -> e != entity && e.isAlive() && entity.canAttack(e));
         for (LivingEntity target : targets) {
-            if (target.hurtServer(level, level.damageSources().explosion(entity, entity), 20.0F)) {
+            if (entity.attackTarget(level, target, 0.6F, ACEntity.Operation.MULTIPLY)) {
                 Vec3 knockback = target.position().subtract(entity.position()).normalize().scale(3.0).add(0, 0.35, 0);
                 target.setDeltaMovement(target.getDeltaMovement().add(knockback));
                 target.hurtMarked = true;

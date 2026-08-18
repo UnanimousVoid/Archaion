@@ -28,9 +28,7 @@ public class GrimorayShootAction extends ManagedAction<Grimoray> {
         if (target == null || !target.isAlive()) return false;
         if (!entity.hasLineOfSight(target)) return false;
         double distance = entity.distanceTo(target);
-        return entity.getSpellCooldown() <= 0
-                && distance <= Grimoray.SHOOT_RANGE
-                && distance >= Grimoray.MIN_SHOOT_RANGE;
+        return entity.getSpellCooldown() <= 0 && distance <= Grimoray.SHOOT_RANGE && distance >= Grimoray.MIN_SHOOT_RANGE;
     }
 
     @Override
@@ -49,6 +47,8 @@ public class GrimorayShootAction extends ManagedAction<Grimoray> {
 
                 if (entity.getGrimorayType() == GrimorayType.HEALING) {
 
+                    entity.playSound(SoundEvents.PLAYER_LEVELUP, 1.5f, 1.5f);
+
                     AABB area = entity.getBoundingBox().inflate(16.0);
                     for (LivingEntity living : serverLevel.getEntitiesOfClass(LivingEntity.class, area, e -> e instanceof Enemy && e.isAlive())) {
                         if (living.is(entity)) {
@@ -66,7 +66,7 @@ public class GrimorayShootAction extends ManagedAction<Grimoray> {
 
                     Vec3 pos = entity.position().add(0, entity.getBbHeight() * 0.6, 0);
 
-                    entity.playSound(SoundEvents.BLAZE_SHOOT, 1.5f, 1.2f);
+                    entity.playSound(SoundEvents.SQUID_SQUIRT, 1.5f, 0.8f);
 
                     GrimoraySpellProjectile spell = ACEntityTypes.GRIMORAY_SPELL.get().create(serverLevel, EntitySpawnReason.TRIGGERED);
                     spell.moveOrInterpolateTo(pos);

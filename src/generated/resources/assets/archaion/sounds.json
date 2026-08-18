@@ -101,6 +101,15 @@
     ],
     "subtitle": "subtitle.archaion.lod_step"
   },
+  "lod_theme": {
+    "sounds": [
+      {
+        "name": "archaion:lod_theme",
+        "stream": true
+      }
+    ],
+    "subtitle": "subtitle.archaion.lod_theme"
+  },
   "lod_warn_archaics": {
     "sounds": [
       "archaion:lod_warn_archaics"
