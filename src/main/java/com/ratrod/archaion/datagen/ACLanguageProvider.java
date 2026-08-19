@@ -58,7 +58,7 @@ public class ACLanguageProvider extends LanguageProvider {
         this.add("item.archaion.smithing_template.echos_grace_upgrade.base_slot_description", "Add a Bow");
         this.add("item.archaion.smithing_template.echos_grace_upgrade.additions_slot_description", "Add an Echo Charge");
 
-        this.add("tooltip.archaion.last_of_deepslate.echo_charge_required", "[ %s Echo Charges required ]");
+        this.add("tooltip.archaion.last_of_deepslate.echo_charge_required", "%s Echo Charges required to activate boss");
         this.add("misc.archaion.filled_map.ancient_keep", "Ancient Keep Map");
 
         this.add("misc.archaion.hologram.ancient_keep_0", this.hologram(
@@ -97,6 +97,8 @@ public class ACLanguageProvider extends LanguageProvider {
                 "Our Last."
         ));
 
+        this.addEntityType(ACEntityTypes.LAST_OF_DEEPSLATE, "The Last of Deepslate");
+
         for (DeferredHolder<Item, ? extends Item> item : ACItems.ITEM.getEntries()) {
             if (!(item.get() instanceof BlockItem) && !(item.get() instanceof SmithingTemplateItem) && !(item.get() instanceof EchosGraceItem)) {
                 this.addItem(item, WordUtils.capitalize(item.getId().getPath().replace("_", " ")));
@@ -108,7 +110,9 @@ public class ACLanguageProvider extends LanguageProvider {
         }
 
         for (DeferredHolder<EntityType<?>, ? extends EntityType<?>> en : ACEntityTypes.ENTITY_TYPE.getEntries()) {
-            this.addEntityType(en, WordUtils.capitalize(en.getId().getPath().replace("_", " ")));
+            if (!en.equals(ACEntityTypes.LAST_OF_DEEPSLATE)) {
+                this.addEntityType(en, WordUtils.capitalize(en.getId().getPath().replace("_", " ")));
+            }
         }
 
         Map<String, String> subtitles = Map.ofEntries(

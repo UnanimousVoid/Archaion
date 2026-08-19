@@ -94,7 +94,7 @@ public class LastOfDeepslate extends Monster implements ACEntity<LastOfDeepslate
         this.attackManager.addAction(new LODSwingSpinAction(this), 150);
         this.attackManager.addAction(new LODShootAction(this), 100);
         this.attackManager.addAction(new LODInterceptShootAction(this), 500);
-        this.attackManager.addAction(new LODRollAction(this), 15);
+        this.attackManager.addAction(new LODRollAction(this), 20);
         this.attackManager.addAction(new LODSpawnArchaicsAction(this), 500);
         this.attackManager.addAction(new LODBodySlamAction(this), 100);
     }
@@ -199,7 +199,7 @@ public class LastOfDeepslate extends Monster implements ACEntity<LastOfDeepslate
                 }
 
                 float hpRatio = this.getHealth() / this.getMaxHealth();
-                if (tickCount % 12 == 0 && hpRatio <= 0.33F) {
+                if (tickCount % 20 == 0 && hpRatio <= 0.33F) {
                     ParticleEmitterInfo info = new ParticleEmitterInfo(Archaion.prefix("lod_smoking"));
                     AAALevel.addParticle(level(), info.bindOnEntity(this).position(0, 3, 0).scale(1.5F));
                 }

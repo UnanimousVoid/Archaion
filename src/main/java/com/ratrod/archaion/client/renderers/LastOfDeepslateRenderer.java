@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.LivingEntityEmissiveLayer;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 
@@ -39,6 +40,11 @@ public class LastOfDeepslateRenderer extends MobRenderer<LastOfDeepslate, LastOf
     @Override
     protected float getFlipDegrees() {
         return 0;
+    }
+
+    @Override
+    protected int getBlockLightLevel(LastOfDeepslate entity, BlockPos blockPos) {
+        return entity.getSleepingState() == SleepingState.SLEEPING ? 5 : 10;
     }
 
     @Override

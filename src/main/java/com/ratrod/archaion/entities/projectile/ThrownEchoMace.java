@@ -78,8 +78,8 @@ public class ThrownEchoMace extends ThrowableProjectile {
         Entity owner = this.getOwner();
         DamageSource source = this.damageSources().thrown(this, owner == null ? this : owner);
         if (this.level() instanceof ServerLevel serverLevel) {
-            float damage = 8;
-            damage += (float) this.tickCount * 0.5F;
+            float damage = 10;
+            damage += (float) this.tickCount * 0.65F;
             damage = EnchantmentHelper.modifyFallBasedDamage(serverLevel, this.getThrownStack(), target, source, damage);
             if (target.hurtServer(serverLevel, source, damage)) {
                 if (target instanceof LivingEntity living) {

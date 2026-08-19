@@ -100,7 +100,7 @@ public class HologramRenderer implements BlockEntityRenderer<HologramBlockEntity
             float halfAngle = (float) Math.toRadians(60.0);
             float radius = 2;
 
-            submitNodeCollector.submitCustomGeometry(poseStack, RenderTypes.translucentMovingBlock(), (pose, consumer) -> {
+            submitNodeCollector.submitCustomGeometry(poseStack, RenderTypes.debugQuads(), (pose, consumer) -> {
                 for (int i = 0; i < segments; i++) {
                     float angleA = -halfAngle + (2 * halfAngle) * (i / (float) segments);
                     float angleB = -halfAngle + (2 * halfAngle) * ((i + 1) / (float) segments);
@@ -110,10 +110,10 @@ public class HologramRenderer implements BlockEntityRenderer<HologramBlockEntity
                     float xB = (float) Math.sin(angleB) * radius;
                     float yB = (float) Math.cos(angleB) * radius;
 
-                    consumer.addVertex(pose, 0.0F, 0.0F, 0.0F).setColor(r, g, b, alpha).setUv(0.0F, 0.0F).setLight(light);
-                    consumer.addVertex(pose, xA, yA, 0.0F).setColor(r, g, b, 0.0F).setUv(0.0F, 0.0F).setLight(light);
-                    consumer.addVertex(pose, xB, yB, 0.0F).setColor(r, g, b, 0.0F).setUv(0.0F, 0.0F).setLight(light);
-                    consumer.addVertex(pose, xB, yB, 0.0F).setColor(r, g, b, 0.0F).setUv(0.0F, 0.0F).setLight(light);
+                    consumer.addVertex(pose, 0.0F, 0.0F, 0.0F).setColor(r, g, b, alpha);
+                    consumer.addVertex(pose, xA, yA, 0.0F).setColor(r, g, b, 0.0F);
+                    consumer.addVertex(pose, xB, yB, 0.0F).setColor(r, g, b, 0.0F);
+                    consumer.addVertex(pose, xB, yB, 0.0F).setColor(r, g, b, 0.0F);
                 }
             });
 
