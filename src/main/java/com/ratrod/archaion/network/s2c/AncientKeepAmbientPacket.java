@@ -18,7 +18,7 @@ public record AncientKeepAmbientPacket(BoundingBox box) implements CustomPacketP
     );
 
     public static void handle(AncientKeepAmbientPacket packet, IPayloadContext context) {
-        AncientKeepClientData.setBox(packet.box());
+        AncientKeepClientData.ANCIENT_KEEP_BOX = packet.box();
     }
 
     @Override

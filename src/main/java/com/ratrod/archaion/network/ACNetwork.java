@@ -13,12 +13,13 @@ import net.minecraft.world.entity.Entity;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
 public class ACNetwork {
     private static final String PROTOCOL_VERSION = "1.0";
 
     public static void register(RegisterPayloadHandlersEvent event) {
-        var registrar = event.registrar(PROTOCOL_VERSION);
+        PayloadRegistrar registrar = event.registrar(PROTOCOL_VERSION);
         registrar.playToClient(AncientKeepAmbientPacket.TYPE, AncientKeepAmbientPacket.CODEC, AncientKeepAmbientPacket::handle);
         registrar.playToClient(CameraShakePacket.TYPE, CameraShakePacket.CODEC, CameraShakePacket::handle);
         registrar.playToClient(ManageAnimationStatePacket.TYPE, ManageAnimationStatePacket.CODEC, ManageAnimationStatePacket::handle);

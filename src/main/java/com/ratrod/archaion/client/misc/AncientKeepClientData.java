@@ -13,22 +13,10 @@ import org.jspecify.annotations.Nullable;
 public class AncientKeepClientData {
 
     @Nullable
-    private static BoundingBox keepBox;
+    public static BoundingBox ANCIENT_KEEP_BOX;
 
-    public static void setBox(@Nullable BoundingBox box) {
-        keepBox = box;
-    }
-
-    public static void tick(Player player) {
-        BoundingBox box = keepBox;
-        if (box == null) {
-            return;
-        }
-        if (!box.isInside(player.blockPosition())) {
-            return;
-        }
-        spawnAmbientParticles(player.level(), box, player.position(), player.getRandom());
-    }
+    private static float ANCIENT_KEEP_FOG_MIX = 0.0F;
+    private static final float ANCIENT_KEEP_FOG_RAMP = 1.0F / 20.0F;
 
     private static void spawnAmbientParticles(Level level, BoundingBox box, Vec3 playerPos, RandomSource random) {
         for (int i = 0; i < 30; i++) {
@@ -38,11 +26,6 @@ public class AncientKeepClientData {
             }
 
             level.addParticle(ParticleTypes.SCULK_SOUL, pos.x, pos.y, pos.z, 0, 0.2 + random.nextFloat() * 0.3, 0);
-
-//            ParticleEmitterInfo info = new ParticleEmitterInfo(Archaion.prefix("ancient_keep_ambient"))
-//                    .position(pos.x, pos.y, pos.z)
-//                    .scale(1F);
-//            AAALevel.addParticle(level, true, info);
         }
     }
 
@@ -57,5 +40,22 @@ public class AncientKeepClientData {
     private static boolean isInOpenSpace(Level level, Vec3 pos) {
         BlockPos blockPos = BlockPos.containing(pos);
         return level.isEmptyBlock(blockPos) && level.isEmptyBlock(blockPos.above());
+    }
+
+    public static void tick(Player player) {
+        boolean inside = ANCIENT_KEEP_BOX != null && ANCIENT_KEEP_BOX.isInside(player.blockPosition());
+        if (inside && ANCIENT_KEEP_FOG_MIX < 1.0F) {
+            ANCIENT_KEEP_FOG_MIX = Math.min(1.0F, ANCIENT_KEEP_FOG_MIX + ANCIENT_KEEP_FOG_RAMP);
+        } else if (!inside && ANCIENT_KEEP_FOG_MIX > 0.0F) {
+            ANCIENT_KEEP_FOG_MIX = Math.max(0.0F, ANCIENT_KEEP_FOG_MIX - ANCIENT_KEEP_FOG_RAMP);
+        }
+
+        if (inside) {
+            spawnAmbientParticles(player.level(), ANCIENT_KEEP_BOX, player.position(), player.getRandom());
+        }
+    }
+
+    public static float keepFogFactor() {
+        return (float) Mth.smoothstep(ANCIENT_KEEP_FOG_MIX);
     }
 }
