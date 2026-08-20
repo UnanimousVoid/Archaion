@@ -12,16 +12,7 @@
       }
     },
     {
-      "weight": 2,
-      "element": {
-        "element_type": "minecraft:single_pool_element",
-        "location": "archaion:ancient_keep/map_room_v2",
-        "processors": "archaion:ancient_keep/ancient_keep_decay",
-        "projection": "rigid"
-      }
-    },
-    {
-      "weight": 2,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "archaion:ancient_keep/ancient_library",
@@ -39,7 +30,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "archaion:ancient_keep/storage_room",
@@ -48,7 +39,7 @@
       }
     },
     {
-      "weight": 2,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "archaion:ancient_keep/water_room_v2",
