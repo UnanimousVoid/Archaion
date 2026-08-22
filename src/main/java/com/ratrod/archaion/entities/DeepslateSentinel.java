@@ -11,6 +11,7 @@ import com.ratrod.archaion.registry.ACSounds;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -67,6 +68,12 @@ public class DeepslateSentinel extends Monster implements ACEntity<DeepslateSent
 
     public void setCharged(boolean charged) {
         this.entityData.set(IS_CHARGED, charged);
+    }
+
+    @Override
+    protected void dropExperience(ServerLevel level, @Nullable Entity entity) {
+        this.xpReward = this.archaicXpReward(this.xpReward);
+        super.dropExperience(level, entity);
     }
 
     @Nullable

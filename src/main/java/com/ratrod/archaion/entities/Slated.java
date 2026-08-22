@@ -42,6 +42,12 @@ public class Slated extends Zombie implements Archaic {
         this.entityData.set(IS_CHARGED, charged);
     }
 
+    @Override
+    protected void dropExperience(ServerLevel level, @Nullable Entity entity) {
+        this.xpReward = this.archaicXpReward(this.xpReward);
+        super.dropExperience(level, entity);
+    }
+
     @Nullable
     public UUID getOwnerUUID() {
         return ownerUUID;

@@ -12,7 +12,7 @@ public class ClientEchoChargeRequiredTooltip implements ClientTooltipComponent {
     private final Component text;
 
     public ClientEchoChargeRequiredTooltip(EchoChargeRequiredTooltip component) {
-        this.text = Component.translatable("tooltip.archaion.last_of_deepslate.echo_charge_required", component.requiredCharges()).withStyle(ChatFormatting.RED);
+        this.text = Component.translatable("misc.archaion.last_of_deepslate.echo_charge_required", component.requiredCharges()).withStyle(ChatFormatting.RED);
     }
 
     @Override

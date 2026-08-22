@@ -53,13 +53,15 @@ public record ACChestLootTables(HolderLookup.Provider registries) implements Loo
                         .add(LootItem.lootTableItem(Items.DIAMOND).setWeight(4).apply(SetItemCountFunction.setCount(UniformGenerator.between(4.0F, 8.0F))))
                         .add(LootItem.lootTableItem(Items.GOLDEN_CARROT).setWeight(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(6.0F, 8.0F))))
                         .add(LootItem.lootTableItem(Items.GOLD_INGOT).setWeight(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(8.0F, 16.0F))))
+                        .add(LootItem.lootTableItem(Items.GOLD_BLOCK).setWeight(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
                         .add(LootItem.lootTableItem(Items.DIAMOND_BLOCK).setWeight(1).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
-                        .add(LootItem.lootTableItem(Items.ENCHANTED_BOOK).setWeight(3).apply(new SetEnchantmentsFunction.Builder().withEnchantment(enchantments.getOrThrow(Enchantments.DENSITY), UniformGenerator.between(1.0F, 5.0F))))
-                        .add(LootItem.lootTableItem(Items.ENCHANTED_BOOK).setWeight(3).apply(new SetEnchantmentsFunction.Builder().withEnchantment(enchantments.getOrThrow(Enchantments.MENDING), ConstantValue.exactly(1.0F))))
-                        .add(LootItem.lootTableItem(Items.ENCHANTED_BOOK).setWeight(3).apply(new SetEnchantmentsFunction.Builder().withEnchantment(enchantments.getOrThrow(Enchantments.UNBREAKING), UniformGenerator.between(1.0F, 3.0F))))
-                        .add(LootItem.lootTableItem(Items.ENCHANTED_BOOK).setWeight(3).apply(new SetEnchantmentsFunction.Builder().withEnchantment(enchantments.getOrThrow(Enchantments.SHARPNESS), UniformGenerator.between(1.0F, 5.0F))))
-                        .add(LootItem.lootTableItem(Items.ENCHANTED_BOOK).setWeight(3).apply(new SetEnchantmentsFunction.Builder().withEnchantment(enchantments.getOrThrow(Enchantments.POWER), UniformGenerator.between(1.0F, 5.0F))))
-                        .add(LootItem.lootTableItem(ACItems.ECHOS_GRACE_UPGRADE_SMITHING_TEMPLATE).setWeight(3))
+                        .add(LootItem.lootTableItem(ACItems.ECHOS_GRACE_UPGRADE_SMITHING_TEMPLATE).setWeight(2))
+                        .add(LootItem.lootTableItem(Items.EXPERIENCE_BOTTLE).setWeight(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(4.0F, 12.0F))))
+                        .add(LootItem.lootTableItem(Items.ENCHANTED_BOOK).setWeight(1).apply(new SetEnchantmentsFunction.Builder().withEnchantment(enchantments.getOrThrow(Enchantments.DENSITY), UniformGenerator.between(1.0F, 5.0F))))
+                        .add(LootItem.lootTableItem(Items.ENCHANTED_BOOK).setWeight(2).apply(new SetEnchantmentsFunction.Builder().withEnchantment(enchantments.getOrThrow(Enchantments.MENDING), ConstantValue.exactly(1.0F))))
+                        .add(LootItem.lootTableItem(Items.ENCHANTED_BOOK).setWeight(2).apply(new SetEnchantmentsFunction.Builder().withEnchantment(enchantments.getOrThrow(Enchantments.UNBREAKING), UniformGenerator.between(1.0F, 3.0F))))
+                        .add(LootItem.lootTableItem(Items.ENCHANTED_BOOK).setWeight(1).apply(new SetEnchantmentsFunction.Builder().withEnchantment(enchantments.getOrThrow(Enchantments.SHARPNESS), UniformGenerator.between(1.0F, 5.0F))))
+                        .add(LootItem.lootTableItem(Items.ENCHANTED_BOOK).setWeight(1).apply(new SetEnchantmentsFunction.Builder().withEnchantment(enchantments.getOrThrow(Enchantments.POWER), UniformGenerator.between(1.0F, 5.0F))))
                 )
         );
 
@@ -157,7 +159,7 @@ public record ACChestLootTables(HolderLookup.Provider registries) implements Loo
                         )
                         .add(LootItem.lootTableItem(Items.BOW)
                                 .apply(new SetEnchantmentsFunction.Builder()
-                                        .withEnchantment(enchantments.getOrThrow(Enchantments.PUNCH), ConstantValue.exactly(2.0F))
+                                        .withEnchantment(enchantments.getOrThrow(Enchantments.PUNCH), UniformGenerator.between(0.0F, 1.0F))
                                 )
                         )
                 )
@@ -245,7 +247,6 @@ public record ACChestLootTables(HolderLookup.Provider registries) implements Loo
 
     private static SetEnchantmentsFunction.Builder deepslateKeepEnchantments(HolderLookup.RegistryLookup<Enchantment> enchantments) {
         return new SetEnchantmentsFunction.Builder()
-                .withEnchantment(enchantments.getOrThrow(Enchantments.PROTECTION), UniformGenerator.between(3.0F, 4.0F))
-                .withEnchantment(enchantments.getOrThrow(Enchantments.THORNS), ConstantValue.exactly(2.0F));
+                .withEnchantment(enchantments.getOrThrow(Enchantments.PROTECTION), UniformGenerator.between(2.0F, 4.0F));
     }
 }

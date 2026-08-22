@@ -23,7 +23,7 @@ public class LastOfDeepslateChargedLayer extends EnergySwirlLayer<LastOfDeepslat
     }
 
     protected float xOffset(float t) {
-        return t * 0.01F;
+        return t * 0.005F;
     }
 
     protected Identifier getTextureLocation() {

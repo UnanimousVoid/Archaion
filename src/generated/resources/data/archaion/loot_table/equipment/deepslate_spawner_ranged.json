@@ -37,7 +37,11 @@
             {
               "add": false,
               "enchantments": {
-                "minecraft:punch": 2.0
+                "minecraft:punch": {
+                  "type": "minecraft:uniform",
+                  "max": 1.0,
+                  "min": 0.0
+                }
               },
               "function": "minecraft:set_enchantments"
             }

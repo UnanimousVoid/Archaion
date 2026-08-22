@@ -12,6 +12,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -25,8 +26,6 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.golem.IronGolem;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.entity.projectile.ProjectileDeflection;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.PathType;
@@ -90,6 +89,12 @@ public class Brave extends Monster implements ACEntity<Brave>, Archaic {
         this.entityData.set(IS_CHARGED, charged);
     }
 
+    @Override
+    protected void dropExperience(ServerLevel level, @Nullable Entity entity) {
+        this.xpReward = this.archaicXpReward(this.xpReward);
+        super.dropExperience(level, entity);
+    }
+
     public void setOwnerUUID(@Nullable UUID ownerUUID) {
         this.ownerUUID = ownerUUID;
     }
@@ -120,11 +125,6 @@ public class Brave extends Monster implements ACEntity<Brave>, Archaic {
         if (this.ownerUUID != null) {
             output.putString("ownerUUID", this.ownerUUID.toString());
         }
-    }
-
-    @Override
-    public ProjectileDeflection deflection(Projectile projectile) {
-        return this.isCharged() ? ProjectileDeflection.REVERSE : ProjectileDeflection.NONE;
     }
 
     public boolean mustRetreat(Vec3 target) {

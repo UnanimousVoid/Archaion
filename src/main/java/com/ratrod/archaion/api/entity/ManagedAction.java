@@ -20,4 +20,8 @@ public abstract class ManagedAction<T extends Entity> {
 
     public void onStop() {
     }
+
+    public int getTimer() {
+        return timer;
+    }
 }

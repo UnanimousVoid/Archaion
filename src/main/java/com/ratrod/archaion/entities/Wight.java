@@ -9,6 +9,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -45,6 +46,12 @@ public class Wight extends Skeleton implements Archaic {
 
     public void setCharged(boolean charged) {
         this.entityData.set(IS_CHARGED, charged);
+    }
+
+    @Override
+    protected void dropExperience(ServerLevel level, @Nullable Entity entity) {
+        this.xpReward = this.archaicXpReward(this.xpReward);
+        super.dropExperience(level, entity);
     }
 
     @Nullable

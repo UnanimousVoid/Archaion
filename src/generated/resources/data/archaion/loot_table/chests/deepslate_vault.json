@@ -98,7 +98,44 @@
               "function": "minecraft:set_count"
             }
           ],
+          "name": "minecraft:gold_block",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 2.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
           "name": "minecraft:diamond_block"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "archaion:echos_grace_upgrade_smithing_template",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 12.0,
+                "min": 4.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:experience_bottle",
+          "weight": 3
         },
         {
           "type": "minecraft:item",
@@ -115,8 +152,7 @@
               "function": "minecraft:set_enchantments"
             }
           ],
-          "name": "minecraft:enchanted_book",
-          "weight": 3
+          "name": "minecraft:enchanted_book"
         },
         {
           "type": "minecraft:item",
@@ -130,7 +166,7 @@
             }
           ],
           "name": "minecraft:enchanted_book",
-          "weight": 3
+          "weight": 2
         },
         {
           "type": "minecraft:item",
@@ -148,7 +184,7 @@
             }
           ],
           "name": "minecraft:enchanted_book",
-          "weight": 3
+          "weight": 2
         },
         {
           "type": "minecraft:item",
@@ -165,8 +201,7 @@
               "function": "minecraft:set_enchantments"
             }
           ],
-          "name": "minecraft:enchanted_book",
-          "weight": 3
+          "name": "minecraft:enchanted_book"
         },
         {
           "type": "minecraft:item",
@@ -183,13 +218,7 @@
               "function": "minecraft:set_enchantments"
             }
           ],
-          "name": "minecraft:enchanted_book",
-          "weight": 3
-        },
-        {
-          "type": "minecraft:item",
-          "name": "archaion:echos_grace_upgrade_smithing_template",
-          "weight": 3
+          "name": "minecraft:enchanted_book"
         }
       ],
       "rolls": 5.0
