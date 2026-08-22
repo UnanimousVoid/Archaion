@@ -100,7 +100,7 @@ public class ACLanguageProvider extends LanguageProvider {
                 "Our Last."
         ));
 
-        this.addEntityType(ACEntityTypes.LAST_OF_DEEPSLATE, "The Last of Deepslate");
+        this.addEntityType(ACEntityTypes.LAST_OF_DEEPSLATE, "Last of Deepslate");
 
         for (DeferredHolder<Item, ? extends Item> item : ACItems.ITEM.getEntries()) {
             if (!(item.get() instanceof BlockItem) && !(item.get() instanceof SmithingTemplateItem) && !(item.get() instanceof EchosGraceItem)) {
