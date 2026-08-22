@@ -68,9 +68,9 @@ public class LODSpawnArchaicsAction extends ManagedAction<LastOfDeepslate> {
             this.regenTicksLeft = 0;
         }
         int players = entity.getArchaicSystem().countNearbyPlayers();
-        int spawnCount = Math.max(5, 5 + 6 * (players - 1));
+        int spawnCount = Math.max(4, 4 + 6 * (players - 1));
         if (summonPhase >= 2) {
-            spawnCount = Math.max(7, 7 + 7 * (players - 1));
+            spawnCount = Math.max(5, 5 + 7 * (players - 1));
         }
 
         int base = spawnCount / 3;
@@ -169,7 +169,7 @@ public class LODSpawnArchaicsAction extends ManagedAction<LastOfDeepslate> {
     private EntityType<? extends Monster> pickArchaicType() {
         boolean phaseTwo = entity.getArchaicSystem().getPhasesTriggered() >= 2;
         WeightedList<EntityType<? extends Monster>> choices = WeightedList.<EntityType<? extends Monster>>builder()
-                .add(ACEntityTypes.BRAVE.get(), phaseTwo ? 2 : 0)
+                .add(ACEntityTypes.BRAVE.get(), phaseTwo ? 1 : 0)
                 .add(ACEntityTypes.WIGHT.get(), 4)
                 .add(ACEntityTypes.SLATED.get(), 3)
                 .add(ACEntityTypes.DEEPSLATE_SENTINEL.get(), 4)

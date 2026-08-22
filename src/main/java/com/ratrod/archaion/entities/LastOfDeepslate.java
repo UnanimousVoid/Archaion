@@ -95,11 +95,11 @@ public class LastOfDeepslate extends Monster implements ACEntity<LastOfDeepslate
         this.lookControl = new LastOfDeepslateLookControl(this);
         this.bossEvent = new ServerBossEvent(Mth.createInsecureUUID(this.random), this.getDisplayName(), BossBarColor.BLUE, BossBarOverlay.PROGRESS);
 
-        this.attackManager.addAction(new LODSmashGroundAction(this), 120);
+        this.attackManager.addAction(new LODSmashGroundAction(this), 100);
         this.attackManager.addAction(new LODSwingSpinAction(this), 150);
         this.attackManager.addAction(new LODShootAction(this), 150);
         this.attackManager.addAction(new LODInterceptShootAction(this), 500);
-        this.attackManager.addAction(new LODRollAction(this), 20);
+        this.attackManager.addAction(new LODRollAction(this), 30);
         this.attackManager.addAction(new LODSpawnArchaicsAction(this), 500);
         this.attackManager.addAction(new LODBodySlamAction(this), 100);
     }

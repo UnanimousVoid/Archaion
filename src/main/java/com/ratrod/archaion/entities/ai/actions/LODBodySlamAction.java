@@ -92,10 +92,11 @@ public class LODBodySlamAction extends ManagedAction<LastOfDeepslate> {
         List<LivingEntity> targets = entity.level().getEntitiesOfClass(LivingEntity.class, area, e -> e != entity && e.isAlive() && entity.canAttack(e));
 
         for (LivingEntity target : targets) {
-            entity.attackTarget(serverLevel, target, 1.2F, ACEntity.Operation.MULTIPLY);
-            Vec3 knockback = target.position().subtract(entity.position()).normalize().scale(2.0).add(0, 0.8, 0);
-            target.setDeltaMovement(target.getDeltaMovement().add(knockback));
-            target.hurtMarked = true;
+            if (entity.attackTarget(serverLevel, target, 1.15F, ACEntity.Operation.MULTIPLY)) {
+                Vec3 knockback = target.position().subtract(entity.position()).normalize().scale(2.0).add(0, 0.8, 0);
+                target.setDeltaMovement(target.getDeltaMovement().add(knockback));
+                target.hurtMarked = true;
+            }
         }
     }
 

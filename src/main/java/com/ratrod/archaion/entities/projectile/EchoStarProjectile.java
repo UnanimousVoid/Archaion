@@ -19,7 +19,7 @@ import net.minecraft.world.phys.EntityHitResult;
 
 public class EchoStarProjectile extends ThrowableProjectile {
 
-    private float baseDamage = 25.0F;
+    private float baseDamage = 20.0F;
     private float powerBonus;
 
     public EchoStarProjectile(EntityType<? extends ThrowableProjectile> entityType, Level level) {

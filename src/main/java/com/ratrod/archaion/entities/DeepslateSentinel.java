@@ -106,7 +106,7 @@ public class DeepslateSentinel extends Monster implements ACEntity<DeepslateSent
                 .add(Attributes.MAX_HEALTH, 100.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.3D)
                 .add(Attributes.ATTACK_DAMAGE, 15.0D)
-                .add(Attributes.ARMOR, 10.0D)
+                .add(Attributes.ARMOR, 8.0D)
                 .add(Attributes.ARMOR_TOUGHNESS, 4.0F)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 1.0D)
                 .add(Attributes.FOLLOW_RANGE, 48.0D);
@@ -144,7 +144,7 @@ public class DeepslateSentinel extends Monster implements ACEntity<DeepslateSent
     }
 
     public void startChargeCooldown() {
-        this.chargeCooldownTicks = this.random.nextIntBetweenInclusive(120, 180);
+        this.chargeCooldownTicks = this.random.nextIntBetweenInclusive(180, 220);
     }
 
     public boolean hasNearbyRidersToPickup(double searchRadius) {

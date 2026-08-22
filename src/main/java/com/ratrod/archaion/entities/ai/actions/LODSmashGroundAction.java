@@ -56,7 +56,7 @@ public class LODSmashGroundAction extends ManagedAction<LastOfDeepslate> {
             this.entity.getLookControl().setLookAt(entity.getTarget(), 30.0F, 30.0F);
         }
 
-        return timer < 50;
+        return timer < 60;
     }
 
     private void applyBlockFalling() {
@@ -93,15 +93,16 @@ public class LODSmashGroundAction extends ManagedAction<LastOfDeepslate> {
         ParticleEmitterInfo info = new ParticleEmitterInfo(Archaion.prefix("lod_boom_ground"));
         AAALevel.addParticle(serverLevel, info.position(center.add(0, 0.2, 0)).scale(3.0F));
 
-        AABB area = AABB.ofSize(center, 12, 6, 12);
+        AABB area = AABB.ofSize(center, 9, 6, 9);
 
         List<LivingEntity> targets = entity.level().getEntitiesOfClass(LivingEntity.class, area, e -> e != entity && e.isAlive() && entity.canAttack(e));
 
         for (LivingEntity target : targets) {
-            entity.attackTarget(serverLevel, target, 1.1F, ACEntity.Operation.MULTIPLY);
-            Vec3 knockback = target.position().subtract(center).normalize().scale(1.5).add(0, 0.35, 0);
-            target.setDeltaMovement(target.getDeltaMovement().add(knockback));
-            target.hurtMarked = true;
+            if (entity.attackTarget(serverLevel, target, 0.95F, ACEntity.Operation.MULTIPLY)) {
+                Vec3 knockback = target.position().subtract(center).normalize().scale(1.5).add(0, 0.35, 0);
+                target.setDeltaMovement(target.getDeltaMovement().add(knockback));
+                target.hurtMarked = true;
+            }
         }
     }
 

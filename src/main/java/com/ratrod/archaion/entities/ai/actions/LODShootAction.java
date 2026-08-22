@@ -53,9 +53,9 @@ public class LODShootAction extends ManagedAction<LastOfDeepslate> {
                 EchoStarProjectile projectile = ACEntityTypes.ECHO_STAR.get().create(entity.level(), EntitySpawnReason.TRIGGERED);
                 projectile.moveOrInterpolateTo(center);
                 projectile.setOwner(entity);
-                float xR = -20 + (-1 + entity.getRandom().nextFloat() * 2) * 45;
-                float yR = (-1 + entity.getRandom().nextFloat() * 2) * 45;
-                projectile.shootFromRotation(entity, entity.getXRot() + xR, entity.getYRot() + yR, 0, 1.0F, 0.0F);
+                float xR = -22.5F + (-1 + entity.getRandom().nextFloat() * 2) * 45;
+                float yR = (-1 + entity.getRandom().nextFloat() * 2) * 65;
+                projectile.shootFromRotation(entity, entity.getXRot() + xR, entity.getYRot() + yR, 0, 0.85F, 0.0F);
                 entity.level().addFreshEntity(projectile);
             }
         }

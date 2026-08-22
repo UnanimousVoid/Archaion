@@ -50,8 +50,8 @@ public class LastOfDeepslateTooltipRenderer {
         int mouseX = guiGraphics.guiWidth() / 2;
         int mouseY = (guiGraphics.guiHeight() / 2);
         guiGraphics.pose().pushMatrix();
-        guiGraphics.pose().translate(mouseX, mouseY + Mth.sin(tick * 0.1F) * 2);
-        guiGraphics.tooltip(font, components, 0, 0, DefaultTooltipPositioner.INSTANCE, Archaion.prefix("lod"));
+        guiGraphics.pose().translate(0, Mth.sin(tick * 0.1F) * 2);
+        guiGraphics.tooltip(font, components, mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, Archaion.prefix("lod"));
         guiGraphics.pose().popMatrix();
     }
 

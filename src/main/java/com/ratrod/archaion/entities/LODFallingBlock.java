@@ -39,7 +39,7 @@ public class LODFallingBlock extends Entity {
         LODFallingBlock entity = ACEntityTypes.LOD_FALLING_BLOCK.get().create(level, EntitySpawnReason.TRIGGERED);
         entity.blockState = state;
         entity.owner = owner;
-        entity.gravity = 0.05 + level.getRandom().nextDouble() * 0.15;
+        entity.gravity = 0.04 + level.getRandom().nextDouble() * 0.15;
         entity.setPos(pos);
         entity.setDeltaMovement(Vec3.ZERO);
         entity.xo = pos.x;
@@ -117,7 +117,7 @@ public class LODFallingBlock extends Entity {
         Entity cause = this.owner != null ? this.owner : this;
         this.playSound(SoundEvents.ANVIL_LAND, 1.0F, 0.4F + random.nextFloat() * 0.2F);
 
-        AABB area = this.getBoundingBox().inflate(2.5, 1.0, 2.5);
+        AABB area = this.getBoundingBox().inflate(2, 1.0, 2);
         for (LivingEntity target : serverLevel.getEntitiesOfClass(LivingEntity.class, area, e -> e != cause && e.isAlive() && canTarget(e))) {
             target.hurtServer(serverLevel, serverLevel.damageSources().explosion(cause, cause), 12.0F);
         }
