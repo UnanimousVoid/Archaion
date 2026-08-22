@@ -9,6 +9,7 @@ import net.neoforged.neoforge.common.data.SoundDefinitionsProvider;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
 public class ACSoundDefinitionsProvider extends SoundDefinitionsProvider {
+
     public ACSoundDefinitionsProvider(PackOutput output) {
         super(output, Archaion.MODID);
     }
@@ -19,7 +20,7 @@ public class ACSoundDefinitionsProvider extends SoundDefinitionsProvider {
 
             SoundDefinition.Sound definition = sound(sound.getId());
 
-            if (sound.getId().equals(ACSounds.LOD_THEME.getId())) {
+            if (sound.getId().getPath().startsWith("lod_boss_theme_phase")) {
                 definition = definition.stream();
             }
 

@@ -6,5 +6,5 @@ public class LastOfDeepslateRenderState extends ACLivingEntityRenderState {
 
     public SleepingState sleepingState;
     public boolean hasChargedArchaics;
-    public float hpRatio;
+    public int phase;
 }

@@ -35,9 +35,8 @@
                           "minecraft:protection": {
                             "type": "minecraft:uniform",
                             "max": 4.0,
-                            "min": 3.0
-                          },
-                          "minecraft:thorns": 2.0
+                            "min": 2.0
+                          }
                         },
                         "function": "minecraft:set_enchantments"
                       }
@@ -74,9 +73,8 @@
                           "minecraft:protection": {
                             "type": "minecraft:uniform",
                             "max": 4.0,
-                            "min": 3.0
-                          },
-                          "minecraft:thorns": 2.0
+                            "min": 2.0
+                          }
                         },
                         "function": "minecraft:set_enchantments"
                       }
@@ -113,9 +111,8 @@
                           "minecraft:protection": {
                             "type": "minecraft:uniform",
                             "max": 4.0,
-                            "min": 3.0
-                          },
-                          "minecraft:thorns": 2.0
+                            "min": 2.0
+                          }
                         },
                         "function": "minecraft:set_enchantments"
                       }
@@ -160,9 +157,8 @@
                           "minecraft:protection": {
                             "type": "minecraft:uniform",
                             "max": 4.0,
-                            "min": 3.0
-                          },
-                          "minecraft:thorns": 2.0
+                            "min": 2.0
+                          }
                         },
                         "function": "minecraft:set_enchantments"
                       }
@@ -199,9 +195,8 @@
                           "minecraft:protection": {
                             "type": "minecraft:uniform",
                             "max": 4.0,
-                            "min": 3.0
-                          },
-                          "minecraft:thorns": 2.0
+                            "min": 2.0
+                          }
                         },
                         "function": "minecraft:set_enchantments"
                       }
@@ -238,9 +233,8 @@
                           "minecraft:protection": {
                             "type": "minecraft:uniform",
                             "max": 4.0,
-                            "min": 3.0
-                          },
-                          "minecraft:thorns": 2.0
+                            "min": 2.0
+                          }
                         },
                         "function": "minecraft:set_enchantments"
                       }
@@ -285,9 +279,8 @@
                           "minecraft:protection": {
                             "type": "minecraft:uniform",
                             "max": 4.0,
-                            "min": 3.0
-                          },
-                          "minecraft:thorns": 2.0
+                            "min": 2.0
+                          }
                         },
                         "function": "minecraft:set_enchantments"
                       }
@@ -324,9 +317,8 @@
                           "minecraft:protection": {
                             "type": "minecraft:uniform",
                             "max": 4.0,
-                            "min": 3.0
-                          },
-                          "minecraft:thorns": 2.0
+                            "min": 2.0
+                          }
                         },
                         "function": "minecraft:set_enchantments"
                       }
@@ -363,9 +355,8 @@
                           "minecraft:protection": {
                             "type": "minecraft:uniform",
                             "max": 4.0,
-                            "min": 3.0
-                          },
-                          "minecraft:thorns": 2.0
+                            "min": 2.0
+                          }
                         },
                         "function": "minecraft:set_enchantments"
                       }
@@ -410,9 +401,8 @@
                           "minecraft:protection": {
                             "type": "minecraft:uniform",
                             "max": 4.0,
-                            "min": 3.0
-                          },
-                          "minecraft:thorns": 2.0
+                            "min": 2.0
+                          }
                         },
                         "function": "minecraft:set_enchantments"
                       }
@@ -449,9 +439,8 @@
                           "minecraft:protection": {
                             "type": "minecraft:uniform",
                             "max": 4.0,
-                            "min": 3.0
-                          },
-                          "minecraft:thorns": 2.0
+                            "min": 2.0
+                          }
                         },
                         "function": "minecraft:set_enchantments"
                       }
@@ -488,9 +477,8 @@
                           "minecraft:protection": {
                             "type": "minecraft:uniform",
                             "max": 4.0,
-                            "min": 3.0
-                          },
-                          "minecraft:thorns": 2.0
+                            "min": 2.0
+                          }
                         },
                         "function": "minecraft:set_enchantments"
                       }

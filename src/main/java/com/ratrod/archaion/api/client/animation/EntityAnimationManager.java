@@ -52,8 +52,4 @@ public class EntityAnimationManager {
     public Int2ObjectOpenHashMap<ACAnimation> getAnimationMap() {
         return animationMap;
     }
-
-    public void tickAnimations() {
-        this.animationMap.values().forEach(anim -> anim.getState().animateWhen(true, entity.tickCount));
-    }
 }

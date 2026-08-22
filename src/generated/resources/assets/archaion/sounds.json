@@ -59,6 +59,33 @@
     ],
     "subtitle": "subtitle.archaion.lod_ambient"
   },
+  "lod_boss_theme_phase_1": {
+    "sounds": [
+      {
+        "name": "archaion:lod_boss_theme_phase_1",
+        "stream": true
+      }
+    ],
+    "subtitle": "subtitle.archaion.lod_boss_theme_phase_1"
+  },
+  "lod_boss_theme_phase_2": {
+    "sounds": [
+      {
+        "name": "archaion:lod_boss_theme_phase_2",
+        "stream": true
+      }
+    ],
+    "subtitle": "subtitle.archaion.lod_boss_theme_phase_2"
+  },
+  "lod_boss_theme_phase_3": {
+    "sounds": [
+      {
+        "name": "archaion:lod_boss_theme_phase_3",
+        "stream": true
+      }
+    ],
+    "subtitle": "subtitle.archaion.lod_boss_theme_phase_3"
+  },
   "lod_death": {
     "sounds": [
       "archaion:lod_death"
@@ -106,15 +133,6 @@
       "archaion:lod_step"
     ],
     "subtitle": "subtitle.archaion.lod_step"
-  },
-  "lod_theme": {
-    "sounds": [
-      {
-        "name": "archaion:lod_theme",
-        "stream": true
-      }
-    ],
-    "subtitle": "subtitle.archaion.lod_theme"
   },
   "lod_warn_archaics": {
     "sounds": [

@@ -19,15 +19,18 @@ public class LastOfDeepslateRenderer extends MobRenderer<LastOfDeepslate, LastOf
     private static final Identifier TEXTURE = Archaion.prefix("textures/entity/last_of_deepslate.png");
     private static final Identifier GLOW_TEXTURE = Archaion.prefix("textures/entity/last_of_deepslate_glow.png");
 
-    private static final Identifier TEXTURE_CRACKED = Archaion.prefix("textures/entity/last_of_deepslate_cracked.png");
+    private static final Identifier TEXTURE_P1 = Archaion.prefix("textures/entity/last_of_deepslate_p1.png");
+    private static final Identifier GLOW_TEXTURE_P1 = Archaion.prefix("textures/entity/last_of_deepslate_glow_p1.png");
 
+    private static final Identifier TEXTURE_P2 = Archaion.prefix("textures/entity/last_of_deepslate_p2.png");
+    private static final Identifier GLOW_TEXTURE_P2 = Archaion.prefix("textures/entity/last_of_deepslate_glow_p2.png");
 
     public LastOfDeepslateRenderer(EntityRendererProvider.Context context) {
         super(context, new LastOfDeepslateModel<>(context.bakeLayer(LastOfDeepslateModel.LAYER_LOCATION)), 5F);
         this.addLayer(
                 new LivingEntityEmissiveLayer<>(
                         this,
-                        renderState -> GLOW_TEXTURE,
+                        this::getGlowTextureLocation,
                         (entity, ageInTicks) -> entity.sleepingState == SleepingState.SLEEPING ? 0 : Mth.clamp(1F + Mth.sin(ageInTicks * 0.25F), 0.0F, 1.0F),
                         new LastOfDeepslateModel<>(context.bakeLayer(LastOfDeepslateModel.LAYER_LOCATION)),
                         RenderTypes::entityTranslucentEmissive,
@@ -58,11 +61,23 @@ public class LastOfDeepslateRenderer extends MobRenderer<LastOfDeepslate, LastOf
         state.animationManager = entity.getAnimationManager();
         state.sleepingState = entity.getSleepingState();
         state.hasChargedArchaics = entity.hasChargedArchaics();
-        state.hpRatio = entity.getHealth() / entity.getMaxHealth();
+        state.phase = entity.getPhase();
     }
 
     @Override
     public Identifier getTextureLocation(LastOfDeepslateRenderState state) {
-        return state.hpRatio <= 0.66 ? TEXTURE_CRACKED : TEXTURE;
+        return switch (state.phase) {
+            case 2 -> TEXTURE_P2;
+            case 1 -> TEXTURE_P1;
+            default -> TEXTURE;
+        };
+    }
+
+    public Identifier getGlowTextureLocation(LastOfDeepslateRenderState state) {
+        return switch (state.phase) {
+            case 2 -> GLOW_TEXTURE_P2;
+            case 1 -> GLOW_TEXTURE_P1;
+            default -> GLOW_TEXTURE;
+        };
     }
 }

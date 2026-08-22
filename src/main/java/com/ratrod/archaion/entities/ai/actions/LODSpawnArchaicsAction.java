@@ -8,6 +8,7 @@ import com.ratrod.archaion.entities.LastOfDeepslate;
 import com.ratrod.archaion.entities.Slated;
 import com.ratrod.archaion.entities.Wight;
 import com.ratrod.archaion.entities.ai.ACEntity;
+import com.ratrod.archaion.misc.LODTheme;
 import com.ratrod.archaion.registry.ACEntityTypes;
 import com.ratrod.archaion.registry.ACSounds;
 import mod.chloeprime.aaaparticles.api.common.AAALevel;
@@ -33,6 +34,8 @@ public class LODSpawnArchaicsAction extends ManagedAction<LastOfDeepslate> {
     private final int[] batchSizes = new int[3];
     private int batchIndex = 0;
     private int smashIdx = 0;
+    private int regenTicksLeft = 0;
+    private float regenPerTick = 0.0F;
 
     public LODSpawnArchaicsAction(LastOfDeepslate entity) {
         super(entity);
@@ -40,24 +43,34 @@ public class LODSpawnArchaicsAction extends ManagedAction<LastOfDeepslate> {
 
     @Override
     public boolean canStart() {
-        int count = entity.getArchaicSystem().getPhasesTriggered();
-        if (count >= 2) return false;
+        if (entity.getArchaicSystem().getPhasesTriggered() >= 2) return false;
         float hpRatio = entity.getHealth() / entity.getMaxHealth();
-        return count == 0 ? hpRatio <= 0.66F : hpRatio <= 0.33F;
+        return hpRatio <= 0.5F;
     }
 
     @Override
     public void onStart() {
         this.timer = 0;
         this.smashIdx = 0;
-        entity.getArchaicSystem().incrementPhasesTriggered();
+        entity.getArchaicSystem().updatePhase();
+        entity.sendPhaseSwitchMessage();
 
         int summonPhase = entity.getArchaicSystem().getPhasesTriggered();
+        entity.sendBossMusic(LODTheme.STOP);
+
         this.statMultiplier = summonPhase >= 2 ? 1.2F : 1.1F;
+
+        if (summonPhase == 1) {
+            float maxHealth = entity.getMaxHealth();
+            this.regenPerTick = maxHealth / 40.0F;
+            this.regenTicksLeft = 40;
+        } else {
+            this.regenTicksLeft = 0;
+        }
         int players = entity.getArchaicSystem().countNearbyPlayers();
-        int spawnCount = Math.max(4, 4 + 6 * (players - 1));
+        int spawnCount = Math.max(5, 5 + 6 * (players - 1));
         if (summonPhase >= 2) {
-            spawnCount = Math.max(6, 6 + 7 * (players - 1));
+            spawnCount = Math.max(7, 7 + 7 * (players - 1));
         }
 
         int base = spawnCount / 3;
@@ -79,10 +92,25 @@ public class LODSpawnArchaicsAction extends ManagedAction<LastOfDeepslate> {
     public boolean onTick() {
         timer++;
 
+        if (this.regenTicksLeft > 0) {
+            this.regenTicksLeft--;
+            entity.setHealth(Math.min(entity.getMaxHealth(), entity.getHealth() + this.regenPerTick));
+        }
+
         if (timer >= 45 && smashIdx == 0) {
             spawnArchaicBatch();
             applySmashDamage();
             smashIdx++;
+
+            int summonPhase = entity.getArchaicSystem().getPhasesTriggered();
+            if (summonPhase == 1) {
+                entity.musicPhase = LODTheme.PHASE_2;
+                entity.sendBossMusic(LODTheme.PHASE_2);
+            } else if (summonPhase == 2) {
+                entity.musicPhase = LODTheme.PHASE_3;
+                entity.sendBossMusic(LODTheme.PHASE_3);
+            }
+
         } else if (timer >= 50 && smashIdx == 1) {
             spawnArchaicBatch();
             applySmashDamage();
@@ -141,7 +169,7 @@ public class LODSpawnArchaicsAction extends ManagedAction<LastOfDeepslate> {
     private EntityType<? extends Monster> pickArchaicType() {
         boolean phaseTwo = entity.getArchaicSystem().getPhasesTriggered() >= 2;
         WeightedList<EntityType<? extends Monster>> choices = WeightedList.<EntityType<? extends Monster>>builder()
-                .add(ACEntityTypes.BRAVE.get(), phaseTwo ? 3 : 1)
+                .add(ACEntityTypes.BRAVE.get(), phaseTwo ? 2 : 0)
                 .add(ACEntityTypes.WIGHT.get(), 4)
                 .add(ACEntityTypes.SLATED.get(), 3)
                 .add(ACEntityTypes.DEEPSLATE_SENTINEL.get(), 4)

@@ -24,16 +24,20 @@ public class BossbarRenderers {
         int y = event.getY();
         float progress = event.getBossEvent().getProgress();
 
+        Map<String, Integer> values = ClientBossBarData.getValues(event.getBossEvent().getId());
+        int phaseTriggered = values.getOrDefault("archaicPhase", 0);
+
         // Bar Background
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED, BARS_LOCATION, x, y, 0, 0, 192, 32, 256, 256);
 
         // Empty Bar
         float ageInTicks = mc.player.tickCount + event.getPartialTick().getGameTimeDeltaPartialTick(true);
         int segmentWidth = 4;
+        int waveMult = phaseTriggered == 1 ? 1 : 3;
 
         for (int segmentX = 0; segmentX < 192; segmentX += segmentWidth) {
             int width = Math.min(segmentWidth, 192 - segmentX);
-            int offsetY = (int)(Mth.sin(ageInTicks * 0.075F + segmentX * 0.05F) * 4.0F);
+            int offsetY = phaseTriggered >= 1 ? (int)(Mth.sin(ageInTicks * (0.075F * waveMult) + segmentX * 0.05F) * 4.0F) : 0;
             guiGraphics.blit(RenderPipelines.GUI_TEXTURED, BARS_LOCATION, x + segmentX, y + offsetY, segmentX, 64, width, 32, 256, 256);
         }
 
@@ -42,13 +46,11 @@ public class BossbarRenderers {
 
         for (int segmentX = 0; segmentX < fullWidth; segmentX += segmentWidth) {
             int width = Math.min(segmentWidth, fullWidth - segmentX);
-            int offsetY = (int)(Mth.sin(ageInTicks * 0.075F + segmentX * 0.05F) * 4.0F);
+            int offsetY = phaseTriggered >= 1 ? (int)(Mth.sin(ageInTicks * (0.075F * waveMult) + segmentX * 0.05F) * 4.0F) : 0;
             guiGraphics.blit(RenderPipelines.GUI_TEXTURED, BARS_LOCATION, x + segmentX, y + offsetY + 1, segmentX, 32, width, 32, 256, 256);
         }
 
-        // BossBar Data
-        Map<String, Integer> values = ClientBossBarData.getValues(event.getBossEvent().getId());
-
+        // Archaic Raid
         int raidAlive = values.getOrDefault("archaicRaidAlive", 0);
         int raidTotal = values.getOrDefault("archaicRaidTotal", 0);
         int raidXOffset = (192 / 2) - (109 / 2);

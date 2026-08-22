@@ -75,4 +75,12 @@ public class ACEntityTypes {
                     .noSave()
                     .noSummon()
                     .build(ResourceKey.create(Registries.ENTITY_TYPE, Archaion.prefix("lod_slam"))));
+
+    public static final DeferredHolder<EntityType<?>, EntityType<LODFallingBlock>> LOD_FALLING_BLOCK = ENTITY_TYPE.register("lod_falling_block",
+            () -> EntityType.Builder.<LODFallingBlock>of(LODFallingBlock::new, MobCategory.MISC)
+                    .sized(0.98F, 0.98F)
+                    .clientTrackingRange(8)
+                    .noSave()
+                    .noSummon()
+                    .build(ResourceKey.create(Registries.ENTITY_TYPE, Archaion.prefix("lod_falling_block"))));
 }

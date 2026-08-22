@@ -24,7 +24,10 @@ public class ACClientEvents {
         if (!event.getEntity().level().isClientSide()) {
             return;
         }
+
         AncientKeepClientData.tick(event.getEntity());
+
+        LODSoundInstance.tryToRepair();
     }
 
     @SubscribeEvent

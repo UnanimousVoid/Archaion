@@ -49,18 +49,18 @@ public class LODShootAction extends ManagedAction<LastOfDeepslate> {
             ParticleEmitterInfo info = new ParticleEmitterInfo(Archaion.prefix("echo_blast"));
             AAALevel.addParticle(entity.level(), info.position(center).scale(6.0F));
 
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 3; i++) {
                 EchoStarProjectile projectile = ACEntityTypes.ECHO_STAR.get().create(entity.level(), EntitySpawnReason.TRIGGERED);
                 projectile.moveOrInterpolateTo(center);
                 projectile.setOwner(entity);
-                float xR = -15 + (-1 + entity.getRandom().nextFloat() * 2) * 45;
+                float xR = -20 + (-1 + entity.getRandom().nextFloat() * 2) * 45;
                 float yR = (-1 + entity.getRandom().nextFloat() * 2) * 45;
-                projectile.shootFromRotation(entity, entity.getXRot() + xR, entity.getYRot() + yR, 0, 1.2F, 0.0F);
+                projectile.shootFromRotation(entity, entity.getXRot() + xR, entity.getYRot() + yR, 0, 1.0F, 0.0F);
                 entity.level().addFreshEntity(projectile);
             }
         }
 
-        return timer < 60;
+        return timer < 70;
     }
 
     @Override

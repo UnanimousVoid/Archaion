@@ -3,9 +3,7 @@ package com.ratrod.archaion.entities.ai.systems;
 import com.ratrod.archaion.entities.Archaic;
 import com.ratrod.archaion.entities.LastOfDeepslate;
 import com.ratrod.archaion.network.BossBarDataOutput;
-import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
@@ -17,16 +15,13 @@ import net.minecraft.world.level.storage.ValueOutput;
 import java.util.function.Predicate;
 
 public class ArchaicRaid {
-
-    private static final float BASE_REDUCTION = 0.3F;
-    private static final float MAX_REDUCTION = 0.95F;
-
     private final LastOfDeepslate entity;
 
     private int phasesTriggered = 0;
     private int archaicsIntended = 0;
     private int lastRaidAlive = -1;
     private int lastRaidTotal = -1;
+    private int lastPhase = -1;
 
     public ArchaicRaid(LastOfDeepslate entity) {
         this.entity = entity;
@@ -36,8 +31,9 @@ public class ArchaicRaid {
         return this.phasesTriggered;
     }
 
-    public void incrementPhasesTriggered() {
+    public void updatePhase() {
         this.phasesTriggered++;
+        entity.setPhase(this.phasesTriggered);
     }
 
     public int getArchaicsIntended() {
@@ -68,20 +64,20 @@ public class ArchaicRaid {
     public float getArchaicProtectionMultiplier(int aliveArchaics) {
         if (this.archaicsIntended <= 0 || aliveArchaics <= 0) return 1.0F;
         float ratio = Mth.clamp(aliveArchaics / (float) this.archaicsIntended, 0.0F, 1.0F);
-        float reduction = BASE_REDUCTION + (MAX_REDUCTION - BASE_REDUCTION) * ratio;
+        float baseRed = 0.3F;
+        float maxRed = 0.95F;
+        float reduction = baseRed + (maxRed - baseRed) * ratio;
         return 1.0F - reduction;
-    }
-
-    public boolean hasFatalDamageCap(DamageSource source, int aliveArchaics) {
-        return aliveArchaics > 0 && !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY);
     }
 
     public void tick() {
         int aliveArchaics = this.countChargedArchaics();
         int raidTotal = this.archaicsIntended;
-        if (aliveArchaics != this.lastRaidAlive || raidTotal != this.lastRaidTotal) {
+        int phase = entity.getPhase();
+        if (aliveArchaics != this.lastRaidAlive || raidTotal != this.lastRaidTotal || phase != this.lastPhase) {
             this.lastRaidAlive = aliveArchaics;
             this.lastRaidTotal = raidTotal;
+            this.lastPhase = phase;
             entity.setHasChargedArchaics(aliveArchaics > 0);
             entity.syncBossBarData(entity.getBossEvent(), 0);
         }
@@ -91,6 +87,7 @@ public class ArchaicRaid {
         output.add("hasChargedArchaics", entity.hasChargedArchaics() ? 1 : 0);
         output.add("archaicRaidAlive", this.countChargedArchaics());
         output.add("archaicRaidTotal", this.archaicsIntended);
+        output.add("archaicPhase", entity.getPhase());
     }
 
     public void load(ValueInput input) {

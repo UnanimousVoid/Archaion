@@ -1,5 +1,7 @@
 package com.ratrod.archaion.entities.ai.controls.look;
 
+import com.ratrod.archaion.entities.LastOfDeepslate;
+import com.ratrod.archaion.entities.ai.actions.LODSmashGroundAction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -22,6 +24,11 @@ public class LastOfDeepslateLookControl extends LookControl {
     public void tick() {
         LivingEntity target = this.mob.getTarget();
         if (target != null && target.isAlive()) {
+
+            if (mob instanceof LastOfDeepslate lod && lod.attackManager.getCurrentAction() instanceof LODSmashGroundAction action) {
+                if (action.getTimer() <= 27) return;
+            }
+
             Vec3 lookDir = target.getEyePosition().subtract(this.mob.getEyePosition()).normalize();
 
             float targetYaw = (float) (Mth.atan2(-lookDir.x, lookDir.z) * Mth.RAD_TO_DEG);

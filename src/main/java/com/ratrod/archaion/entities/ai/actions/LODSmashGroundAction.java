@@ -2,14 +2,17 @@ package com.ratrod.archaion.entities.ai.actions;
 
 import com.ratrod.archaion.Archaion;
 import com.ratrod.archaion.api.entity.ManagedAction;
+import com.ratrod.archaion.entities.LODFallingBlock;
 import com.ratrod.archaion.entities.LastOfDeepslate;
 import com.ratrod.archaion.entities.ai.ACEntity;
 import com.ratrod.archaion.registry.ACSounds;
 import mod.chloeprime.aaaparticles.api.common.AAALevel;
 import mod.chloeprime.aaaparticles.api.common.ParticleEmitterInfo;
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
@@ -27,7 +30,11 @@ public class LODSmashGroundAction extends ManagedAction<LastOfDeepslate> {
         if (target == null || !target.isAlive()) return false;
         if (!entity.hasLineOfSight(target)) return false;
         if (entity.getY() + 3 < target.getY()) return false;
-        return entity.distanceTo(target) <= entity.getBbWidth() * 1.5F;
+        float r = 1.5F;
+        if (entity.getArchaicSystem().getPhasesTriggered() >= 1) {
+            r = 8F;
+        }
+        return entity.distanceTo(target) <= entity.getBbWidth() * r;
     }
 
     @Override
@@ -52,10 +59,32 @@ public class LODSmashGroundAction extends ManagedAction<LastOfDeepslate> {
         return timer < 50;
     }
 
+    private void applyBlockFalling() {
+        Level level = entity.level();
+        BlockPos blockPos = BlockPos.containing(entity.position().add(0, 30, 0));
+        int hRad = 48;
+        int vRad = 4;
+        for (int xx = -hRad; xx <= hRad; xx++) {
+            for (int zz = -hRad; zz <= hRad; zz++) {
+                for (int yy = -vRad; yy <= vRad; yy++) {
+                    BlockPos pos = blockPos.offset(xx, yy, zz);
+                    if (level.getRandom().nextFloat() < 0.015) {
+                        if (!level.isEmptyBlock(pos) && level.isEmptyBlock(pos.below())) {
+                            LODFallingBlock.spawn((ServerLevel) level, entity.level().getBlockState(pos), new Vec3(pos.getX() + 0.5, pos.getY() - 0.5, pos.getZ() + 0.5), entity);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     private void applySmashDamage() {
         if (!(entity.level() instanceof ServerLevel serverLevel)) return;
 
         entity.playSound(ACSounds.LOD_SMASH.get(), 3.0F, 1.0F);
+        if (entity.getArchaicSystem().getPhasesTriggered() >= 1) {
+            this.applyBlockFalling();
+        }
 
         float yaw = entity.getYHeadRot() * Mth.DEG_TO_RAD;
         Vec3 flatLook = new Vec3(-Mth.sin(yaw), 0, Mth.cos(yaw));

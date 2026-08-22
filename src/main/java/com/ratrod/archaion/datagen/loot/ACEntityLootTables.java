@@ -46,7 +46,7 @@ public class ACEntityLootTables extends EntityLootSubProvider {
         this.add(ACEntityTypes.GRIMORAY.get(), LootTable.lootTable()
                 .withPool(LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1.0F))
-                        .add(LootItem.lootTableItem(Items.BOOK).setWeight(5))
+                        .add(LootItem.lootTableItem(Items.BOOK).setWeight(8))
                         .add(LootItem.lootTableItem(Items.ENCHANTED_BOOK).setWeight(1)
                                 .apply(new SetEnchantmentsFunction.Builder().withEnchantment(enchantments.getOrThrow(Enchantments.SHARPNESS), UniformGenerator.between(1.0F, 5.0F)))
                         )
