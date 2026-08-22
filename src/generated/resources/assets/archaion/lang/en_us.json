@@ -47,7 +47,7 @@
   "entity.archaion.echo_star": "Echo Star",
   "entity.archaion.grimoray": "Grimoray",
   "entity.archaion.grimoray_spell": "Grimoray Spell",
-  "entity.archaion.last_of_deepslate": "Last Of Deepslate",
+  "entity.archaion.last_of_deepslate": "The Last of Deepslate",
   "entity.archaion.lod_intercept_blast": "Lod Intercept Blast",
   "entity.archaion.lod_slam": "Lod Slam",
   "entity.archaion.slated": "Slated",
@@ -106,5 +106,5 @@
   "subtitle.archaion.sentinel_death": "Deepslate Sentinel dies",
   "subtitle.archaion.sentinel_hurt": "Deepslate Sentinel hurts",
   "subtitle.archaion.sentinel_start_charging": "Deepslate Sentinel starts charging",
-  "tooltip.archaion.last_of_deepslate.echo_charge_required": "[ %s Echo Charges required ]"
+  "tooltip.archaion.last_of_deepslate.echo_charge_required": "%s Echo Charges required to activate boss"
 }

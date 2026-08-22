@@ -88,6 +88,10 @@ public class ACTagProvider {
                     ACItems.ECHO_MACE.get()
             );
 
+            this.tag(ItemTags.DURABILITY_ENCHANTABLE).add(
+                    ACItems.ECHOS_GRACE.get()
+            );
+
             this.tag(ItemTags.BOW_ENCHANTABLE).add(
                     ACItems.ECHOS_GRACE.get()
             );

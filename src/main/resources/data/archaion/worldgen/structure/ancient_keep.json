@@ -39,7 +39,7 @@
     }
   },
   "start_pool": "archaion:ancient_keep/main_path",
-  "size": 8,
+  "size": 15,
   "start_height": {
     "type": "minecraft:uniform",
     "max_inclusive": {
