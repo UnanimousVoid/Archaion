@@ -6,7 +6,7 @@
       "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
-        "location": "archaion:ancient_keep/map_room_v1",
+        "location": "archaion:ancient_keep/map_room",
         "processors": "archaion:ancient_keep/ancient_keep_decay",
         "projection": "rigid"
       }
@@ -24,7 +24,7 @@
       "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
-        "location": "archaion:ancient_keep/misc_room_1_v2",
+        "location": "archaion:ancient_keep/misc_room",
         "processors": "archaion:ancient_keep/ancient_keep_decay",
         "projection": "rigid"
       }
@@ -42,7 +42,7 @@
       "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
-        "location": "archaion:ancient_keep/water_room_v2",
+        "location": "archaion:ancient_keep/water_room",
         "processors": "archaion:ancient_keep/ancient_keep_decay",
         "projection": "rigid"
       }
@@ -66,7 +66,7 @@
       }
     },
     {
-      "weight": 2,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "archaion:ancient_keep/sentinel_barracks",
@@ -75,7 +75,7 @@
       }
     },
     {
-      "weight": 2,
+      "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "archaion:ancient_keep/sentinel_crossroad",
