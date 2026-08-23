@@ -68,9 +68,17 @@ public class LODSpawnArchaicsAction extends ManagedAction<LastOfDeepslate> {
             this.regenTicksLeft = 0;
         }
         int players = entity.getArchaicSystem().countNearbyPlayers();
-        int spawnCount = Math.max(4, 4 + 6 * (players - 1));
+
+        int singleSpawn = switch (entity.level().getDifficulty()) {
+            case HARD -> 6;
+            case NORMAL -> 5;
+            default -> 4;
+        };
+        int singleSpawnP2 = singleSpawn + 1;
+
+        int spawnCount = Math.max(singleSpawn, singleSpawn + 6 * (players - 1));
         if (summonPhase >= 2) {
-            spawnCount = Math.max(5, 5 + 7 * (players - 1));
+            spawnCount = Math.max(singleSpawnP2, singleSpawnP2 + 7 * (players - 1));
         }
 
         int base = spawnCount / 3;

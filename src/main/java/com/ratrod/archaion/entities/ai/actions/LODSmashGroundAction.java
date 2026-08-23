@@ -11,6 +11,7 @@ import mod.chloeprime.aaaparticles.api.common.ParticleEmitterInfo;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
@@ -48,15 +49,18 @@ public class LODSmashGroundAction extends ManagedAction<LastOfDeepslate> {
     public boolean onTick() {
         timer++;
 
+        Difficulty difficulty = entity.level().getDifficulty();
+        boolean isHard = difficulty == Difficulty.HARD;
+
         if (timer == 27) {
-            this.applySmashDamage();
+            this.applySmashDamage(isHard ? 1.15F : 1.0F);
         }
 
         if (timer > 18 && entity.getTarget() != null) {
             this.entity.getLookControl().setLookAt(entity.getTarget(), 30.0F, 30.0F);
         }
 
-        return timer < 60;
+        return timer < (isHard ? 50 : 60);
     }
 
     private void applyBlockFalling() {
@@ -78,7 +82,7 @@ public class LODSmashGroundAction extends ManagedAction<LastOfDeepslate> {
         }
     }
 
-    private void applySmashDamage() {
+    private void applySmashDamage(float attackMultiplier) {
         if (!(entity.level() instanceof ServerLevel serverLevel)) return;
 
         entity.playSound(ACSounds.LOD_SMASH.get(), 3.0F, 1.0F);
@@ -98,7 +102,7 @@ public class LODSmashGroundAction extends ManagedAction<LastOfDeepslate> {
         List<LivingEntity> targets = entity.level().getEntitiesOfClass(LivingEntity.class, area, e -> e != entity && e.isAlive() && entity.canAttack(e));
 
         for (LivingEntity target : targets) {
-            if (entity.attackTarget(serverLevel, target, 0.95F, ACEntity.Operation.MULTIPLY)) {
+            if (entity.attackTarget(serverLevel, target, attackMultiplier, ACEntity.Operation.MULTIPLY)) {
                 Vec3 knockback = target.position().subtract(center).normalize().scale(1.5).add(0, 0.35, 0);
                 target.setDeltaMovement(target.getDeltaMovement().add(knockback));
                 target.hurtMarked = true;

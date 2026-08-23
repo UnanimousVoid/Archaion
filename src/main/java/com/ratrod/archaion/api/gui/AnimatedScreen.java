@@ -7,7 +7,7 @@ import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
 
 public abstract class AnimatedScreen extends Screen {
-    public final ObjectArrayList<CDXUIElement<?>> uiElements = new ObjectArrayList<>();
+    public final ObjectArrayList<UIElement<?>> uiElements = new ObjectArrayList<>();
 
     protected AnimatedScreen(Component pTitle) {
         super(pTitle);
@@ -22,14 +22,14 @@ public abstract class AnimatedScreen extends Screen {
 
     public abstract void initUIElements();
 
-    public <T extends CDXUIElement<?>> T addUIElement(T element) {
+    public <T extends UIElement<?>> T addUIElement(T element) {
         this.uiElements.add(element);
         return element;
     }
 
     @Override
     public void extractRenderState(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
-        for (CDXUIElement<?> element : uiElements) {
+        for (UIElement<?> element : uiElements) {
             element.setupRender(guiGraphics, mouseX, mouseY, partialTick);
         }
         super.extractRenderState(guiGraphics, mouseX, mouseY, partialTick);
@@ -43,14 +43,14 @@ public abstract class AnimatedScreen extends Screen {
     @Override
     public void tick() {
         super.tick();
-        for (CDXUIElement<?> element : uiElements) {
+        for (UIElement<?> element : uiElements) {
             element.tick();
         }
     }
 
     @Override
     public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
-        for (CDXUIElement<?> element : uiElements) {
+        for (UIElement<?> element : uiElements) {
             element.setupClick((int) event.x(), (int) event.y());
         }
         return super.mouseClicked(event, doubleClick);

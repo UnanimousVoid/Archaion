@@ -11,7 +11,6 @@ import org.jspecify.annotations.Nullable;
 
 public class LODSoundInstance extends AbstractTickableSoundInstance {
 
-    private static final float MUSIC_VOLUME = 1.0F;
     private static final float FADE_STEP = 1.0F / 40.0F;
 
     private static @Nullable LODSoundInstance current;
@@ -24,19 +23,18 @@ public class LODSoundInstance extends AbstractTickableSoundInstance {
         super(sound, SoundSource.MUSIC, SoundInstance.createUnseededRandom());
         this.looping = true;
         this.delay = 0;
-        this.volume = MUSIC_VOLUME;
+        this.volume = 1.0F;
         this.relative = true;
     }
 
     @Override
     public void tick() {
-        if (!this.fadingOut) {
-            return;
-        }
-        this.volume = Math.max(0.0F, this.volume - FADE_STEP);
-        if (this.volume <= 0.0F) {
-            this.stop();
-            current = null;
+        if (this.fadingOut) {
+            this.volume = Math.max(0.0F, this.volume - FADE_STEP);
+            if (this.volume <= 0.0F) {
+                this.stop();
+                current = null;
+            }
         }
     }
 

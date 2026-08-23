@@ -4,13 +4,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 
-public abstract class CDXUIElement<T extends Screen> {
+public abstract class UIElement<T extends Screen> {
     protected final Minecraft minecraft;
     protected final T screen;
     protected int x;
     protected int y;
 
-    protected CDXUIElement(T screen) {
+    protected UIElement(T screen) {
         this.screen = screen;
         this.minecraft = Minecraft.getInstance();
     }

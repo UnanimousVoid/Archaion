@@ -8,7 +8,7 @@ import org.joml.Matrix3x2fStack;
 
 import javax.annotation.Nullable;
 
-public abstract class AnimatedUIElement<T extends Screen> extends CDXUIElement<T> {
+public abstract class AnimatedUIElement<T extends Screen> extends UIElement<T> {
 
     protected @Nullable AnimationState animation;
 
