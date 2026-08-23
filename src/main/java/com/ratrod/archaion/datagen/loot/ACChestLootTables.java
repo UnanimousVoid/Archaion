@@ -204,7 +204,7 @@ public record ACChestLootTables(HolderLookup.Provider registries) implements Loo
                                 .apply(ExplorationMapFunction.makeExplorationMap()
                                         .setDestination(ACStructures.ON_ANCIENT_KEEP_MAPS)
                                         .setMapDecoration(MapDecorationTypes.WOODLAND_MANSION)
-                                        .setZoom((byte)1)
+                                        .setZoom((byte)4)
                                         .setSearchRadius(100)
                                         .setSkipKnownStructures(false)
                                 )
