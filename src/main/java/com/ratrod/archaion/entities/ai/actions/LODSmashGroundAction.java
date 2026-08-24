@@ -53,7 +53,7 @@ public class LODSmashGroundAction extends ManagedAction<LastOfDeepslate> {
         boolean isHard = difficulty == Difficulty.HARD;
 
         if (timer == 27) {
-            this.applySmashDamage(isHard ? 1.15F : 1.0F);
+            this.applySmashDamage(isHard ? 1.075F : 1.0F);
         }
 
         if (timer > 18 && entity.getTarget() != null) {

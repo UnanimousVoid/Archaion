@@ -23,7 +23,7 @@ public class ACEntityTypes {
             () -> EntityType.Builder.of(LastOfDeepslate::new, MobCategory.MONSTER).sized(6.0F, 6.5F).eyeHeight(5).build(ResourceKey.create(Registries.ENTITY_TYPE, Archaion.prefix("last_of_deepslate"))));
 
     public static final DeferredHolder<EntityType<?>, EntityType<Brave>> BRAVE = ENTITY_TYPE.register("brave",
-            () -> EntityType.Builder.of(Brave::new, MobCategory.MONSTER).sized(0.6F, 1.77F).eyeHeight(1.3452F).clientTrackingRange(10).build(ResourceKey.create(Registries.ENTITY_TYPE, Archaion.prefix("brave"))));
+            () -> EntityType.Builder.of(Brave::new, MobCategory.MONSTER).sized(1.0F, 1.8F).eyeHeight(1.3452F).clientTrackingRange(10).build(ResourceKey.create(Registries.ENTITY_TYPE, Archaion.prefix("brave"))));
 
     public static final DeferredHolder<EntityType<?>, EntityType<Slated>> SLATED = ENTITY_TYPE.register("slated",
             () -> EntityType.Builder.of(Slated::new, MobCategory.MONSTER).sized(0.6F, 1.95F).eyeHeight(1.74F).passengerAttachments(2.0125F).ridingOffset(-0.7F).clientTrackingRange(8).build(ResourceKey.create(Registries.ENTITY_TYPE, Archaion.prefix("slated"))));
