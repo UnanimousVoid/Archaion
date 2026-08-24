@@ -61,7 +61,7 @@ public class LODAttackableRandomTargetGoal extends TargetGoal {
     private List<LivingEntity> nearbyVisibleTargets() {
         List<LivingEntity> result = new ArrayList<>();
         AABB range = this.mob.getBoundingBox().inflate(64.0);
-        Predicate<LivingEntity> predicate = p -> p.isAlive() && this.mob.canAttack(p) && this.mob.getSensing().hasLineOfSight(p);
+        Predicate<LivingEntity> predicate = p -> p.isAlive() && this.mob.canAttack(p);
         result.addAll(this.mob.level().getEntitiesOfClass(Player.class, range, predicate));
         result.addAll(this.mob.level().getEntitiesOfClass(IronGolem.class, range, predicate));
         return result;

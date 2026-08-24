@@ -36,8 +36,7 @@ public class LODRollAction extends ManagedAction<LastOfDeepslate> {
     @Override
     public boolean canStart() {
         LivingEntity target = entity.getTarget();
-        if (target == null || !target.isAlive()) return false;
-        if (!entity.hasLineOfSight(target)) return false;
+        if (target == null || !target.isAlive()) return false; 
         if (entity.getY() + entity.getBbHeight() < target.getY()) return false;
         return entity.getArchaicSystem().getPhasesTriggered() >= 1;
     }

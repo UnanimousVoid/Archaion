@@ -29,7 +29,6 @@ public class LODSmashGroundAction extends ManagedAction<LastOfDeepslate> {
     public boolean canStart() {
         LivingEntity target = entity.getTarget();
         if (target == null || !target.isAlive()) return false;
-        if (!entity.hasLineOfSight(target)) return false;
         if (entity.getY() + 3 < target.getY()) return false;
         float r = 1.5F;
         if (entity.getArchaicSystem().getPhasesTriggered() >= 1) {
