@@ -1,5 +1,6 @@
 package com.ratrod.archaion.entities;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -10,19 +11,18 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.monster.zombie.Zombie;
+import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import org.jspecify.annotations.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
-public class Slated extends Zombie implements Archaic {
+public class Slated extends Zombie implements Archaic, PowerableMob {
 
     public static final EntityDataAccessor<Boolean> IS_CHARGED = SynchedEntityData.defineId(Slated.class, EntityDataSerializers.BOOLEAN);
-    @Nullable private UUID ownerUUID;
+    @Nullable
+    private UUID ownerUUID;
 
     public Slated(EntityType<? extends Slated> entityType, Level level) {
         super(entityType, level);
@@ -38,15 +38,20 @@ public class Slated extends Zombie implements Archaic {
         return this.entityData.get(IS_CHARGED);
     }
 
+    @Override
+    public boolean isPowered() {
+        return this.isCharged();
+    }
+
     public void setCharged(boolean charged) {
         this.entityData.set(IS_CHARGED, charged);
     }
 
-    @Override
-    protected void dropExperience(ServerLevel level, @Nullable Entity entity) {
-        this.xpReward = this.archaicXpReward(this.xpReward);
-        super.dropExperience(level, entity);
-    }
+//    @Override
+//    protected void dropExperience(ServerLevel level, @Nullable Entity entity) {
+//        this.xpReward = this.archaicXpReward(this.xpReward);
+//        super.dropExperience(entity);
+//    }
 
     @Nullable
     public UUID getOwnerUUID() {
@@ -58,14 +63,16 @@ public class Slated extends Zombie implements Archaic {
     }
 
     @Override
-    protected void readAdditionalSaveData(ValueInput input) {
+    public void readAdditionalSaveData(CompoundTag input) {
         super.readAdditionalSaveData(input);
-        this.setCharged(input.getBooleanOr("isCharged", false));
-        input.getString("ownerUUID").ifPresent(s -> this.ownerUUID = UUID.fromString(s));
+        this.setCharged(input.getBoolean("isCharged"));
+        if (input.contains("ownerUUID")) {
+            this.ownerUUID = UUID.fromString(input.getString("ownerUUID"));
+        }
     }
 
     @Override
-    protected void addAdditionalSaveData(ValueOutput output) {
+    public void addAdditionalSaveData(CompoundTag output) {
         super.addAdditionalSaveData(output);
         output.putBoolean("isCharged", this.isCharged());
         if (this.ownerUUID != null) {
@@ -91,16 +98,16 @@ public class Slated extends Zombie implements Archaic {
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, EntitySpawnReason spawnReason, SpawnGroupData groupData) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnReason, SpawnGroupData groupData) {
         return super.finalizeSpawn(level, difficulty, spawnReason, new ZombieGroupData(false, true));
     }
 
     @Override
-    public boolean doHurtTarget(ServerLevel level, Entity target) {
-        boolean result = super.doHurtTarget(level, target);
+    public boolean doHurtTarget(Entity target) {
+        boolean result = super.doHurtTarget(target);
         if (result && this.getMainHandItem().isEmpty() && target instanceof LivingEntity) {
-            float difficulty = level.getCurrentDifficultyAt(this.blockPosition()).getEffectiveDifficulty();
-            ((LivingEntity)target).addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 140 * (int)difficulty), this);
+            float difficulty = level().getCurrentDifficultyAt(this.blockPosition()).getEffectiveDifficulty();
+            ((LivingEntity)target).addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 140 * (int)difficulty), this);
         }
 
         return result;

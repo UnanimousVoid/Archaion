@@ -1,29 +1,21 @@
 package com.ratrod.archaion.client.item;
 
-import com.mojang.serialization.MapCodec;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.renderer.item.properties.numeric.RangeSelectItemModelProperty;
-import net.minecraft.client.renderer.item.properties.numeric.UseDuration;
-import net.minecraft.world.entity.ItemOwner;
+import net.minecraft.client.renderer.item.ItemPropertyFunction;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import org.jspecify.annotations.Nullable;
+import org.jetbrains.annotations.Nullable;
 
-public class EchosGracePull implements RangeSelectItemModelProperty {
-    public static final MapCodec<EchosGracePull> MAP_CODEC = MapCodec.unit(new EchosGracePull());
+public class EchosGracePull implements ItemPropertyFunction {
 
-    public float get(ItemStack itemStack, @Nullable ClientLevel level, @Nullable ItemOwner owner, int seed) {
-        LivingEntity entity = owner == null ? null : owner.asLivingEntity();
-        if (entity != null && entity.getUseItem() == itemStack) {
-            float maxDraw = EnchantmentHelper.modifyCrossbowChargingTime(itemStack, entity, 1.0F) * 20.0F;
-            return UseDuration.useDuration(itemStack, entity) / maxDraw;
+    @Override
+    public float call(ItemStack stack, @Nullable ClientLevel level, @Nullable LivingEntity entity, int seed) {
+        if (entity != null && entity.getUseItem() == stack) {
+            float maxDraw = EnchantmentHelper.modifyCrossbowChargingTime(stack, entity, 1.0F) * 20.0F;
+            return Math.min(1.0F, (float) (stack.getUseDuration(entity) - entity.getUseItemRemainingTicks()) / maxDraw);
         } else {
             return 0.0F;
         }
-    }
-
-    public MapCodec<EchosGracePull> type() {
-        return MAP_CODEC;
     }
 }

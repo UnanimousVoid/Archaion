@@ -1,6 +1,7 @@
 package com.ratrod.archaion.entities;
 
-import org.jspecify.annotations.Nullable;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 

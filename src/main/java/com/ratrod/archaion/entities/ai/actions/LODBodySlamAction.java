@@ -28,7 +28,7 @@ public class LODBodySlamAction extends ManagedAction<LastOfDeepslate> {
     public boolean canStart() {
         LivingEntity target = entity.getTarget();
         if (target == null || !target.isAlive()) return false;
-        if (!entity.hasLineOfSight(target)) return false;
+//        if (!entity.hasLineOfSight(target)) return false;
         if (entity.getY() + entity.getBbHeight() < target.getY()) return false;
         float r = 1.5F;
         if (entity.getArchaicSystem().getPhasesTriggered() >= 2) {
@@ -49,12 +49,12 @@ public class LODBodySlamAction extends ManagedAction<LastOfDeepslate> {
     public boolean onTick() {
         timer++;
         if (timer == 3) {
-            entity.moveOrInterpolateTo(entity.position().add(0, 12, 0));
+            entity.moveTo(entity.position().add(0, 12, 0));
             entity.setNoGravity(true);
         }
 
         if (timer == 25) {
-            entity.moveOrInterpolateTo(this.getGroundPosition());
+            entity.moveTo(this.getGroundPosition());
             entity.setNoGravity(false);
         }
 
@@ -92,7 +92,7 @@ public class LODBodySlamAction extends ManagedAction<LastOfDeepslate> {
         List<LivingEntity> targets = entity.level().getEntitiesOfClass(LivingEntity.class, area, e -> e != entity && e.isAlive() && entity.canAttack(e));
 
         for (LivingEntity target : targets) {
-            if (entity.attackTarget(serverLevel, target, 1.15F, ACEntity.Operation.MULTIPLY)) {
+            if (entity.attackTarget(target, 1.15F, ACEntity.Operation.MULTIPLY)) {
                 Vec3 knockback = target.position().subtract(entity.position()).normalize().scale(2.0).add(0, 0.8, 0);
                 target.setDeltaMovement(target.getDeltaMovement().add(knockback));
                 target.hurtMarked = true;

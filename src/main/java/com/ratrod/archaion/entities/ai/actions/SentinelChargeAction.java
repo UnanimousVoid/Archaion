@@ -98,7 +98,7 @@ public class SentinelChargeAction extends ManagedAction<DeepslateSentinel> {
         AABB area = AABB.ofSize(entity.position(), bbWidth, 3, bbWidth);
         List<LivingEntity> targets = level.getEntitiesOfClass(LivingEntity.class, area, e -> e != entity && e.isAlive() && entity.canAttack(e));
         for (LivingEntity target : targets) {
-            if (target.hurtServer(level, level.damageSources().explosion(entity, entity), 15.0F)) {
+            if (target.hurt(level.damageSources().explosion(entity, entity), 15.0F)) {
                 Vec3 knockback = target.position().subtract(entity.position()).normalize().scale(3.0).add(0, 0.4, 0);
                 target.setDeltaMovement(target.getDeltaMovement().add(knockback));
                 target.hurtMarked = true;

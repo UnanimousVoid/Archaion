@@ -3,7 +3,9 @@ package com.ratrod.archaion.api.trial;
 import com.ratrod.archaion.registry.ACBlockEntities;
 import com.ratrod.archaion.registry.ACBlocks;
 import com.ratrod.archaion.registry.ACItems;
+import net.minecraft.Util;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.datafix.fixes.References;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
@@ -31,13 +33,13 @@ public final class ACTrialRegistry {
     private static final List<DeferredBlock<TrialVaultBlock>> VAULT_DEFERRED = new ArrayList<>();
     private static Set<Block> vaultBlocksCache;
 
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ACTrialSpawnerBlockEntity>> TRIAL_SPAWNER = ACBlockEntities.BLOCK_ENTITIES.register("trial_spawner", () -> new BlockEntityType<>(ACTrialSpawnerBlockEntity::new, SPAWNERS.stream().map(v -> v.block().get()).collect(Collectors.toSet())));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ACTrialSpawnerBlockEntity>> TRIAL_SPAWNER = ACBlockEntities.BLOCK_ENTITIES.register("trial_spawner", () -> new BlockEntityType<>(ACTrialSpawnerBlockEntity::new, SPAWNERS.stream().map(v -> v.block().get()).collect(Collectors.toSet()), Util.fetchChoiceType(References.BLOCK_ENTITY, "archaion:trial_spawner")));
 
     private ACTrialRegistry() {
     }
 
     public static TrialSpawnerVariant registerSpawner(String name, Function<BlockBehaviour.Properties, BlockBehaviour.Properties> properties) {
-        DeferredBlock<ACTrialSpawnerBlock> block = ACBlocks.BLOCK.registerBlock(name, ACTrialSpawnerBlock::new, properties::apply);
+        DeferredBlock<ACTrialSpawnerBlock> block = ACBlocks.BLOCK.registerBlock(name, ACTrialSpawnerBlock::new, properties.apply(BlockBehaviour.Properties.of()));
         ACItems.ITEM.registerSimpleBlockItem(block);
         TrialSpawnerVariant variant = new TrialSpawnerVariant(name, block);
         SPAWNERS.add(variant);
@@ -45,7 +47,7 @@ public final class ACTrialRegistry {
     }
 
     public static TrialVaultVariant registerVault(String name, Function<BlockBehaviour.Properties, BlockBehaviour.Properties> properties, ResourceKey<LootTable> lootTable, DeferredItem<Item> keyItem, double activationRange, double deactivationRange) {
-        DeferredBlock<TrialVaultBlock> block = ACBlocks.BLOCK.registerBlock(name, p -> new TrialVaultBlock(p, () -> new VaultConfig(lootTable, activationRange, deactivationRange, new ItemStack(keyItem.get()), Optional.empty())), properties::apply);
+        DeferredBlock<TrialVaultBlock> block = ACBlocks.BLOCK.registerBlock(name, p -> new TrialVaultBlock(p, () -> new VaultConfig(lootTable, activationRange, deactivationRange, new ItemStack(keyItem.get()), Optional.empty())), properties.apply(BlockBehaviour.Properties.of()));
         ACItems.ITEM.registerSimpleBlockItem(block);
         VAULT_DEFERRED.add(block);
         TrialVaultVariant variant = new TrialVaultVariant(name, block, lootTable, keyItem, activationRange, deactivationRange);

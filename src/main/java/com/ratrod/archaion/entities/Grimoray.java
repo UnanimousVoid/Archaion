@@ -9,13 +9,14 @@ import com.ratrod.archaion.entities.ai.controls.move.ACMoveControl;
 import com.ratrod.archaion.entities.ai.goals.GrimorayFlightGoal;
 import com.ratrod.archaion.registry.ACEntityDataSerializers;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -27,11 +28,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import org.jspecify.annotations.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.UUID;
 
 public class Grimoray extends Monster implements ACEntity<Grimoray> {
 
@@ -95,17 +95,19 @@ public class Grimoray extends Monster implements ACEntity<Grimoray> {
     }
 
     @Override
-    protected void readAdditionalSaveData(ValueInput input) {
+    public void readAdditionalSaveData(CompoundTag input) {
         super.readAdditionalSaveData(input);
-        input.getInt("grimorayType").ifPresent(num -> {
+        if (input.contains("grimorayType")) {
+            int num = input.getInt("grimorayType");
             if (num >= 0 && num < GrimorayType.values().length) {
                 this.setGrimorayType(GrimorayType.values()[num]);
             }
-        });
+        }
+
     }
 
     @Override
-    protected void addAdditionalSaveData(ValueOutput output) {
+    public void addAdditionalSaveData(CompoundTag output) {
         super.addAdditionalSaveData(output);
         output.putInt("grimorayType", this.getGrimorayType().ordinal());
     }
@@ -132,7 +134,7 @@ public class Grimoray extends Monster implements ACEntity<Grimoray> {
     }
 
     @Override
-    public @Nullable SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, EntitySpawnReason spawnReason, @Nullable SpawnGroupData groupData) {
+    public @Nullable SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnReason, @Nullable SpawnGroupData groupData) {
         SpawnGroupData spawnGroupData = super.finalizeSpawn(level, difficulty, spawnReason, groupData);
         GrimorayType[] types = GrimorayType.values();
         this.entityData.set(GRIMORAY_TYPE, types[this.random.nextInt(types.length)]);

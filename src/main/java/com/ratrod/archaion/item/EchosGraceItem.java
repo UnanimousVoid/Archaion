@@ -9,20 +9,20 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemUseAnimation;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ProjectileWeaponItem;
+import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
-import org.jspecify.annotations.Nullable;
-
+import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -35,15 +35,15 @@ public class EchosGraceItem extends ProjectileWeaponItem {
         super(properties);
     }
 
-    public boolean releaseUsing(ItemStack itemStack, Level level, LivingEntity entity, int remainingTime) {
+    public void releaseUsing(ItemStack itemStack, Level level, LivingEntity entity, int remainingTime) {
         if (entity instanceof Player player) {
             int timeHeld = this.getUseDuration(itemStack, entity) - remainingTime;
             if (timeHeld < 0) {
-                return false;
+                return;
             } else {
                 float pow = getPowerForTime(timeHeld, itemStack, entity);
                 if ((double)pow < 0.1) {
-                    return false;
+                    return;
                 } else {
                     List<ItemStack> projectiles = new ArrayList<>();
                     int count = 1;
@@ -61,11 +61,8 @@ public class EchosGraceItem extends ProjectileWeaponItem {
 
                     level.playSound(null, player.getX(), player.getY(), player.getZ(), ACSounds.LOD_SHOOT, SoundSource.PLAYERS, 1.0F, 1.0F / (level.getRandom().nextFloat() * 0.4F + 1.2F) + pow * 0.5F);
                     player.awardStat(Stats.ITEM_USED.get(this));
-                    return true;
                 }
             }
-        } else {
-            return false;
         }
     }
 
@@ -88,13 +85,23 @@ public class EchosGraceItem extends ProjectileWeaponItem {
         return 72000;
     }
 
-    public ItemUseAnimation getUseAnimation(ItemStack itemStack) {
-        return ItemUseAnimation.BOW;
+    public UseAnim getUseAnimation(ItemStack itemStack) {
+        return UseAnim.BOW;
     }
 
-    public InteractionResult use(Level level, Player player, InteractionHand hand) {
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         player.startUsingItem(hand);
-        return InteractionResult.CONSUME;
+        return InteractionResultHolder.consume(player.getItemInHand(hand));
+    }
+
+    @Override
+    public int getEnchantmentValue() {
+        return 15;
+    }
+
+    @Override
+    public boolean isValidRepairItem(ItemStack stack, ItemStack repairCandidate) {
+        return repairCandidate.is(Items.ECHO_SHARD);
     }
 
     public Predicate<ItemStack> getAllSupportedProjectiles() {

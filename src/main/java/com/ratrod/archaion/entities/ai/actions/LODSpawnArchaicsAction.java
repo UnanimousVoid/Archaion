@@ -15,9 +15,9 @@ import mod.chloeprime.aaaparticles.api.common.AAALevel;
 import mod.chloeprime.aaaparticles.api.common.ParticleEmitterInfo;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
-import net.minecraft.util.random.WeightedList;
-import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentTable;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -26,9 +26,15 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class LODSpawnArchaicsAction extends ManagedAction<LastOfDeepslate> {
+
+    private static final Map<EquipmentSlot, Float> NO_DROP = Arrays.stream(EquipmentSlot.values()).collect(Collectors.toMap(Function.identity(), e -> 0.0F));
 
     private float statMultiplier = 1.2F;
     private final int[] batchSizes = new int[3];
@@ -147,7 +153,7 @@ public class LODSpawnArchaicsAction extends ManagedAction<LastOfDeepslate> {
         List<LivingEntity> targets = entity.level().getEntitiesOfClass(LivingEntity.class, area, e -> e != entity && e.isAlive() && entity.canAttack(e));
 
         for (LivingEntity target : targets) {
-            entity.attackTarget(serverLevel, target, 1.2F * scaleMult, ACEntity.Operation.MULTIPLY);
+            entity.attackTarget(target, 1.2F * scaleMult, ACEntity.Operation.MULTIPLY);
             Vec3 knockback = target.position().subtract(center).normalize().scale(1.5 * scaleMult).add(0, 0.35, 0);
             target.setDeltaMovement(target.getDeltaMovement().add(knockback));
             target.hurtMarked = true;
@@ -168,17 +174,17 @@ public class LODSpawnArchaicsAction extends ManagedAction<LastOfDeepslate> {
 
     private EntityType<? extends Monster> pickArchaicType() {
         boolean phaseTwo = entity.getArchaicSystem().getPhasesTriggered() >= 2;
-        WeightedList<EntityType<? extends Monster>> choices = WeightedList.<EntityType<? extends Monster>>builder()
+        SimpleWeightedRandomList<EntityType<? extends Monster>> choices = SimpleWeightedRandomList.<EntityType<? extends Monster>>builder()
                 .add(ACEntityTypes.BRAVE.get(), phaseTwo ? 1 : 0)
                 .add(ACEntityTypes.WIGHT.get(), 4)
                 .add(ACEntityTypes.SLATED.get(), 3)
                 .add(ACEntityTypes.DEEPSLATE_SENTINEL.get(), 4)
                 .build();
-        return choices.getRandom(entity.getRandom()).orElse(ACEntityTypes.BRAVE.get());
+        return choices.getRandomValue(entity.getRandom()).orElse(ACEntityTypes.BRAVE.get());
     }
 
     private void spawnArchaic(ServerLevel serverLevel) {
-        Monster mob = this.pickArchaicType().create(serverLevel, EntitySpawnReason.TRIGGERED);
+        Monster mob = this.pickArchaicType().create(serverLevel);
         Vec3 center = entity.position();
 
         for (int attempt = 0; attempt < 20; attempt++) {
@@ -188,16 +194,16 @@ public class LODSpawnArchaicsAction extends ManagedAction<LastOfDeepslate> {
             double z = center.z + Math.sin(angle) * radius;
             double y = center.y;
 
-            mob.snapTo(x, y, z, entity.getRandom().nextFloat() * 360.0F, 0.0F);
+            mob.moveTo(x, y, z, entity.getRandom().nextFloat() * 360.0F, 0.0F);
 
             if (serverLevel.noCollision(mob, mob.getBoundingBox())) {
                 ((Archaic) mob).setCharged(true);
                 ((Archaic) mob).setOwnerUUID(entity.getUUID());
 
                 if (mob instanceof Wight) {
-                    mob.equip(new EquipmentTable(ACLootTables.EQUIPMENT_DEEPSLATE_SPAWNER_RANGED, 0.0F));
+                    mob.equip(new EquipmentTable(ACLootTables.EQUIPMENT_DEEPSLATE_SPAWNER_RANGED, NO_DROP));
                 } else if (mob instanceof Slated) {
-                    mob.equip(new EquipmentTable(ACLootTables.EQUIPMENT_DEEPSLATE_SPAWNER_MELEE, 0.0F));
+                    mob.equip(new EquipmentTable(ACLootTables.EQUIPMENT_DEEPSLATE_SPAWNER_MELEE, NO_DROP));
                 }
 
                 this.scaleStats(mob);

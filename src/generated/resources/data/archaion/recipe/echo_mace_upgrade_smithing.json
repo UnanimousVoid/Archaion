@@ -1,9 +1,16 @@
 {
   "type": "minecraft:smithing_transform",
-  "addition": "minecraft:echo_shard",
-  "base": "minecraft:mace",
+  "addition": {
+    "item": "minecraft:echo_shard"
+  },
+  "base": {
+    "item": "minecraft:mace"
+  },
   "result": {
+    "count": 1,
     "id": "archaion:echo_mace"
   },
-  "template": "archaion:echo_mace_upgrade_smithing_template"
+  "template": {
+    "item": "archaion:echo_mace_upgrade_smithing_template"
+  }
 }

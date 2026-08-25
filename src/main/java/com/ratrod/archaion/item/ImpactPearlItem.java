@@ -7,6 +7,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
@@ -19,15 +20,18 @@ public class ImpactPearlItem extends Item {
         super(properties);
     }
 
-    public InteractionResult use(Level level, Player player, InteractionHand hand) {
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack itemStack = player.getItemInHand(hand);
+        player.getCooldowns().addCooldown(this, 20);
         level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ENDER_PEARL_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
         if (level instanceof ServerLevel serverLevel) {
-            Projectile.spawnProjectileFromRotation(ThrownImpactPearl::new, serverLevel, itemStack, player, 0.0F, 2.0F, 0.5F);
+            ThrownImpactPearl pearl = new ThrownImpactPearl(serverLevel, player, itemStack);
+            pearl.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 2.0F, 0.5F);
+            serverLevel.addFreshEntity(pearl);
         }
 
         player.awardStat(Stats.ITEM_USED.get(this));
         itemStack.consume(1, player);
-        return InteractionResult.SUCCESS;
+        return InteractionResultHolder.sidedSuccess(itemStack, level.isClientSide());
     }
 }

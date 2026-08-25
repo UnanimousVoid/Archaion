@@ -24,6 +24,7 @@ import com.ratrod.archaion.registry.ACSounds;
 import mod.chloeprime.aaaparticles.api.common.AAALevel;
 import mod.chloeprime.aaaparticles.api.common.ParticleEmitterInfo;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -43,6 +44,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.PowerableMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
@@ -53,15 +55,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import org.jspecify.annotations.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
 import java.util.List;
 import java.util.Map;
 
-public class LastOfDeepslate extends Monster implements ACEntity<LastOfDeepslate> {
+public class LastOfDeepslate extends Monster implements ACEntity<LastOfDeepslate>, PowerableMob {
 
     public static final EntityDataAccessor<SleepingState> SLEEPING_STATE = SynchedEntityData.defineId(LastOfDeepslate.class, ACEntityDataSerializers.SLEEPING_STATE.get());
     public static final EntityDataAccessor<Boolean> HAS_CHARGED_ARCHAICS = SynchedEntityData.defineId(LastOfDeepslate.class, EntityDataSerializers.BOOLEAN);
@@ -93,14 +93,14 @@ public class LastOfDeepslate extends Monster implements ACEntity<LastOfDeepslate
         this.moveControl = new ACMoveControl<>(this);
         this.navigation = new LargeEntityPathNavigation(this, level);
         this.lookControl = new LastOfDeepslateLookControl(this);
-        this.bossEvent = new ServerBossEvent(Mth.createInsecureUUID(this.random), this.getDisplayName(), BossBarColor.BLUE, BossBarOverlay.PROGRESS);
+        this.bossEvent = new ServerBossEvent(this.getDisplayName(), BossBarColor.BLUE, BossBarOverlay.PROGRESS);
 
         this.attackManager.addAction(new LODSmashGroundAction(this), 100);
         this.attackManager.addAction(new LODSwingSpinAction(this), 150);
         this.attackManager.addAction(new LODShootAction(this), 150);
         this.attackManager.addAction(new LODInterceptShootAction(this), 500);
-        this.attackManager.addAction(new LODRollAction(this), 30);
-        this.attackManager.addAction(new LODSpawnArchaicsAction(this), 500);
+        this.attackManager.addAction(new LODRollAction(this), 40);
+        this.attackManager.setPriorityAction(new LODSpawnArchaicsAction(this));
         this.attackManager.addAction(new LODBodySlamAction(this), 100);
     }
 
@@ -295,7 +295,7 @@ public class LastOfDeepslate extends Monster implements ACEntity<LastOfDeepslate
     }
 
     @Override
-    public boolean hurtServer(ServerLevel level, DamageSource source, float damage) {
+    public boolean hurt(DamageSource source, float damage) {
 
         if (this.getSleepingState() != SleepingState.AWAKE) return false;
 
@@ -316,7 +316,7 @@ public class LastOfDeepslate extends Monster implements ACEntity<LastOfDeepslate
             damage = Math.min(damage, this.getHealth() - 1.0F);
         }
 
-        return super.hurtServer(level, source, damage);
+        return super.hurt(source, damage);
     }
 
     public float getAntiBurstMultiplier(float damage, float threshold) {
@@ -327,8 +327,8 @@ public class LastOfDeepslate extends Monster implements ACEntity<LastOfDeepslate
     }
 
     @Override
-    public boolean doHurtTarget(ServerLevel level, Entity target) {
-        boolean result = super.doHurtTarget(level, target);
+    public boolean doHurtTarget(Entity target) {
+        boolean result = super.doHurtTarget(target);
         if (result && target instanceof LivingEntity living) {
             int phases = this.archaicSystem.getPhasesTriggered();
             int amplifier = phases >= 2 ? 1 : (phases == 1 ? 0 : -1);
@@ -350,6 +350,11 @@ public class LastOfDeepslate extends Monster implements ACEntity<LastOfDeepslate
 
     public boolean hasChargedArchaics() {
         return this.entityData.get(HAS_CHARGED_ARCHAICS);
+    }
+
+    @Override
+    public boolean isPowered() {
+        return this.hasChargedArchaics();
     }
 
     public int getEchoChargesFed() {
@@ -381,23 +386,23 @@ public class LastOfDeepslate extends Monster implements ACEntity<LastOfDeepslate
     }
 
     @Override
-    protected void readAdditionalSaveData(ValueInput input) {
+    public void readAdditionalSaveData(CompoundTag input) {
         super.readAdditionalSaveData(input);
-        input.getInt("sleepState").ifPresent(num -> {
-            this.setSleepingState(SleepingState.values()[num]);
-        });
+        if (input.contains("sleepState")) {
+            this.setSleepingState(SleepingState.values()[input.getInt("sleepState")]);
+        }
         this.archaicSystem.load(input);
         this.setPhase(this.archaicSystem.getPhasesTriggered());
-        this.setEchoChargesFed(input.getIntOr("echoChargesFed", 0));
-        this.musicPhase = input.getBooleanOr("finalThemeStarted", false)
+        this.setEchoChargesFed(input.getInt("echoChargesFed"));
+        this.musicPhase = input.getBoolean("finalThemeStarted")
                 ? LODTheme.PHASE_3
-                : LODTheme.fromPhase(input.getIntOr("musicPhase", 1));
+                : LODTheme.fromPhase(input.getInt("musicPhase"));
 
         if (!(attackManager.getCurrentAction() instanceof LODSpawnArchaicsAction)) attackManager.stopCurrentAction();
     }
 
     @Override
-    protected void addAdditionalSaveData(ValueOutput output) {
+    public void addAdditionalSaveData(CompoundTag output) {
         super.addAdditionalSaveData(output);
         output.putInt("sleepState", this.getSleepingState().ordinal());
         this.archaicSystem.save(output);
@@ -464,7 +469,6 @@ public class LastOfDeepslate extends Monster implements ACEntity<LastOfDeepslate
         this.playSound(ACSounds.LOD_STEP.get(), 1.0F, 1.0F);
     }
 
-    @Override
     public float getSecondsToDisableBlocking() {
         return 7.5F;
     }

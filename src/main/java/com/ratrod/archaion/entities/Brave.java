@@ -9,6 +9,7 @@ import com.ratrod.archaion.entities.ai.goals.BraveDistanceAwayGoal;
 import com.ratrod.archaion.entities.ai.goals.BraveSpreadTargetGoal;
 import com.ratrod.archaion.registry.ACSounds;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -19,25 +20,24 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.PowerableMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.animal.golem.IronGolem;
+import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.PathType;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
-import org.jspecify.annotations.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.UUID;
 
-public class Brave extends Monster implements ACEntity<Brave>, Archaic {
+public class Brave extends Monster implements ACEntity<Brave>, Archaic, PowerableMob {
 
     public static final EntityDataAccessor<Boolean> IS_CHARGED = SynchedEntityData.defineId(Brave.class, EntityDataSerializers.BOOLEAN);
 
@@ -47,12 +47,13 @@ public class Brave extends Monster implements ACEntity<Brave>, Archaic {
     public final ACAnimation jumpingAnim = new ACAnimation(this);
     public final ACAnimation shootingAnim = new ACAnimation(this);
 
-    @Nullable private UUID ownerUUID;
+    @Nullable
+    private UUID ownerUUID;
 
     public Brave(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
-        this.setPathfindingMalus(PathType.ON_TOP_OF_TRAPDOOR, -1.0F);
-        this.setPathfindingMalus(PathType.FIRE, -1.0F);
+        this.setPathfindingMalus(PathType.DANGER_TRAPDOOR, -1.0F);
+        this.setPathfindingMalus(PathType.DANGER_FIRE, -1.0F);
         this.xpReward = 20;
 
         this.attackManager.addAction(new BraveJumpOnAction(this), 100);
@@ -85,15 +86,20 @@ public class Brave extends Monster implements ACEntity<Brave>, Archaic {
         return this.entityData.get(IS_CHARGED);
     }
 
+    @Override
+    public boolean isPowered() {
+        return this.isCharged();
+    }
+
     public void setCharged(boolean charged) {
         this.entityData.set(IS_CHARGED, charged);
     }
 
-    @Override
-    protected void dropExperience(ServerLevel level, @Nullable Entity entity) {
-        this.xpReward = this.archaicXpReward(this.xpReward);
-        super.dropExperience(level, entity);
-    }
+//    @Override
+//    protected void dropExperience(ServerLevel level, @Nullable Entity entity) {
+//        this.xpReward = this.archaicXpReward(this.xpReward);
+//        super.dropExperience(level, entity);
+//    }
 
     public void setOwnerUUID(@Nullable UUID ownerUUID) {
         this.ownerUUID = ownerUUID;
@@ -107,19 +113,24 @@ public class Brave extends Monster implements ACEntity<Brave>, Archaic {
     @Nullable
     public LivingEntity getOwner() {
         if (this.ownerUUID == null) return null;
-        Entity entity = this.level().getEntity(this.ownerUUID);
-        return entity instanceof LivingEntity living ? living : null;
+        if (this.level() instanceof ServerLevel serverLevel) {
+            Entity entity = serverLevel.getEntity(this.ownerUUID);
+            return entity instanceof LivingEntity living ? living : null;
+        }
+        return null;
     }
 
     @Override
-    protected void readAdditionalSaveData(ValueInput input) {
+    public void readAdditionalSaveData(CompoundTag input) {
         super.readAdditionalSaveData(input);
-        this.setCharged(input.getBooleanOr("isCharged", false));
-        input.getString("ownerUUID").ifPresent(s -> this.ownerUUID = UUID.fromString(s));
+        this.setCharged(input.getBoolean("isCharged"));
+        if (input.contains("ownerUUID")) {
+            this.ownerUUID = UUID.fromString(input.getString("ownerUUID"));
+        }
     }
 
     @Override
-    protected void addAdditionalSaveData(ValueOutput output) {
+    public void addAdditionalSaveData(CompoundTag output) {
         super.addAdditionalSaveData(output);
         output.putBoolean("isCharged", this.isCharged());
         if (this.ownerUUID != null) {
@@ -144,7 +155,7 @@ public class Brave extends Monster implements ACEntity<Brave>, Archaic {
 
     @Override
     public boolean canAttack(LivingEntity target) {
-        return (target.is(EntityType.PLAYER) || target.is(EntityType.IRON_GOLEM)) && super.canAttack(target);
+        return (target.getType() == EntityType.PLAYER || target.getType() == EntityType.IRON_GOLEM) && super.canAttack(target);
     }
 
     @Override

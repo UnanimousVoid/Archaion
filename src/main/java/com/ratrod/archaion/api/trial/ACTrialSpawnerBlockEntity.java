@@ -1,12 +1,13 @@
 package com.ratrod.archaion.api.trial;
 
+import com.mojang.logging.LogUtils;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.util.RandomSource;
-import net.minecraft.util.Util;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.Spawner;
@@ -16,36 +17,32 @@ import net.minecraft.world.level.block.entity.trialspawner.TrialSpawner;
 import net.minecraft.world.level.block.entity.trialspawner.TrialSpawnerState;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
+import org.slf4j.Logger;
 
 public class ACTrialSpawnerBlockEntity extends BlockEntity implements TrialSpawner.StateAccessor, Spawner {
+    private static final Logger LOGGER = LogUtils.getLogger();
 
-    private final TrialSpawner trialSpawner = this.createDefaultSpawner();
+    private TrialSpawner trialSpawner;
 
     public ACTrialSpawnerBlockEntity(BlockPos worldPosition, BlockState blockState) {
         super(ACTrialRegistry.TRIAL_SPAWNER.get(), worldPosition, blockState);
-    }
-
-    private TrialSpawner createDefaultSpawner() {
         PlayerDetector playerDetector = SharedConstants.DEBUG_TRIAL_SPAWNER_DETECTS_SHEEP_AS_PLAYERS ? PlayerDetector.SHEEP : PlayerDetector.NO_CREATIVE_PLAYERS;
-        PlayerDetector.EntitySelector entitySelector = PlayerDetector.EntitySelector.SELECT_FROM_LEVEL;
-        return new TrialSpawner(TrialSpawner.FullConfig.DEFAULT, this, playerDetector, entitySelector);
+        this.trialSpawner = new TrialSpawner(this, playerDetector, PlayerDetector.EntitySelector.SELECT_FROM_LEVEL);
     }
 
     @Override
-    protected void loadAdditional(ValueInput input) {
-        super.loadAdditional(input);
-        this.trialSpawner.load(input);
+    protected void loadAdditional(CompoundTag input, HolderLookup.Provider registries) {
+        super.loadAdditional(input, registries);
+        this.trialSpawner = this.trialSpawner.codec().parse(NbtOps.INSTANCE, input).resultOrPartial(LOGGER::error).orElse(this.trialSpawner);
         if (this.level != null) {
             this.markUpdated();
         }
     }
 
     @Override
-    protected void saveAdditional(ValueOutput output) {
-        super.saveAdditional(output);
-        this.trialSpawner.store(output);
+    protected void saveAdditional(CompoundTag output, HolderLookup.Provider registries) {
+        super.saveAdditional(output, registries);
+        this.trialSpawner.codec().encodeStart(NbtOps.INSTANCE, this.trialSpawner).ifSuccess(p_ -> output.merge((CompoundTag) p_));
     }
 
     @Override
@@ -55,17 +52,13 @@ public class ACTrialSpawnerBlockEntity extends BlockEntity implements TrialSpawn
 
     @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
-        return this.trialSpawner.getStateData().getUpdateTag(this.getBlockState().getValue(ACTrialSpawnerBlock.STATE));
+        return this.trialSpawner.getData().getUpdateTag(this.getBlockState().getValue(ACTrialSpawnerBlock.STATE));
     }
 
     @Override
     public void setEntityId(EntityType<?> type, RandomSource random) {
-        if (this.level == null) {
-            Util.logAndPauseIfInIde("Expected non-null level");
-        } else {
-            this.trialSpawner.overrideEntityToSpawn(type, this.level);
-            this.setChanged();
-        }
+        this.trialSpawner.getData().setEntityId(this.trialSpawner, random, type);
+        this.setChanged();
     }
 
     public TrialSpawner getTrialSpawner() {

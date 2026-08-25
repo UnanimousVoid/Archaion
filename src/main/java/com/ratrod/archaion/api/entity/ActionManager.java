@@ -1,8 +1,8 @@
 package com.ratrod.archaion.api.entity;
 
 import net.minecraft.util.RandomSource;
-import net.minecraft.util.random.Weighted;
-import net.minecraft.util.random.WeightedList;
+import net.minecraft.util.random.SimpleWeightedRandomList;
+import net.minecraft.util.random.WeightedEntry;
 import net.minecraft.world.entity.Entity;
 
 import javax.annotation.Nullable;
@@ -11,14 +11,20 @@ import java.util.List;
 public class ActionManager<T extends Entity> {
 
     private final T entity;
-    private final WeightedList.Builder<ManagedAction<T>> actionBuilder = WeightedList.builder();
-    private @Nullable WeightedList<ManagedAction<T>> action;
+    private final SimpleWeightedRandomList.Builder<ManagedAction<T>> actionBuilder = SimpleWeightedRandomList.builder();
+    private @Nullable SimpleWeightedRandomList<ManagedAction<T>> action;
     private boolean dirty = true;
 
+
     private @Nullable ManagedAction<T> currentAction;
+    private @Nullable ManagedAction<T> priorityAction;
 
     public ActionManager(T entity) {
         this.entity = entity;
+    }
+
+    public void setPriorityAction(ManagedAction<T> action) {
+        this.priorityAction = action;
     }
 
     public final void addAction(ManagedAction<T> task, int weight) {
@@ -37,6 +43,17 @@ public class ActionManager<T extends Entity> {
             return;
         }
 
+        if (this.priorityAction != null && this.priorityAction.canStart()) {
+            if (this.currentAction != this.priorityAction) {
+                this.stopCurrentAction();
+                this.startAction(this.priorityAction);
+            }
+            if (!this.priorityAction.onTick()) {
+                this.stopCurrentAction();
+            }
+            return;
+        }
+
         if (this.currentAction != null) {
             if (!this.currentAction.onTick()) {
                 this.stopCurrentAction();
@@ -47,7 +64,7 @@ public class ActionManager<T extends Entity> {
         }
     }
 
-    private WeightedList<ManagedAction<T>> getActions() {
+    private SimpleWeightedRandomList<ManagedAction<T>> getActions() {
         if (this.action == null || this.dirty) {
             this.action = this.actionBuilder.build();
             this.dirty = false;
@@ -56,8 +73,8 @@ public class ActionManager<T extends Entity> {
     }
 
     private void tryStartNewTask() {
-        List<Weighted<ManagedAction<T>>> availableActions = this.getActions().unwrap().stream()
-                .filter(weighted -> weighted.value().canStart())
+        List<WeightedEntry.Wrapper<ManagedAction<T>>> availableActions = this.getActions().unwrap().stream()
+                .filter(weighted -> weighted.data().canStart())
                 .toList();
 
         if (availableActions.isEmpty()) {
@@ -65,7 +82,11 @@ public class ActionManager<T extends Entity> {
         }
 
         RandomSource random = this.entity.getRandom();
-        WeightedList.of(availableActions).getRandom(random).ifPresent(this::startAction);
+        SimpleWeightedRandomList.Builder<ManagedAction<T>> builder = SimpleWeightedRandomList.builder();
+        for (WeightedEntry.Wrapper<ManagedAction<T>> weighted : availableActions) {
+            builder.add(weighted.data(), weighted.getWeight().asInt());
+        }
+        builder.build().getRandomValue(random).ifPresent(this::startAction);
     }
 
     private void startAction(ManagedAction<T> action) {

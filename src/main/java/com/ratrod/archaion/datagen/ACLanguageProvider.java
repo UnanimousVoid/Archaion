@@ -46,22 +46,24 @@ public class ACLanguageProvider extends LanguageProvider {
 
         this.add(ACItems.ECHOS_GRACE.get(), "Echo's Grace");
 
-        this.add(ACItems.ECHO_MACE_UPGRADE_SMITHING_TEMPLATE.get(), "Echo Mace Upgrade");
+        this.add(ACItems.ECHO_MACE_UPGRADE_SMITHING_TEMPLATE.get(), "Smithing Template");
+        this.add("item.archaion.smithing_template.mace_upgrade.upgrade_description", "Echo Mace Upgrade");
         this.add("item.archaion.smithing_template.mace_upgrade.applies_to", "Mace");
         this.add("item.archaion.smithing_template.mace_upgrade.ingredients", "Echo Shard");
         this.add("item.archaion.smithing_template.mace_upgrade.base_slot_description", "Add a Mace");
         this.add("item.archaion.smithing_template.mace_upgrade.additions_slot_description", "Add an Echo Shard");
 
-        this.add(ACItems.ECHOS_GRACE_UPGRADE_SMITHING_TEMPLATE.get(), "Echo's Grace Upgrade");
+        this.add(ACItems.ECHOS_GRACE_UPGRADE_SMITHING_TEMPLATE.get(), "Smithing Template");
+        this.add("item.archaion.smithing_template.echos_grace_upgrade.upgrade_description", "Echo's Grace Upgrade");
         this.add("item.archaion.smithing_template.echos_grace_upgrade.applies_to", "Bow");
         this.add("item.archaion.smithing_template.echos_grace_upgrade.ingredients", "Echo Charge");
         this.add("item.archaion.smithing_template.echos_grace_upgrade.base_slot_description", "Add a Bow");
         this.add("item.archaion.smithing_template.echos_grace_upgrade.additions_slot_description", "Add an Echo Charge");
 
         this.add("misc.archaion.last_of_deepslate.echo_charge_required", "%s Echo Charges required to activate boss");
-        this.add("misc.archaion.last_of_deepslate.phase_1_notifier", "You feel a deep chill.");
-        this.add("misc.archaion.last_of_deepslate.phase_2_notifier", "The cold is becoming unbearable...");
-        this.add("misc.archaion.last_of_deepslate.phase_3_notifier", "A faint warmth pierces the cold...");
+        this.add("misc.archaion.last_of_deepslate.phase_1_notifier", "A deep chill settles upon you.");
+        this.add("misc.archaion.last_of_deepslate.phase_2_notifier", "The cold grows ever deeper...");
+        this.add("misc.archaion.last_of_deepslate.phase_3_notifier", "A faint warmth stirs within the cold...");
         this.add("misc.archaion.filled_map.ancient_keep", "Ancient Keep Map");
 
         this.add("misc.archaion.hologram.ancient_keep_0", this.hologram(

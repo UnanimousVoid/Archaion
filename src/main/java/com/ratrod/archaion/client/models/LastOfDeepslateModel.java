@@ -1,16 +1,18 @@
 package com.ratrod.archaion.client.models;
 
 import com.ratrod.archaion.Archaion;
-import com.ratrod.archaion.client.renderers.renderstate.LastOfDeepslateRenderState;
 import com.ratrod.archaion.client.animations.LastOfDeepslateAnimations;
+import com.ratrod.archaion.entities.LastOfDeepslate;
 import com.ratrod.archaion.entities.ai.SleepingState;
-import net.minecraft.client.animation.KeyframeAnimation;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 
-public class LastOfDeepslateModel<S extends LastOfDeepslateRenderState> extends ACAnimatedModel<S> {
+import java.util.List;
+
+public class LastOfDeepslateModel extends ACHierarchicalModel<LastOfDeepslate> {
 
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(Archaion.prefix("lastofdeepslatemodel"), "main");
     public static final ModelLayerLocation CHARGED_LAYER_LOCATION = new ModelLayerLocation(Archaion.prefix("chargedlastofdeepslate"), "main");
@@ -26,15 +28,9 @@ public class LastOfDeepslateModel<S extends LastOfDeepslateRenderState> extends 
     private final ModelPart legr;
     private final ModelPart legl;
 
-    private final KeyframeAnimation walkUpperAnimation;
-    private final KeyframeAnimation walkLowerAnimation;
-
     public LastOfDeepslateModel(ModelPart root) {
         super(root);
         this.root = root.getChild("root");
-
-        this.walkUpperAnimation = LastOfDeepslateAnimations.WALK_UPPER.bake(root);
-        this.walkLowerAnimation = LastOfDeepslateAnimations.WALK_LOWER.bake(root);
 
         this.bod = this.root.getChild("bod");
         this.upperbod = this.bod.getChild("upperbod");
@@ -84,16 +80,26 @@ public class LastOfDeepslateModel<S extends LastOfDeepslateRenderState> extends 
     }
 
     @Override
-    public void setupAnim(S state) {
-        super.setupAnim(state);
+    public void setupAnim(LastOfDeepslate entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        this.parts().forEach(ModelPart::resetPose);
 
-        if (state.sleepingState == SleepingState.SLEEPING) {
-            this.animateScaled(LastOfDeepslateAnimations.SLEEPING, state.ageInTicks, 1.0F, 1.0F);
-        } else if (state.sleepingState == SleepingState.AWAKE) {
-            this.animateScaled(LastOfDeepslateAnimations.IDLE_UPPER, state.ageInTicks, 1.0F, 1.0F);
+        if (entity.getSleepingState() == SleepingState.SLEEPING) {
+            this.animateScaled(LastOfDeepslateAnimations.SLEEPING, ageInTicks, 1.0F, 1.0F);
+        } else if (entity.getSleepingState() == SleepingState.AWAKE) {
+            this.animateScaled(LastOfDeepslateAnimations.IDLE_UPPER, ageInTicks, 1.0F, 1.0F);
         }
-        walkUpperAnimation.applyWalk(state.walkAnimationPos, state.walkAnimationSpeed, 2.0F, 2.5F);
-        walkLowerAnimation.applyWalk(state.walkAnimationPos, state.walkAnimationSpeed, 2.0F, 2.5F);
-        this.animateManager(state, state.ageInTicks);
+        this.animateWalk(LastOfDeepslateAnimations.WALK_UPPER, limbSwing, limbSwingAmount, 2.0F, 2.5F);
+        this.animateWalk(LastOfDeepslateAnimations.WALK_LOWER, limbSwing, limbSwingAmount, 2.0F, 2.5F);
+        this.animateManager(entity, ageInTicks);
     }
+
+    @Override
+    public ModelPart root() {
+        return this.root;
+    }
+
+    public List<ModelPart> parts() {
+        return ObjectArrayList.of(root, bod, upperbod, centeredbod, core, armr, palmr, arml, palml, legr, legl);
+    }
+
 }

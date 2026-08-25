@@ -12,7 +12,7 @@
               "function": "minecraft:exploration_map",
               "search_radius": 100,
               "skip_existing_chunks": false,
-              "zoom": 1
+              "zoom": 4
             },
             {
               "function": "minecraft:set_name",

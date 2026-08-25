@@ -120,8 +120,7 @@ public class GoToTargetGoal extends Goal {
         double probe = entity.getBbWidth() * 0.5 + 1.5F;
         BlockHitResult hit = entity.level().clip(new ClipContext(from, from.add(dir.scale(probe)), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, entity));
         if (hit.getType() == HitResult.Type.BLOCK && hit.getDirection().getAxis().isHorizontal()) {
-            Vec3 normal = hit.getDirection().getUnitVec3();
-            Vec3 tangent = dir.subtract(normal.scale(dir.dot(normal)));
+            Vec3 normal = Vec3.atLowerCornerOf(hit.getDirection().getNormal());            Vec3 tangent = dir.subtract(normal.scale(dir.dot(normal)));
             if (tangent.lengthSqr() < 1.0E-6) {
                 tangent = new Vec3(-normal.z, 0, normal.x);
             } else {

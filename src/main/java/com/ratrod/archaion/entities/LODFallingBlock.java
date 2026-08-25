@@ -4,6 +4,8 @@ import com.ratrod.archaion.Archaion;
 import com.ratrod.archaion.registry.ACEntityTypes;
 import mod.chloeprime.aaaparticles.api.common.AAALevel;
 import mod.chloeprime.aaaparticles.api.common.ParticleEmitterInfo;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
@@ -17,13 +19,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 public class LODFallingBlock extends Entity {
-
     private BlockState blockState = Blocks.SAND.defaultBlockState();
     private Entity owner;
     private boolean dealtDamage;
@@ -36,7 +35,7 @@ public class LODFallingBlock extends Entity {
     }
 
     public static void spawn(ServerLevel level, BlockState state, Vec3 pos, Entity owner) {
-        LODFallingBlock entity = ACEntityTypes.LOD_FALLING_BLOCK.get().create(level, EntitySpawnReason.TRIGGERED);
+        LODFallingBlock entity = ACEntityTypes.LOD_FALLING_BLOCK.get().create(level);
         entity.blockState = state;
         entity.owner = owner;
         entity.gravity = 0.04 + level.getRandom().nextDouble() * 0.15;
@@ -62,14 +61,14 @@ public class LODFallingBlock extends Entity {
     }
 
     @Override
-    protected void readAdditionalSaveData(ValueInput input) {
-        this.blockState = input.read("BlockState", BlockState.CODEC).orElse(Blocks.SAND.defaultBlockState());
-        this.time = input.getIntOr("Time", 0);
+    public void readAdditionalSaveData(CompoundTag input) {
+        this.blockState = BlockState.CODEC.parse(NbtOps.INSTANCE, input.get("BlockState")).result().orElse(Blocks.SAND.defaultBlockState());
+        this.time = input.getInt("Time");
     }
 
     @Override
-    protected void addAdditionalSaveData(ValueOutput output) {
-        output.store("BlockState", BlockState.CODEC, this.blockState);
+    public void addAdditionalSaveData(CompoundTag output) {
+        output.put("BlockState", BlockState.CODEC.encodeStart(NbtOps.INSTANCE, this.blockState).result().orElseThrow());
         output.putInt("Time", this.time);
     }
 
@@ -93,7 +92,6 @@ public class LODFallingBlock extends Entity {
             this.time++;
             this.applyGravity();
             this.move(MoverType.SELF, this.getDeltaMovement());
-            this.applyEffectsFromBlocks();
 
             if (!this.level().isClientSide() && (this.onGround() || this.time > 600)) {
                 this.damageArea();
@@ -105,7 +103,7 @@ public class LODFallingBlock extends Entity {
     }
 
     @Override
-    public boolean hurtServer(ServerLevel level, DamageSource source, float damage) {
+    public boolean hurt(DamageSource source, float damage) {
         return false;
     }
 
@@ -119,7 +117,7 @@ public class LODFallingBlock extends Entity {
 
         AABB area = this.getBoundingBox().inflate(2, 1.0, 2);
         for (LivingEntity target : serverLevel.getEntitiesOfClass(LivingEntity.class, area, e -> e != cause && e.isAlive() && canTarget(e))) {
-            target.hurtServer(serverLevel, serverLevel.damageSources().explosion(cause, cause), 12.0F);
+            target.hurt(serverLevel.damageSources().explosion(cause, cause), 12.0F);
         }
 
         ParticleEmitterInfo info = new ParticleEmitterInfo(Archaion.prefix("lod_falling_block"));

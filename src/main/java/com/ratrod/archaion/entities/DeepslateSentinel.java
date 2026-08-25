@@ -8,6 +8,7 @@ import com.ratrod.archaion.entities.ai.actions.SentinelChargeAction;
 import com.ratrod.archaion.entities.ai.controls.pathnav.LargeEntityPathNavigation;
 import com.ratrod.archaion.entities.ai.goals.PickUpRidersGoal;
 import com.ratrod.archaion.registry.ACSounds;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -18,6 +19,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.PowerableMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
@@ -27,17 +29,15 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import org.jspecify.annotations.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.UUID;
 import java.util.function.Predicate;
 
-public class DeepslateSentinel extends Monster implements ACEntity<DeepslateSentinel>, Archaic {
+public class DeepslateSentinel extends Monster implements ACEntity<DeepslateSentinel>, Archaic, PowerableMob {
 
     public static final EntityDataAccessor<Boolean> IS_CHARGED = SynchedEntityData.defineId(DeepslateSentinel.class, EntityDataSerializers.BOOLEAN);
 
@@ -47,7 +47,8 @@ public class DeepslateSentinel extends Monster implements ACEntity<DeepslateSent
 
     private int chargeCooldownTicks;
 
-    @Nullable private UUID ownerUUID;
+    @Nullable
+    private UUID ownerUUID;
 
     public DeepslateSentinel(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
@@ -66,15 +67,20 @@ public class DeepslateSentinel extends Monster implements ACEntity<DeepslateSent
         return this.entityData.get(IS_CHARGED);
     }
 
+    @Override
+    public boolean isPowered() {
+        return this.isCharged();
+    }
+
     public void setCharged(boolean charged) {
         this.entityData.set(IS_CHARGED, charged);
     }
 
-    @Override
-    protected void dropExperience(ServerLevel level, @Nullable Entity entity) {
-        this.xpReward = this.archaicXpReward(this.xpReward);
-        super.dropExperience(level, entity);
-    }
+//    @Override
+//    protected void dropExperience(ServerLevel level, @Nullable Entity entity) {
+//        this.xpReward = this.archaicXpReward(this.xpReward);
+//        super.dropExperience(level, entity);
+//    }
 
     @Nullable
     public UUID getOwnerUUID() {
@@ -86,14 +92,16 @@ public class DeepslateSentinel extends Monster implements ACEntity<DeepslateSent
     }
 
     @Override
-    protected void readAdditionalSaveData(ValueInput input) {
+    public void readAdditionalSaveData(CompoundTag input) {
         super.readAdditionalSaveData(input);
-        this.setCharged(input.getBooleanOr("isCharged", false));
-        input.getString("ownerUUID").ifPresent(s -> this.ownerUUID = UUID.fromString(s));
+        this.setCharged(input.getBoolean("isCharged"));
+        if (input.contains("ownerUUID")) {
+            this.ownerUUID = UUID.fromString(input.getString("ownerUUID"));
+        }
     }
 
     @Override
-    protected void addAdditionalSaveData(ValueOutput output) {
+    public void addAdditionalSaveData(CompoundTag output) {
         super.addAdditionalSaveData(output);
         output.putBoolean("isCharged", this.isCharged());
         if (this.ownerUUID != null) {

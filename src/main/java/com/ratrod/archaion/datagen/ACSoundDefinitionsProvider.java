@@ -4,14 +4,15 @@ import com.ratrod.archaion.Archaion;
 import com.ratrod.archaion.registry.ACSounds;
 import net.minecraft.data.PackOutput;
 import net.minecraft.sounds.SoundEvent;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.common.data.SoundDefinition;
 import net.neoforged.neoforge.common.data.SoundDefinitionsProvider;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
 public class ACSoundDefinitionsProvider extends SoundDefinitionsProvider {
 
-    public ACSoundDefinitionsProvider(PackOutput output) {
-        super(output, Archaion.MODID);
+    public ACSoundDefinitionsProvider(PackOutput output, ExistingFileHelper efh) {
+        super(output, Archaion.MODID, efh);
     }
 
     @Override

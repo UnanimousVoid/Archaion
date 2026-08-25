@@ -74,7 +74,7 @@ public class LODInterceptBlast extends ThrowableProjectile {
         AABB area = AABB.ofSize(this.position(), 14 * sizeMult, 14 * sizeMult, 14 * sizeMult);
         List<LivingEntity> targets = serverLevel.getEntitiesOfClass(LivingEntity.class, area, e -> e != cause && e.isAlive() && canTarget(e));
         for (LivingEntity target : targets) {
-            target.hurtServer(serverLevel, serverLevel.damageSources().explosion(cause, cause), 55.0F);
+            target.hurt(serverLevel.damageSources().explosion(cause, cause), 55.0F);
             Vec3 knockback = target.position().subtract(this.position()).normalize().scale(3.0).add(0, 0.35, 0);
             target.setDeltaMovement(target.getDeltaMovement().add(knockback));
             target.hurtMarked = true;

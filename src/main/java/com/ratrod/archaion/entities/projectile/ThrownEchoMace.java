@@ -28,7 +28,7 @@ import net.minecraft.world.level.SimpleExplosionDamageCalculator;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
-import org.jspecify.annotations.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class ThrownEchoMace extends ThrowableProjectile {
 
@@ -78,18 +78,18 @@ public class ThrownEchoMace extends ThrowableProjectile {
         Entity owner = this.getOwner();
         DamageSource source = this.damageSources().thrown(this, owner == null ? this : owner);
         if (this.level() instanceof ServerLevel serverLevel) {
-            float damage = 10;
-            damage += (float) this.tickCount * 0.65F;
+            float damage = 8;
+            damage += (float) this.tickCount * 0.5F;
             damage = EnchantmentHelper.modifyFallBasedDamage(serverLevel, this.getThrownStack(), target, source, damage);
-            if (target.hurtServer(serverLevel, source, damage)) {
+            if (target.hurt(source, damage)) {
                 if (target instanceof LivingEntity living) {
                     Vec3 delta = this.getDeltaMovement();
                     living.push(delta.x * 0.4, 0.3, delta.z * 0.4);
                 }
-                if (owner instanceof LivingEntity livingOwner) {
-                    livingOwner.setIgnoreFallDamageFromCurrentImpulse(true, livingOwner.position());
-                }
-                EnchantmentHelper.doPostAttackEffectsWithItemSourceOnBreak(serverLevel, target, source, this.withoutWindBurst(), weapon -> {});
+//                if (owner instanceof LivingEntity livingOwner) {
+//                    livingOwner.setIgnoreFallDamageFromCurrentImpulse(true, livingOwner.position());
+//                }
+                EnchantmentHelper.doPostAttackEffectsWithItemSource(serverLevel, target, source, this.withoutWindBurst());
                 this.level().playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.MACE_SMASH_AIR, SoundSource.PLAYERS, 2.0F, 1.2F);
                 this.spawnSmashEffect(serverLevel, target.getOnPos(), 550, target);
                 this.setDeltaMovement(0, 1, 0);
@@ -116,7 +116,7 @@ public class ThrownEchoMace extends ThrowableProjectile {
             this.spawnSmashEffect(serverLevel, hitResult.getBlockPos(), 550, null);
 
             Vec3 velocity = this.getDeltaMovement();
-            Vec3 normal = Vec3.atLowerCornerOf(hitResult.getDirection().getUnitVec3i());
+            Vec3 normal = Vec3.atLowerCornerOf(hitResult.getDirection().getNormal());
             double approach = velocity.dot(normal);
             this.setDeltaMovement(velocity.subtract(normal.scale((1.75) * approach)));
             this.setPos(this.position().add(normal.scale(0.05)));
@@ -182,7 +182,7 @@ public class ThrownEchoMace extends ThrowableProjectile {
             }
 
             @Override
-            public float getEntityDamageAmount(Explosion explosion, Entity entity, float exposure) {
+            public float getEntityDamageAmount(Explosion explosion, Entity entity) {
                 return aoeDamage;
             }
         };
@@ -197,7 +197,6 @@ public class ThrownEchoMace extends ThrowableProjectile {
                 explodeEffect.blockInteraction(),
                 explodeEffect.smallParticle(),
                 explodeEffect.largeParticle(),
-                explodeEffect.blockParticles(),
                 explodeEffect.sound()
         );
     }

@@ -20,22 +20,22 @@ public class ACEntityTypes {
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPE = DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, Archaion.MODID);
 
     public static final DeferredHolder<EntityType<?>, EntityType<LastOfDeepslate>> LAST_OF_DEEPSLATE = ENTITY_TYPE.register("last_of_deepslate",
-            () -> EntityType.Builder.of(LastOfDeepslate::new, MobCategory.MONSTER).sized(6.0F, 6.5F).eyeHeight(5).build(ResourceKey.create(Registries.ENTITY_TYPE, Archaion.prefix("last_of_deepslate"))));
+            () -> EntityType.Builder.of(LastOfDeepslate::new, MobCategory.MONSTER).sized(6.0F, 6.5F).eyeHeight(5).build("last_of_deepslate"));
 
     public static final DeferredHolder<EntityType<?>, EntityType<Brave>> BRAVE = ENTITY_TYPE.register("brave",
-            () -> EntityType.Builder.of(Brave::new, MobCategory.MONSTER).sized(0.6F, 1.77F).eyeHeight(1.3452F).clientTrackingRange(10).build(ResourceKey.create(Registries.ENTITY_TYPE, Archaion.prefix("brave"))));
+            () -> EntityType.Builder.of(Brave::new, MobCategory.MONSTER).sized(1.0F, 1.77F).eyeHeight(1.3452F).clientTrackingRange(10).build("brave"));
 
     public static final DeferredHolder<EntityType<?>, EntityType<Slated>> SLATED = ENTITY_TYPE.register("slated",
-            () -> EntityType.Builder.of(Slated::new, MobCategory.MONSTER).sized(0.6F, 1.95F).eyeHeight(1.74F).passengerAttachments(2.0125F).ridingOffset(-0.7F).clientTrackingRange(8).build(ResourceKey.create(Registries.ENTITY_TYPE, Archaion.prefix("slated"))));
+            () -> EntityType.Builder.of(Slated::new, MobCategory.MONSTER).sized(0.6F, 1.95F).eyeHeight(1.74F).passengerAttachments(2.0125F).ridingOffset(-0.7F).clientTrackingRange(8).build("slated"));
 
     public static final DeferredHolder<EntityType<?>, EntityType<Wight>> WIGHT = ENTITY_TYPE.register("wight",
-            () -> EntityType.Builder.of(Wight::new, MobCategory.MONSTER).sized(0.6F, 1.99F).eyeHeight(1.74F).ridingOffset(-0.7F).clientTrackingRange(8).build(ResourceKey.create(Registries.ENTITY_TYPE, Archaion.prefix("wight"))));
+            () -> EntityType.Builder.of(Wight::new, MobCategory.MONSTER).sized(0.6F, 1.99F).eyeHeight(1.74F).ridingOffset(-0.7F).clientTrackingRange(8).build("wight"));
 
     public static final DeferredHolder<EntityType<?>, EntityType<Grimoray>> GRIMORAY = ENTITY_TYPE.register("grimoray",
-            () -> EntityType.Builder.of(Grimoray::new, MobCategory.MONSTER).sized(0.9F, 1.0F).eyeHeight(1.6F).clientTrackingRange(8).build(ResourceKey.create(Registries.ENTITY_TYPE, Archaion.prefix("grimoray"))));
+            () -> EntityType.Builder.of(Grimoray::new, MobCategory.MONSTER).sized(0.9F, 1.0F).eyeHeight(1.6F).clientTrackingRange(8).build("grimoray"));
 
     public static final DeferredHolder<EntityType<?>, EntityType<DeepslateSentinel>> DEEPSLATE_SENTINEL = ENTITY_TYPE.register("deepslate_sentinel",
-            () -> EntityType.Builder.of(DeepslateSentinel::new, MobCategory.MONSTER).sized(2.75F, 2.6F).eyeHeight(1.05F).nameTagOffset(2.05F).clientTrackingRange(10).build(ResourceKey.create(Registries.ENTITY_TYPE, Archaion.prefix("deepslate_sentinel"))));
+            () -> EntityType.Builder.of(DeepslateSentinel::new, MobCategory.MONSTER).sized(2.75F, 2.6F).eyeHeight(1.05F).nameTagOffset(2.05F).clientTrackingRange(10).build("deepslate_sentinel"));
 
     public static final DeferredHolder<EntityType<?>, EntityType<GrimoraySpellProjectile>> GRIMORAY_SPELL = ENTITY_TYPE.register("grimoray_spell",
             () -> EntityType.Builder.<GrimoraySpellProjectile>of(GrimoraySpellProjectile::new, MobCategory.MISC)
@@ -43,38 +43,38 @@ public class ACEntityTypes {
                     .clientTrackingRange(8)
                     .noSave()
                     .noSummon()
-                    .build(ResourceKey.create(Registries.ENTITY_TYPE, Archaion.prefix("grimoray_spell"))));
+                    .build("grimoray_spell"));
 
     public static final DeferredHolder<EntityType<?>, EntityType<EchoStarProjectile>> ECHO_STAR = ENTITY_TYPE.register("echo_star",
-            () -> EntityType.Builder.<EchoStarProjectile>of(EchoStarProjectile::new, MobCategory.MISC).sized(1.5F, 1.5F).noSave().build(ResourceKey.create(Registries.ENTITY_TYPE, Archaion.prefix("echo_star"))));
+            () -> EntityType.Builder.<EchoStarProjectile>of(EchoStarProjectile::new, MobCategory.MISC).sized(1.5F, 1.5F).noSave().build("echo_star"));
 
     public static final DeferredHolder<EntityType<?>, EntityType<ThrownEchoMace>> THROWN_ECHO_MACE = ENTITY_TYPE.register("thrown_echo_mace",
             () -> EntityType.Builder.<ThrownEchoMace>of(ThrownEchoMace::new, MobCategory.MISC)
                     .sized(0.5F, 0.5F)
                     .clientTrackingRange(8)
                     .noSave()
-                    .build(ResourceKey.create(Registries.ENTITY_TYPE, Archaion.prefix("thrown_echo_mace"))));
+                    .build("thrown_echo_mace"));
 
     public static final DeferredHolder<EntityType<?>, EntityType<ThrownImpactPearl>> THROWN_IMPACT_PEARL = ENTITY_TYPE.register("thrown_impact_pearl",
             () -> EntityType.Builder.<ThrownImpactPearl>of(ThrownImpactPearl::new, MobCategory.MISC)
                     .sized(0.25F, 0.25F)
                     .clientTrackingRange(8)
                     .noSave()
-                    .build(ResourceKey.create(Registries.ENTITY_TYPE, Archaion.prefix("thrown_impact_pearl"))));
+                    .build("thrown_impact_pearl"));
 
     public static final DeferredHolder<EntityType<?>, EntityType<LODInterceptBlast>> LOD_INTERCEPT_BLAST = ENTITY_TYPE.register("lod_intercept_blast",
             () -> EntityType.Builder.<LODInterceptBlast>of(LODInterceptBlast::new, MobCategory.MISC)
                     .sized(0.1F, 0.1F)
                     .noSave()
                     .noSummon()
-                    .build(ResourceKey.create(Registries.ENTITY_TYPE, Archaion.prefix("lod_intercept_blast"))));
+                    .build("lod_intercept_blast"));
 
     public static final DeferredHolder<EntityType<?>, EntityType<LODSlamEffect>> LOD_SLAM = ENTITY_TYPE.register("lod_slam",
             () -> EntityType.Builder.<LODSlamEffect>of(LODSlamEffect::new, MobCategory.MISC)
                     .sized(0.1F, 0.1F)
                     .noSave()
                     .noSummon()
-                    .build(ResourceKey.create(Registries.ENTITY_TYPE, Archaion.prefix("lod_slam"))));
+                    .build("lod_slam"));
 
     public static final DeferredHolder<EntityType<?>, EntityType<LODFallingBlock>> LOD_FALLING_BLOCK = ENTITY_TYPE.register("lod_falling_block",
             () -> EntityType.Builder.<LODFallingBlock>of(LODFallingBlock::new, MobCategory.MISC)
@@ -82,5 +82,5 @@ public class ACEntityTypes {
                     .clientTrackingRange(8)
                     .noSave()
                     .noSummon()
-                    .build(ResourceKey.create(Registries.ENTITY_TYPE, Archaion.prefix("lod_falling_block"))));
+                    .build("lod_falling_block"));
 }

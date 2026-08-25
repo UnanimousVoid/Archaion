@@ -67,7 +67,7 @@ public class LODSwingSpinAction extends ManagedAction<LastOfDeepslate> {
         List<LivingEntity> targets = entity.level().getEntitiesOfClass(LivingEntity.class, area, e -> e != entity && e.isAlive() && entity.canAttack(e));
 
         for (LivingEntity target : targets) {
-            entity.attackTarget(serverLevel, target, 0.9F, ACEntity.Operation.MULTIPLY);
+            entity.attackTarget(target, 0.9F, ACEntity.Operation.MULTIPLY);
             Vec3 knockback = target.position().subtract(center).normalize().scale(1.5).add(0, 0.5, 0);
             target.setDeltaMovement(target.getDeltaMovement().add(knockback));
             target.hurtMarked = true;

@@ -3,14 +3,13 @@ package com.ratrod.archaion.entities.ai.systems;
 import com.ratrod.archaion.entities.Archaic;
 import com.ratrod.archaion.entities.LastOfDeepslate;
 import com.ratrod.archaion.network.BossBarDataOutput;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 
 import java.util.function.Predicate;
 
@@ -90,12 +89,12 @@ public class ArchaicRaid {
         output.add("archaicPhase", entity.getPhase());
     }
 
-    public void load(ValueInput input) {
-        this.phasesTriggered = input.getIntOr("hurlArchaicsCount", 0);
-        this.archaicsIntended = input.getIntOr("hurlArchaicsIntended", 0);
+    public void load(CompoundTag input) {
+        this.phasesTriggered = input.getInt("hurlArchaicsCount");
+        this.archaicsIntended = input.getInt("hurlArchaicsIntended");
     }
 
-    public void save(ValueOutput output) {
+    public void save(CompoundTag output) {
         output.putInt("hurlArchaicsCount", this.phasesTriggered);
         output.putInt("hurlArchaicsIntended", this.archaicsIntended);
     }

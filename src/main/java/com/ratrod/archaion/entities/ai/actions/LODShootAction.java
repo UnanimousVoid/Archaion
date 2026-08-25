@@ -9,7 +9,6 @@ import com.ratrod.archaion.registry.ACSounds;
 import mod.chloeprime.aaaparticles.api.common.AAALevel;
 import mod.chloeprime.aaaparticles.api.common.ParticleEmitterInfo;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 
@@ -50,8 +49,8 @@ public class LODShootAction extends ManagedAction<LastOfDeepslate> {
             AAALevel.addParticle(entity.level(), info.position(center).scale(6.0F));
 
             for (int i = 0; i < 3; i++) {
-                EchoStarProjectile projectile = ACEntityTypes.ECHO_STAR.get().create(entity.level(), EntitySpawnReason.TRIGGERED);
-                projectile.moveOrInterpolateTo(center);
+                EchoStarProjectile projectile = ACEntityTypes.ECHO_STAR.get().create(entity.level());
+                projectile.moveTo(center);
                 projectile.setOwner(entity);
                 float xR = -22.5F + (-1 + entity.getRandom().nextFloat() * 2) * 45;
                 float yR = (-1 + entity.getRandom().nextFloat() * 2) * 65;

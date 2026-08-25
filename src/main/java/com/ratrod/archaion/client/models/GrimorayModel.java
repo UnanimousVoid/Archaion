@@ -5,13 +5,16 @@ package com.ratrod.archaion.client.models;// Made with Blockbench 5.1.6
 
 import com.ratrod.archaion.Archaion;
 import com.ratrod.archaion.client.animations.GrimorayAnimations;
-import com.ratrod.archaion.client.renderers.renderstate.ACLivingEntityRenderState;
+import com.ratrod.archaion.entities.Grimoray;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 
-public class GrimorayModel<T extends ACLivingEntityRenderState> extends ACAnimatedModel<T> {
+import java.util.List;
+
+public class GrimorayModel extends ACHierarchicalModel<Grimoray> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(Archaion.prefix("grimoraymodel"), "main");
 	private final ModelPart base;
@@ -49,10 +52,19 @@ public class GrimorayModel<T extends ACLivingEntityRenderState> extends ACAnimat
 	}
 
 	@Override
-	public void setupAnim(T state) {
-		super.setupAnim(state);
+	public void setupAnim(Grimoray entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		this.parts().forEach(ModelPart::resetPose);
 
-		this.animateScaled(GrimorayAnimations.IDLE, state.ageInTicks, 1.0F, 1.0F);
-		this.animateManager(state, state.ageInTicks);
+		this.animateScaled(GrimorayAnimations.IDLE, ageInTicks, 1.0F, 1.0F);
+		this.animateManager(entity, ageInTicks);
+	}
+
+	@Override
+	public ModelPart root() {
+		return this.base;
+	}
+
+	public List<ModelPart> parts() {
+		return ObjectArrayList.of(base, arml, thin, armr, thin2);
 	}
 }

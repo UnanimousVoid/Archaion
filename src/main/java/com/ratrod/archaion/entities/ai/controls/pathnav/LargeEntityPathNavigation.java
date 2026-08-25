@@ -18,12 +18,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-/**
- * Ground path navigator tuned for entities with large hitboxes.
- * Uses 3D voxel sweeping to truncate path nodes whenever a direct
- * line-of-walk between the entity and a future node is clear,
- * preventing large entities from walking unnecessary zigzag paths.
- */
 public class LargeEntityPathNavigation extends GroundPathNavigation {
     private static final float EPSILON = 1.0E-6F;
 
@@ -175,7 +169,7 @@ public class LargeEntityPathNavigation extends GroundPathNavigation {
                     PathType in = this.nodeEvaluator.getPathType(new PathfindingContext(this.level, this.mob), x, y0, z);
                     float malus = this.mob.getPathfindingMalus(in);
                     if (malus < 0.0F || malus >= 8.0F) return false;
-                    if (in == PathType.FIRE || in == PathType.FIRE_IN_NEIGHBOR || in == PathType.DAMAGING || in == PathType.WATER)
+                    if (in == PathType.DANGER_FIRE || in == PathType.DANGER_OTHER || in == PathType.WATER)
                         return false;
                 }
             }

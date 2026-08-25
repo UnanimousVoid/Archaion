@@ -1,10 +1,9 @@
 package com.ratrod.archaion;
 
-
 import com.mojang.logging.LogUtils;
 import com.ratrod.archaion.network.ACNetwork;
 import com.ratrod.archaion.registry.*;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
@@ -38,7 +37,7 @@ public class Archaion {
 
     }
 
-    public static Identifier prefix(String path) {
-        return Identifier.fromNamespaceAndPath(MODID, path.toLowerCase(Locale.ROOT));
+    public static ResourceLocation prefix(String path) {
+        return ResourceLocation.fromNamespaceAndPath(MODID, path.toLowerCase(Locale.ROOT));
     }
 }

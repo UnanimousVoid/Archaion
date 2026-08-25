@@ -60,7 +60,7 @@ public class GrimoraySpellProjectile extends ThrowableProjectile {
                 int r = 2;
                 AABB area = new AABB(pos.x - r, pos.y - r, pos.z - r, pos.x + r, pos.y + r, pos.z + r);
                 for (LivingEntity target : serverLevel.getEntitiesOfClass(LivingEntity.class, area, e -> e != this.getOwner() && !(e instanceof Grimoray) && e.isAffectedByPotions())) {
-                    MobEffects.INSTANT_DAMAGE.value().applyInstantenousEffect(serverLevel, this, this.getOwner(), target, 0, 1.0);
+                    MobEffects.HARM.value().applyInstantenousEffect(this, this.getOwner(), target, 0, 1.0);
                 }
                 this.playSound(SoundEvents.SQUID_DEATH, 1.5f, 0.8f);
             }

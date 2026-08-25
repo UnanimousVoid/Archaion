@@ -10,8 +10,8 @@ import mod.chloeprime.aaaparticles.api.common.AAALevel;
 import mod.chloeprime.aaaparticles.api.common.ParticleEmitterInfo;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -68,8 +68,8 @@ public class GrimorayShootAction extends ManagedAction<Grimoray> {
 
                     entity.playSound(SoundEvents.SQUID_SQUIRT, 1.5f, 0.8f);
 
-                    GrimoraySpellProjectile spell = ACEntityTypes.GRIMORAY_SPELL.get().create(serverLevel, EntitySpawnReason.TRIGGERED);
-                    spell.moveOrInterpolateTo(pos);
+                    GrimoraySpellProjectile spell = ACEntityTypes.GRIMORAY_SPELL.get().create(serverLevel);
+                    spell.moveTo(pos);
                     spell.setOwner(entity);
                     spell.setGrimorayType(entity.getGrimorayType());
 

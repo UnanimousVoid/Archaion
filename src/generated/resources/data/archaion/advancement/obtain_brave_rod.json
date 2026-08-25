@@ -17,6 +17,7 @@
       "translate": "advancements.obtain_brave_rod.description"
     },
     "icon": {
+      "count": 1,
       "id": "archaion:brave_rod"
     },
     "title": {

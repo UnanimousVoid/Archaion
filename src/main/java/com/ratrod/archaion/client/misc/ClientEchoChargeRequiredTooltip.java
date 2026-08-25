@@ -3,7 +3,7 @@ package com.ratrod.archaion.client.misc;
 import com.ratrod.archaion.registry.ACItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.network.chat.Component;
 
@@ -21,13 +21,13 @@ public class ClientEchoChargeRequiredTooltip implements ClientTooltipComponent {
     }
 
     @Override
-    public int getHeight(Font font) {
+    public int getHeight() {
         return 18;
     }
 
     @Override
-    public void extractImage(Font font, int x, int y, int w, int h, GuiGraphicsExtractor graphics) {
-        graphics.item(ACItems.ECHO_CHARGE.get().getDefaultInstance(), x, y);
-        graphics.text(font, this.text, x + 20, y + 4, 0xFFFFFFFF);
+    public void renderImage(Font font, int x, int y, GuiGraphics graphics) {
+        graphics.renderItem(ACItems.ECHO_CHARGE.get().getDefaultInstance(), x, y);
+        graphics.drawString(font, this.text, x + 20, y + 4, 0xFFFFFFFF);
     }
 }

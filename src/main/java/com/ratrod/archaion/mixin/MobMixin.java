@@ -3,7 +3,6 @@ package com.ratrod.archaion.mixin;
 import com.ratrod.archaion.entities.ai.ACEntity;
 import com.ratrod.archaion.misc.mixinhelpers.IMixinMob;
 import it.unimi.dsi.fastutil.Pair;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import org.spongepowered.asm.mixin.Mixin;
@@ -29,10 +28,10 @@ public abstract class MobMixin implements IMixinMob {
 
     @ModifyVariable(
             method = "doHurtTarget",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;hurtServer(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/damagesource/DamageSource;F)Z"),
-            name = "dmg"
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z"),
+            name = "f"
     )
-    private float ac$modifyDamage(float damage, ServerLevel level, Entity target) {
+    private float ac$modifyDamage(float damage, Entity target) {
         if (this.ac$damageModifier != null) {
             float modifier = this.ac$damageModifier.first();
             damage = switch (this.ac$damageModifier.second()) {

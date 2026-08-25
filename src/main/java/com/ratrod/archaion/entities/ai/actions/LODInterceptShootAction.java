@@ -9,7 +9,6 @@ import com.ratrod.archaion.registry.ACSounds;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 
@@ -45,8 +44,8 @@ public class LODInterceptShootAction extends ManagedAction<LastOfDeepslate> {
             Vec3 center = entity.position().add(flatLook.yRot(-90 * Mth.DEG_TO_RAD).scale(3).with(Direction.Axis.Y, entity.getBbHeight() + 6));
 
             if (entity.level() instanceof ServerLevel serverLevel) {
-                LODInterceptBlast blast = ACEntityTypes.LOD_INTERCEPT_BLAST.get().create(serverLevel, EntitySpawnReason.TRIGGERED);
-                blast.moveOrInterpolateTo(center);
+                LODInterceptBlast blast = ACEntityTypes.LOD_INTERCEPT_BLAST.get().create(serverLevel);
+                blast.moveTo(center);
                 blast.source = this.entity;
                 blast.setOwner(this.entity);
                 blast.setDeltaMovement(0, 3.0, 0);
@@ -54,8 +53,8 @@ public class LODInterceptShootAction extends ManagedAction<LastOfDeepslate> {
             }
 
             for (int i = 0; i < 5; i++) {
-                EchoStarProjectile projectile = ACEntityTypes.ECHO_STAR.get().create(entity.level(), EntitySpawnReason.TRIGGERED);
-                projectile.moveOrInterpolateTo(center);
+                EchoStarProjectile projectile = ACEntityTypes.ECHO_STAR.get().create(entity.level());
+                projectile.moveTo(center);
                 projectile.setOwner(entity);
                 double motionX = (entity.getRandom().nextDouble() - 0.5) * 2;
                 double motionY = 1.0;

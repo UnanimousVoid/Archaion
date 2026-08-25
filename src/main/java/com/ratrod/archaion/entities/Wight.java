@@ -1,5 +1,6 @@
 package com.ratrod.archaion.entities;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -11,24 +12,24 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.PowerableMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.monster.skeleton.Skeleton;
-import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
-import net.minecraft.world.entity.projectile.arrow.Arrow;
+import net.minecraft.world.entity.monster.Skeleton;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import org.jspecify.annotations.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
-public class Wight extends Skeleton implements Archaic {
+public class Wight extends Skeleton implements Archaic, PowerableMob {
 
     public static final EntityDataAccessor<Boolean> IS_CHARGED = SynchedEntityData.defineId(Wight.class, EntityDataSerializers.BOOLEAN);
-    @Nullable private UUID ownerUUID;
+    @Nullable
+    private UUID ownerUUID;
 
     public Wight(EntityType<? extends Wight> entityType, Level level) {
         super(entityType, level);
@@ -44,15 +45,20 @@ public class Wight extends Skeleton implements Archaic {
         return this.entityData.get(IS_CHARGED);
     }
 
+    @Override
+    public boolean isPowered() {
+        return this.isCharged();
+    }
+
     public void setCharged(boolean charged) {
         this.entityData.set(IS_CHARGED, charged);
     }
 
-    @Override
-    protected void dropExperience(ServerLevel level, @Nullable Entity entity) {
-        this.xpReward = this.archaicXpReward(this.xpReward);
-        super.dropExperience(level, entity);
-    }
+//    @Override
+//    protected void dropExperience(ServerLevel level, @Nullable Entity entity) {
+//        this.xpReward = this.archaicXpReward(this.xpReward);
+//        super.dropExperience(level, entity);
+//    }
 
     @Nullable
     public UUID getOwnerUUID() {
@@ -64,14 +70,16 @@ public class Wight extends Skeleton implements Archaic {
     }
 
     @Override
-    protected void readAdditionalSaveData(ValueInput input) {
+    public void readAdditionalSaveData(CompoundTag input) {
         super.readAdditionalSaveData(input);
-        this.setCharged(input.getBooleanOr("isCharged", false));
-        input.getString("ownerUUID").ifPresent(s -> this.ownerUUID = UUID.fromString(s));
+        this.setCharged(input.getBoolean("isCharged"));
+        if (input.contains("ownerUUID")) {
+            this.ownerUUID = UUID.fromString(input.getString("ownerUUID"));
+        }
     }
 
     @Override
-    protected void addAdditionalSaveData(ValueOutput output) {
+    public void addAdditionalSaveData(CompoundTag output) {
         super.addAdditionalSaveData(output);
         output.putBoolean("isCharged", this.isCharged());
         if (this.ownerUUID != null) {
@@ -97,9 +105,9 @@ public class Wight extends Skeleton implements Archaic {
     }
 
     @Override
-    public boolean hurtServer(ServerLevel level, DamageSource source, float damage) {
+    public boolean hurt(DamageSource source, float damage) {
         float dmgResult = this.getVehicle() instanceof DeepslateSentinel ? (damage * 0.5F) : damage;
-        return super.hurtServer(level, source, dmgResult);
+        return super.hurt(source, dmgResult);
     }
 
     @Override

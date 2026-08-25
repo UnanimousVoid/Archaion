@@ -1,15 +1,12 @@
 package com.ratrod.archaion.client.misc;
 
-import com.ratrod.archaion.Archaion;
 import com.ratrod.archaion.entities.LastOfDeepslate;
 import com.ratrod.archaion.entities.ai.SleepingState;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
-import net.minecraft.client.gui.screens.inventory.tooltip.DefaultTooltipPositioner;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.Mth;
@@ -19,10 +16,11 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.phys.*;
 
 import java.util.List;
+import java.util.Optional;
 
 public class LastOfDeepslateTooltipRenderer {
 
-    public static void render(GuiGraphicsExtractor guiGraphics, DeltaTracker deltaTracker) {
+    public static void render(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
         Minecraft mc = Minecraft.getInstance();
         Entity player = mc.player;
         if (player == null) {
@@ -37,22 +35,18 @@ public class LastOfDeepslateTooltipRenderer {
         renderTooltip(guiGraphics, target, mc, target.getDisplayName(), deltaTracker);
     }
 
-    private static void renderTooltip(GuiGraphicsExtractor guiGraphics, LastOfDeepslate target, Minecraft mc, Component name, DeltaTracker deltaTracker) {
+    private static void renderTooltip(GuiGraphics guiGraphics, LastOfDeepslate target, Minecraft mc, Component name, DeltaTracker deltaTracker) {
         Font font = mc.font;
         float partialTick = deltaTracker.getGameTimeDeltaPartialTick(true);
         float tick = mc.player.tickCount + partialTick;
         MutableComponent nameUpdated = name.copy().withStyle(ChatFormatting.AQUA);
-        List<ClientTooltipComponent> components = List.of(
-                ClientTooltipComponent.create(nameUpdated.getVisualOrderText()),
-                ClientTooltipComponent.create(new EchoChargeRequiredTooltip(4 - target.getEchoChargesFed()))
-        );
 
         int mouseX = guiGraphics.guiWidth() / 2;
-        int mouseY = (guiGraphics.guiHeight() / 2);
-        guiGraphics.pose().pushMatrix();
-        guiGraphics.pose().translate(0, Mth.sin(tick * 0.1F) * 2);
-        guiGraphics.tooltip(font, components, mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, Archaion.prefix("lod"));
-        guiGraphics.pose().popMatrix();
+        int mouseY = guiGraphics.guiHeight() / 2;
+        guiGraphics.pose().pushPose();
+        guiGraphics.pose().translate(0, Mth.sin(tick * 0.1F) * 2, 0);
+        guiGraphics.renderTooltip(font, List.of(nameUpdated), Optional.of(new EchoChargeRequiredTooltip(4 - target.getEchoChargesFed())), mouseX, mouseY);
+        guiGraphics.pose().popPose();
     }
 
     private static LastOfDeepslate findLookedAtLastOfDeepslate(Entity player, DeltaTracker deltaTracker) {

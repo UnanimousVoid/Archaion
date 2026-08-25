@@ -2,7 +2,7 @@ package com.ratrod.archaion.client.animations;
 
 import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.world.entity.EntityType;
-import org.jspecify.annotations.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.List;

@@ -8,8 +8,8 @@ import com.ratrod.archaion.registry.ACStructurePlacements;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Vec3i;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.level.chunk.ChunkGeneratorStructureState;
 import net.minecraft.world.level.levelgen.structure.StructureSet;
@@ -33,7 +33,7 @@ public class AvoidTrialChambersStructurePlacement extends RandomSpreadStructureP
             Codec.intRange(0, 4096).optionalFieldOf("trial_chambers_min_distance", DEFAULT_TRIAL_CHAMBERS_MIN_DISTANCE).forGetter(AvoidTrialChambersStructurePlacement::trialChambersMinDistance)
     ).apply(instance, AvoidTrialChambersStructurePlacement::new)).validate(AvoidTrialChambersStructurePlacement::validate);
 
-    private static final ResourceKey<StructureSet> TRIAL_CHAMBERS_STRUCTURE_SET = ResourceKey.create(Registries.STRUCTURE_SET, Identifier.fromNamespaceAndPath("minecraft", "trial_chambers"));
+    private static final ResourceKey<StructureSet> TRIAL_CHAMBERS_STRUCTURE_SET = ResourceKey.create(Registries.STRUCTURE_SET, ResourceLocation.fromNamespaceAndPath("minecraft", "trial_chambers"));
 
     private final int trialChambersMinDistance;
 

@@ -7,7 +7,7 @@ import com.ratrod.archaion.registry.ACEntityTypes;
 import com.ratrod.archaion.registry.ACItems;
 import com.ratrod.archaion.registry.ACStructures;
 import net.minecraft.advancements.*;
-import net.minecraft.advancements.criterion.*;
+import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -15,10 +15,8 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.advancements.AdvancementProvider;
 import net.minecraft.data.advancements.AdvancementSubProvider;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Recipe;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -34,7 +32,6 @@ public class ACAdvancementProvider extends AdvancementProvider {
 
         @Override
         public void generate(HolderLookup.Provider registries, Consumer<AdvancementHolder> writer) {
-            HolderGetter<EntityType<?>> entities = registries.lookupOrThrow(Registries.ENTITY_TYPE);
 
             AdvancementHolder root = Advancement.Builder.advancement()
                     .display(ACBlocks.REINFORCED_DEEPSLATE_BRICKS.get(), Component.translatable("advancements.root.title"), Component.translatable("advancements.root.description"), Archaion.prefix("block/reinforced_deepslate_bricks"), AdvancementType.TASK, true, false, false)
@@ -88,7 +85,7 @@ public class ACAdvancementProvider extends AdvancementProvider {
             AdvancementHolder killLastOfDeepslate = Advancement.Builder.advancement()
                     .parent(enterAncientKeep)
                     .display(ACItems.LAST_OF_DEEPSLATE_SPAWN_EGG.get(), Component.translatable("advancements.kill_last_of_deepslate.title"), Component.translatable("advancements.kill_last_of_deepslate.description"), null, AdvancementType.CHALLENGE, true, true, false)
-                    .addCriterion("kill_last_of_deepslate", KilledTrigger.TriggerInstance.playerKilledEntity(EntityPredicate.Builder.entity().of(entities, ACEntityTypes.LAST_OF_DEEPSLATE.get())))
+                    .addCriterion("kill_last_of_deepslate", KilledTrigger.TriggerInstance.playerKilledEntity(EntityPredicate.Builder.entity().of(ACEntityTypes.LAST_OF_DEEPSLATE.get())))
                     .rewards(AdvancementRewards.Builder.experience(100).addRecipe(recipe("echo_mace_upgrade_smithing")))
                     .save(writer, Archaion.prefix("kill_last_of_deepslate").toString());
 
@@ -100,8 +97,8 @@ public class ACAdvancementProvider extends AdvancementProvider {
                     .save(writer, Archaion.prefix("craft_echo_mace").toString());
         }
 
-        private static ResourceKey<Recipe<?>> recipe(String name) {
-            return ResourceKey.create(Registries.RECIPE, Archaion.prefix(name));
+        private static ResourceLocation recipe(String name) {
+            return Archaion.prefix(name);
         }
     }
 }

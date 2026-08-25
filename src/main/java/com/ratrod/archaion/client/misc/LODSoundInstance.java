@@ -7,7 +7,7 @@ import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
-import org.jspecify.annotations.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class LODSoundInstance extends AbstractTickableSoundInstance {
 
@@ -24,19 +24,18 @@ public class LODSoundInstance extends AbstractTickableSoundInstance {
         super(sound, SoundSource.MUSIC, SoundInstance.createUnseededRandom());
         this.looping = true;
         this.delay = 0;
-        this.volume = MUSIC_VOLUME;
+        this.volume = 1.0F;
         this.relative = true;
     }
 
     @Override
     public void tick() {
-        if (!this.fadingOut) {
-            return;
-        }
-        this.volume = Math.max(0.0F, this.volume - FADE_STEP);
-        if (this.volume <= 0.0F) {
-            this.stop();
-            current = null;
+        if (this.fadingOut) {
+            this.volume = Math.max(0.0F, this.volume - FADE_STEP);
+            if (this.volume <= 0.0F) {
+                this.stop();
+                current = null;
+            }
         }
     }
 

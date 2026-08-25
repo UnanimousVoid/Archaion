@@ -1,13 +1,12 @@
 package com.ratrod.archaion.api.gui;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
 
 public abstract class AnimatedScreen extends Screen {
-    public final ObjectArrayList<CDXUIElement<?>> uiElements = new ObjectArrayList<>();
+    public final ObjectArrayList<UIElement<?>> uiElements = new ObjectArrayList<>();
 
     protected AnimatedScreen(Component pTitle) {
         super(pTitle);
@@ -22,37 +21,32 @@ public abstract class AnimatedScreen extends Screen {
 
     public abstract void initUIElements();
 
-    public <T extends CDXUIElement<?>> T addUIElement(T element) {
+    public <T extends UIElement<?>> T addUIElement(T element) {
         this.uiElements.add(element);
         return element;
     }
 
     @Override
-    public void extractRenderState(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
-        for (CDXUIElement<?> element : uiElements) {
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        for (UIElement<?> element : uiElements) {
             element.setupRender(guiGraphics, mouseX, mouseY, partialTick);
         }
-        super.extractRenderState(guiGraphics, mouseX, mouseY, partialTick);
-    }
-
-    @Override
-    public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
-        super.extractBackground(guiGraphics, mouseX, mouseY, partialTick);
+        super.render(guiGraphics, mouseX, mouseY, partialTick);
     }
 
     @Override
     public void tick() {
         super.tick();
-        for (CDXUIElement<?> element : uiElements) {
+        for (UIElement<?> element : uiElements) {
             element.tick();
         }
     }
 
     @Override
-    public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
-        for (CDXUIElement<?> element : uiElements) {
-            element.setupClick((int) event.x(), (int) event.y());
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        for (UIElement<?> element : uiElements) {
+            element.setupClick((int) mouseX, (int) mouseY);
         }
-        return super.mouseClicked(event, doubleClick);
+        return super.mouseClicked(mouseX, mouseY, button);
     }
 }

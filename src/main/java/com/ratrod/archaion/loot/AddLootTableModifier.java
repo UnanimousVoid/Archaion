@@ -25,8 +25,8 @@ public class AddLootTableModifier extends LootModifier {
         return CODEC;
     }
 
-    public AddLootTableModifier(LootItemCondition[] conditions, int priority, ResourceKey<LootTable> lootTable) {
-        super(conditions, priority);
+    public AddLootTableModifier(LootItemCondition[] conditions, ResourceKey<LootTable> lootTable) {
+        super(conditions);
         this.lootTable = lootTable;
     }
 

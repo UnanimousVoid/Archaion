@@ -53,16 +53,20 @@ public class ACClientEvents {
         if (factor > 0.0F) {
             float near = event.getNearPlaneDistance();
             float far = event.getFarPlaneDistance();
-            Vector4f base = new Vector4f(event.getFogData().color);
 
             event.setNearPlaneDistance(Mth.lerp(factor, near, 16F));
             event.setFarPlaneDistance(Mth.lerp(factor, far, 128F));
-            event.getFogData().color.set(
-                    Mth.lerp(factor, base.x, 0.390F),
-                    Mth.lerp(factor, base.y, 0.898F),
-                    Mth.lerp(factor, base.z, 1.00F),
-                    Mth.lerp(factor, base.w, 1.0F)
-            );
+            event.setCanceled(true);
+        }
+    }
+
+    @SubscribeEvent
+    static void renderAncientKeepFogColor(ViewportEvent.ComputeFogColor event) {
+        float factor = AncientKeepClientData.keepFogFactor();
+        if (factor > 0.0F) {
+            event.setRed(Mth.lerp(factor, event.getRed(), 0.390F));
+            event.setGreen(Mth.lerp(factor, event.getGreen(), 0.898F));
+            event.setBlue(Mth.lerp(factor, event.getBlue(), 1.00F));
         }
     }
 }

@@ -37,7 +37,7 @@ public class LODRollAction extends ManagedAction<LastOfDeepslate> {
     public boolean canStart() {
         LivingEntity target = entity.getTarget();
         if (target == null || !target.isAlive()) return false;
-        if (!entity.hasLineOfSight(target)) return false;
+//        if (!entity.hasLineOfSight(target)) return false;
         if (entity.getY() + entity.getBbHeight() < target.getY()) return false;
         return entity.getArchaicSystem().getPhasesTriggered() >= 1;
     }
@@ -112,7 +112,7 @@ public class LODRollAction extends ManagedAction<LastOfDeepslate> {
         AABB area = AABB.ofSize(entity.position(), bbWidth, 3, bbWidth);
         List<LivingEntity> targets = level.getEntitiesOfClass(LivingEntity.class, area, e -> e != entity && e.isAlive() && entity.canAttack(e));
         for (LivingEntity target : targets) {
-            if (entity.attackTarget(level, target, 0.6F, ACEntity.Operation.MULTIPLY)) {
+            if (entity.attackTarget(target, 0.6F, ACEntity.Operation.MULTIPLY)) {
                 Vec3 knockback = target.position().subtract(entity.position()).normalize().scale(3.0).add(0, 0.35, 0);
                 target.setDeltaMovement(target.getDeltaMovement().add(knockback));
                 target.hurtMarked = true;
@@ -143,7 +143,7 @@ public class LODRollAction extends ManagedAction<LastOfDeepslate> {
         BlockHitResult hit = entity.level().clip(new ClipContext(from, from.add(dir.scale(probe)), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, entity));
 
         if (hit.getType() == HitResult.Type.BLOCK && hit.getDirection().getAxis().isHorizontal()) {
-            Vec3 normal = hit.getDirection().getUnitVec3();
+            Vec3 normal = Vec3.atLowerCornerOf(hit.getDirection().getNormal());
             Vec3 tangent = dir.subtract(normal.scale(dir.dot(normal)));
             if (tangent.lengthSqr() < 1.0E-6) {
                 tangent = new Vec3(-normal.z, 0, normal.x);

@@ -1,18 +1,22 @@
-package com.ratrod.archaion.client.models;// Made with Blockbench 5.1.6
-// Exported for Minecraft version 1.17 or later with Mojang mappings
-// Paste this class into your mod and generate all required imports
-
+package com.ratrod.archaion.client.models;
 
 import com.ratrod.archaion.Archaion;
-import com.ratrod.archaion.client.renderers.renderstate.BraveRenderState;
 import com.ratrod.archaion.client.animations.BraveAnimations;
+import com.ratrod.archaion.entities.Brave;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
 
-public class BraveModel<S extends BraveRenderState> extends ACAnimatedModel<S> {
+import java.util.List;
+
+public class BraveModel extends ACHierarchicalModel<Brave> {
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(Archaion.prefix("brave"), "main");
 	public static final ModelLayerLocation CHARGED_LAYER_LOCATION = new ModelLayerLocation(Archaion.prefix("chargedbrave"), "main");
 	private final ModelPart base;
@@ -27,6 +31,7 @@ public class BraveModel<S extends BraveRenderState> extends ACAnimatedModel<S> {
 
 	public BraveModel(ModelPart root) {
 		super(root);
+
 		this.base = root.getChild("base");
 		this.head = this.base.getChild("head");
 		this.rods = this.base.getChild("rods");
@@ -64,19 +69,28 @@ public class BraveModel<S extends BraveRenderState> extends ACAnimatedModel<S> {
 	}
 
 	@Override
-	public void setupAnim(S state) {
-		super.setupAnim(state);
+	public void setupAnim(Brave entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		this.parts().forEach(ModelPart::resetPose);
 
-		this.ring.yRot = state.ageInTicks * 0.2F;
-		this.ring.zRot = Mth.sin(state.ageInTicks * 0.2F) * 15 * Mth.DEG_TO_RAD;
+		this.ring.yRot = ageInTicks * 0.2F;
+		this.ring.zRot = Mth.sin(ageInTicks * 0.2F) * 15 * Mth.DEG_TO_RAD;
 
-		this.rods.yRot = -state.ageInTicks * 0.2F;
-		this.rod1.y = -3 + Mth.sin(state.ageInTicks * 0.1F) * 3;
-		this.rod2.y = -3 + Mth.sin((state.ageInTicks + 20) * 0.1F) * 3;
-		this.rod3.y = -3 + Mth.sin((state.ageInTicks + 40) * 0.1F) * 3;
-		this.rod4.y = -3 + Mth.sin((state.ageInTicks + 80) * 0.1F) * 3;
+		this.rods.yRot = -ageInTicks * 0.2F;
+		this.rod1.y = -3 + Mth.sin(ageInTicks * 0.1F) * 3;
+		this.rod2.y = -3 + Mth.sin((ageInTicks + 20) * 0.1F) * 3;
+		this.rod3.y = -3 + Mth.sin((ageInTicks + 40) * 0.1F) * 3;
+		this.rod4.y = -3 + Mth.sin((ageInTicks + 80) * 0.1F) * 3;
 
-		this.animateScaled(BraveAnimations.IDLE_HEAD, state.ageInTicks, 1.0F, 1.0F);
-		this.animateManager(state, state.ageInTicks);
+		this.animateScaled(BraveAnimations.IDLE_HEAD, ageInTicks, 1.0F, 1.0F);
+		this.animateManager(entity, ageInTicks);
+	}
+
+	@Override
+	public ModelPart root() {
+		return this.base;
+	}
+
+	public List<ModelPart> parts() {
+		return ObjectArrayList.of(base, head, rods, rod2, rodgroup, rod1, rod3, rod4);
 	}
 }

@@ -38,6 +38,12 @@ public class BraveSpreadTargetGoal extends TargetGoal {
     @Override
     public void tick() {
         if (this.brave.level().isClientSide()) return;
+
+        LivingEntity current = this.mob.getTarget();
+        if (current != null && !this.isValidTarget(current)) {
+            this.mob.setTarget(null);
+        }
+
         if (--this.recheckDelay > 0) return;
         this.recheckDelay = 10;
 
@@ -49,6 +55,14 @@ public class BraveSpreadTargetGoal extends TargetGoal {
                 this.mob.setTarget(nearest);
             }
         }
+    }
+
+    private boolean isValidTarget(LivingEntity target) {
+        return target.isAlive()
+                && !target.isSpectator()
+                && !target.isInvulnerable()
+                && (!(target instanceof Player player) || !player.isCreative())
+                && this.brave.canAttack(target);
     }
 
     private void spreadToOwnSlot() {

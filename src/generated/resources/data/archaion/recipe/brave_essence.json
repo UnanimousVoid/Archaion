@@ -2,7 +2,9 @@
   "type": "minecraft:crafting_shapeless",
   "category": "equipment",
   "ingredients": [
-    "archaion:brave_rod"
+    {
+      "item": "archaion:brave_rod"
+    }
   ],
   "result": {
     "count": 2,

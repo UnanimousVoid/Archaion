@@ -13,8 +13,11 @@ import com.ratrod.archaion.client.models.LastOfDeepslateModel;
 import com.ratrod.archaion.client.renderers.*;
 import com.ratrod.archaion.registry.ACBlockEntities;
 import com.ratrod.archaion.registry.ACEntityTypes;
+import com.ratrod.archaion.registry.ACItems;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
@@ -35,6 +38,9 @@ public class ACClientSetup {
 
     @SubscribeEvent
     static void onClientSetup(FMLClientSetupEvent event) {
+        ItemProperties.register(ACItems.ECHOS_GRACE.get(), Archaion.prefix("echos_grace_pull"), new EchosGracePull());
+        ItemProperties.register(ACItems.ECHOS_GRACE.get(), ResourceLocation.withDefaultNamespace("pulling"), (stack, level, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F);
+
         ClientAnimationRegistry.register(ACEntityTypes.LAST_OF_DEEPSLATE.get(), List.of(
                 LastOfDeepslateAnimations.DYING,
                 LastOfDeepslateAnimations.WAKING,
@@ -59,11 +65,6 @@ public class ACClientSetup {
         ClientAnimationRegistry.register(ACEntityTypes.GRIMORAY.get(), List.of(
                 GrimorayAnimations.SHOOT
         ));
-    }
-
-    @SubscribeEvent
-    static void onRegisterRangeSelectItemModelProperties(RegisterRangeSelectItemModelPropertyEvent event) {
-        event.register(Archaion.prefix("echos_grace_pull"), EchosGracePull.MAP_CODEC);
     }
 
     @SubscribeEvent
@@ -94,8 +95,7 @@ public class ACClientSetup {
         event.registerLayerDefinition(BraveModel.LAYER_LOCATION, () -> BraveModel.createBodyLayer(CubeDeformation.NONE));
         event.registerLayerDefinition(BraveModel.CHARGED_LAYER_LOCATION, () -> BraveModel.createBodyLayer(new CubeDeformation(2.0F)));
 
-        event.registerLayerDefinition(DeepslateSentinelModel.LAYER_LOCATION, () -> DeepslateSentinelModel.createBodyLayer(CubeDeformation.NONE));
-        event.registerLayerDefinition(DeepslateSentinelModel.CHARGED_LAYER_LOCATION, () -> DeepslateSentinelModel.createBodyLayer(new CubeDeformation(2.0F)));
+        event.registerLayerDefinition(DeepslateSentinelModel.LAYER_LOCATION, DeepslateSentinelModel::createBodyLayer);
 
         event.registerLayerDefinition(GrimorayModel.LAYER_LOCATION, GrimorayModel::createBodyLayer);
     }

@@ -11,7 +11,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-import org.jspecify.annotations.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class DeepslateVaultProcessor extends StructureProcessor {
     public static final MapCodec<DeepslateVaultProcessor> CODEC = MapCodec.unit(DeepslateVaultProcessor::new);

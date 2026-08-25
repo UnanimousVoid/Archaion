@@ -16,10 +16,6 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:diamond_spear"
-        },
-        {
-          "type": "minecraft:item",
           "functions": [
             {
               "add": false,

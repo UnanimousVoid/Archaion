@@ -31,12 +31,12 @@ public interface ACEntity<L extends LivingEntity> {
         return List.of();
     }
 
-    default boolean attackTarget(ServerLevel level, Entity target, float damageModifier, Operation operation) {
+    default boolean attackTarget(Entity target, float damageModifier, Operation operation) {
         boolean flag = false;
         if (this.acSelf() instanceof IMixinMob mm) {
             mm.ac$setDamageModifier(Pair.of(damageModifier, operation));
             if (target != null) {
-                return this.acSelf().doHurtTarget(level, target);
+                return this.acSelf().doHurtTarget(target);
             }
             mm.ac$setDamageModifier(null);
         }

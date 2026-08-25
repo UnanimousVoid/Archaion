@@ -11,13 +11,9 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.armortrim.*;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.item.equipment.trim.ArmorTrim;
-import net.minecraft.world.item.equipment.trim.TrimMaterial;
-import net.minecraft.world.item.equipment.trim.TrimMaterials;
-import net.minecraft.world.item.equipment.trim.TrimPattern;
-import net.minecraft.world.item.equipment.trim.TrimPatterns;
 import net.minecraft.world.level.saveddata.maps.MapDecorationTypes;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -172,8 +168,6 @@ public record ACChestLootTables(HolderLookup.Provider registries) implements Loo
                 )
                 .withPool(LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1.0F))
-                        .add(LootItem.lootTableItem(Items.DIAMOND_SPEAR)
-                        )
                         .add(LootItem.lootTableItem(Items.IRON_SWORD)
                                 .apply(new SetEnchantmentsFunction.Builder()
                                         .withEnchantment(enchantments.getOrThrow(Enchantments.SHARPNESS), UniformGenerator.between(3.0F, 5.0F))
@@ -204,7 +198,7 @@ public record ACChestLootTables(HolderLookup.Provider registries) implements Loo
                                 .apply(ExplorationMapFunction.makeExplorationMap()
                                         .setDestination(ACStructures.ON_ANCIENT_KEEP_MAPS)
                                         .setMapDecoration(MapDecorationTypes.WOODLAND_MANSION)
-                                        .setZoom((byte)1)
+                                        .setZoom((byte)4)
                                         .setSearchRadius(100)
                                         .setSkipKnownStructures(false)
                                 )

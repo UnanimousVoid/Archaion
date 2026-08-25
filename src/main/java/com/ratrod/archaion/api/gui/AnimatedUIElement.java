@@ -1,14 +1,13 @@
 package com.ratrod.archaion.api.gui;
 
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
-import org.joml.Matrix3x2fStack;
 
 import javax.annotation.Nullable;
 
-public abstract class AnimatedUIElement<T extends Screen> extends CDXUIElement<T> {
+public abstract class AnimatedUIElement<T extends Screen> extends UIElement<T> {
 
     protected @Nullable AnimationState animation;
 
@@ -32,19 +31,20 @@ public abstract class AnimatedUIElement<T extends Screen> extends CDXUIElement<T
     }
 
     @Override
-    public void setupRender(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
-        Matrix3x2fStack pose = guiGraphics.pose();
+    public void setupRender(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        PoseStack pose = guiGraphics.pose();
 
-        pose.pushMatrix();
-        pose.translate(getOffsetX(partialTick), getOffsetY(partialTick));
+        pose.pushPose();
+        pose.translate(getOffsetX(partialTick), getOffsetY(partialTick), 0);
 
         super.setupRender(guiGraphics, mouseX, mouseY, partialTick);
 
-        pose.popMatrix();
+        pose.popPose();
     }
 
     protected int withAlpha(int color, float partialTick) {
-        return ARGB.multiplyAlpha(color, getAlpha(partialTick));
+        int a = (int) (getAlpha(partialTick) * 255.0F);
+        return (color & 0x00FFFFFF) | (a << 24);
     }
 
     public float getOffsetX(float partialTick) {

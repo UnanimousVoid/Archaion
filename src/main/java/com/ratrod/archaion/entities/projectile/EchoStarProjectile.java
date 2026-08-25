@@ -28,7 +28,7 @@ public class EchoStarProjectile extends ThrowableProjectile {
 
     public EchoStarProjectile(Level level, LivingEntity owner, ItemStack stack) {
         super(ACEntityTypes.ECHO_STAR.get(), level);
-        this.snapTo(owner.getX(), owner.getEyeY() - 0.1F, owner.getZ(), owner.getYRot(), owner.getXRot());
+        this.moveTo(owner.getX(), owner.getEyeY() - 0.1F, owner.getZ(), owner.getYRot(), owner.getXRot());
         this.setOwner(owner);
     }
 
@@ -96,7 +96,7 @@ public class EchoStarProjectile extends ThrowableProjectile {
 
         for (LivingEntity target : server.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(3))) {
             if (target != this.getOwner() && canHurt(target)) {
-                target.hurtServer(server, server.damageSources().explosion(this, this.getOwner()), damage);
+                target.hurt(server.damageSources().explosion(this, this.getOwner()), damage);
             }
         }
 

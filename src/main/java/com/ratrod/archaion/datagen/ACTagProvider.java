@@ -7,41 +7,43 @@ import com.ratrod.archaion.registry.ACStructures;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
+import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.data.tags.StructureTagsProvider;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
-import net.neoforged.neoforge.common.data.ItemTagsProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
 
 public class ACTagProvider {
     public static class StructuresProvider extends StructureTagsProvider {
-        public StructuresProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
-            super(output, lookupProvider, Archaion.MODID);
+        public StructuresProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
+            super(output, lookupProvider, Archaion.MODID, existingFileHelper);
         }
 
         @Override
         protected void addTags(HolderLookup.Provider pProvider) {
-            // ancient_keep is a handwritten pack JSON, not part of the datagen registry lookup
-            this.tag(ACStructures.ON_ANCIENT_KEEP_MAPS).addOptional(ACStructures.ANCIENT_KEEP);
+            this.tag(ACStructures.ON_ANCIENT_KEEP_MAPS).addOptional(ACStructures.ANCIENT_KEEP.location());
         }
     }
 
     public static class EntityTypesProvider extends EntityTypeTagsProvider {
-        public EntityTypesProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
-            super(output, lookupProvider, Archaion.MODID);
+        public EntityTypesProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper) {
+            super(output, lookupProvider, Archaion.MODID, existingFileHelper);
         }
 
         @Override
         protected void addTags(HolderLookup.Provider pProvider) {
-            // Brave deflects only while charged — handled in Brave.deflection(), no tag needed
+
         }
     }
 
     public static class BlocksProvider extends BlockTagsProvider {
-        public BlocksProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
-            super(output, lookupProvider, Archaion.MODID);
+        public BlocksProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper) {
+            super(output, lookupProvider, Archaion.MODID, existingFileHelper);
         }
 
         @Override
@@ -60,8 +62,8 @@ public class ACTagProvider {
     }
 
     public static class ItemsProvider extends ItemTagsProvider {
-        public ItemsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, BlockTagsProvider blockTags) {
-            super(output, lookupProvider, Archaion.MODID);
+        public ItemsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, BlockTagsProvider blockTags, @Nullable ExistingFileHelper existingFileHelper) {
+            super(output, lookupProvider, blockTags.contentsGetter(), Archaion.MODID, existingFileHelper);
         }
 
         @Override
