@@ -55,7 +55,7 @@ public record ACChestLootTables(HolderLookup.Provider registries) implements Loo
                         .add(LootItem.lootTableItem(Items.GOLD_INGOT).setWeight(5).apply(SetItemCountFunction.setCount(UniformGenerator.between(8.0F, 16.0F))))
                         .add(LootItem.lootTableItem(Items.GOLD_BLOCK).setWeight(2).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
                         .add(LootItem.lootTableItem(Items.DIAMOND_BLOCK).setWeight(1).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
-                        .add(LootItem.lootTableItem(ACItems.ECHOS_GRACE_UPGRADE_SMITHING_TEMPLATE).setWeight(2))
+                        .add(LootItem.lootTableItem(ACItems.ECHOS_GRACE_UPGRADE_SMITHING_TEMPLATE).setWeight(1))
                         .add(LootItem.lootTableItem(Items.EXPERIENCE_BOTTLE).setWeight(3).apply(SetItemCountFunction.setCount(UniformGenerator.between(4.0F, 12.0F))))
                         .add(LootItem.lootTableItem(Items.ENCHANTED_BOOK).setWeight(1).apply(new SetEnchantmentsFunction.Builder().withEnchantment(enchantments.getOrThrow(Enchantments.DENSITY), UniformGenerator.between(1.0F, 5.0F))))
                         .add(LootItem.lootTableItem(Items.ENCHANTED_BOOK).setWeight(2).apply(new SetEnchantmentsFunction.Builder().withEnchantment(enchantments.getOrThrow(Enchantments.MENDING), ConstantValue.exactly(1.0F))))

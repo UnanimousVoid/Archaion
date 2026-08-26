@@ -28,7 +28,7 @@ public class ACTrialSpawnerConfigProvider {
                 .simultaneousMobs(2.0F)
                 .totalMobsAddedPerPlayer(1)
                 .simultaneousMobsAddedPerPlayer(0.5F)
-                .ticksBetweenSpawn(150)
+                .ticksBetweenSpawn(100)
                 .spawnPotentialsDefinition(
                         WeightedList.<SpawnData>builder()
                                 .add(spawnDataWithEquipment(ACEntityTypes.SLATED.get(), ACLootTables.EQUIPMENT_DEEPSLATE_SPAWNER_MELEE), 2)
@@ -49,7 +49,7 @@ public class ACTrialSpawnerConfigProvider {
                 .simultaneousMobs(2.0F)
                 .totalMobsAddedPerPlayer(1)
                 .simultaneousMobsAddedPerPlayer(0.5F)
-                .ticksBetweenSpawn(150)
+                .ticksBetweenSpawn(100)
                 .spawnPotentialsDefinition(
                         WeightedList.<SpawnData>builder()
                                 .add(spawnDataWithEquipment(ACEntityTypes.WIGHT.get(), ACLootTables.EQUIPMENT_DEEPSLATE_SPAWNER_RANGED), 2)
@@ -71,7 +71,7 @@ public class ACTrialSpawnerConfigProvider {
                 .simultaneousMobs(2.0F)
                 .totalMobsAddedPerPlayer(1)
                 .simultaneousMobsAddedPerPlayer(0.5F)
-                .ticksBetweenSpawn(150)
+                .ticksBetweenSpawn(100)
                 .spawnPotentialsDefinition(
                         WeightedList.<SpawnData>builder()
                                 .add(spawnData(ACEntityTypes.BRAVE.get()))
@@ -92,7 +92,7 @@ public class ACTrialSpawnerConfigProvider {
                 .simultaneousMobs(2.0F)
                 .totalMobsAddedPerPlayer(2)
                 .simultaneousMobsAddedPerPlayer(1F)
-                .ticksBetweenSpawn(200)
+                .ticksBetweenSpawn(100)
                 .spawnPotentialsDefinition(
                         WeightedList.<SpawnData>builder()
                                 .add(spawnData(ACEntityTypes.GRIMORAY.get()))
@@ -113,7 +113,7 @@ public class ACTrialSpawnerConfigProvider {
                 .simultaneousMobs(1.0F)
                 .totalMobsAddedPerPlayer(1)
                 .simultaneousMobsAddedPerPlayer(0.0F)
-                .ticksBetweenSpawn(300)
+                .ticksBetweenSpawn(100)
                 .spawnPotentialsDefinition(
                         WeightedList.<SpawnData>builder()
                                 .add(spawnData(ACEntityTypes.DEEPSLATE_SENTINEL.get()))

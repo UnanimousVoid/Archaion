@@ -25,7 +25,7 @@
       "weight": 2
     }
   ],
-  "ticks_between_spawn": 150,
+  "ticks_between_spawn": 100,
   "total_mobs": 8.0,
   "total_mobs_added_per_player": 1.0
 }
