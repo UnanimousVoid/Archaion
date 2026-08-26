@@ -42,6 +42,7 @@ public class ACItems {
     public static final DeferredItem<Item> BRAVE_SPAWN_EGG = ITEM.registerItem("brave_spawn_egg", SpawnEggItem::new, () -> new Item.Properties().spawnEgg(ACEntityTypes.BRAVE.get()));
     public static final DeferredItem<Item> DEEPSLATE_SENTINEL_SPAWN_EGG = ITEM.registerItem("deepslate_sentinel_spawn_egg", SpawnEggItem::new, () -> new Item.Properties().spawnEgg(ACEntityTypes.DEEPSLATE_SENTINEL.get()));
     public static final DeferredItem<Item> GRIMORAY_SPAWN_EGG = ITEM.registerItem("grimoray_spawn_egg", SpawnEggItem::new, () -> new Item.Properties().spawnEgg(ACEntityTypes.GRIMORAY.get()));
+    public static final DeferredItem<Item> HAUNTER_SPAWN_EGG = ITEM.registerItem("haunter_spawn_egg", SpawnEggItem::new, () -> new Item.Properties().spawnEgg(ACEntityTypes.HAUNTER.get()));
     public static final DeferredItem<Item> LAST_OF_DEEPSLATE_SPAWN_EGG = ITEM.registerItem("last_of_deepslate_spawn_egg", SpawnEggItem::new, () -> new Item.Properties().spawnEgg(ACEntityTypes.LAST_OF_DEEPSLATE.get()));
 
 }

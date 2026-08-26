@@ -32,7 +32,10 @@ public class ACEntityTypes {
             () -> EntityType.Builder.of(Wight::new, MobCategory.MONSTER).sized(0.6F, 1.99F).eyeHeight(1.74F).ridingOffset(-0.7F).clientTrackingRange(8).build(ResourceKey.create(Registries.ENTITY_TYPE, Archaion.prefix("wight"))));
 
     public static final DeferredHolder<EntityType<?>, EntityType<Grimoray>> GRIMORAY = ENTITY_TYPE.register("grimoray",
-            () -> EntityType.Builder.of(Grimoray::new, MobCategory.MONSTER).sized(0.9F, 1.0F).eyeHeight(1.6F).clientTrackingRange(8).build(ResourceKey.create(Registries.ENTITY_TYPE, Archaion.prefix("grimoray"))));
+            () -> EntityType.Builder.of(Grimoray::new, MobCategory.MONSTER).sized(0.9F, 1.0F).eyeHeight(0.5F).clientTrackingRange(8).build(ResourceKey.create(Registries.ENTITY_TYPE, Archaion.prefix("grimoray"))));
+
+    public static final DeferredHolder<EntityType<?>, EntityType<Haunter>> HAUNTER = ENTITY_TYPE.register("haunter",
+            () -> EntityType.Builder.of(Haunter::new, MobCategory.MONSTER).sized(0.8F, 2.6F).eyeHeight(2.2F).clientTrackingRange(8).build(ResourceKey.create(Registries.ENTITY_TYPE, Archaion.prefix("haunter"))));
 
     public static final DeferredHolder<EntityType<?>, EntityType<DeepslateSentinel>> DEEPSLATE_SENTINEL = ENTITY_TYPE.register("deepslate_sentinel",
             () -> EntityType.Builder.of(DeepslateSentinel::new, MobCategory.MONSTER).sized(2.75F, 2.6F).eyeHeight(1.05F).nameTagOffset(2.05F).clientTrackingRange(10).build(ResourceKey.create(Registries.ENTITY_TYPE, Archaion.prefix("deepslate_sentinel"))));

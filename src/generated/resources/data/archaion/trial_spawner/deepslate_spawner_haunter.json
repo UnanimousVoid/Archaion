@@ -1,0 +1,26 @@
+{
+  "items_to_drop_when_ominous": "archaion:spawner/deepslate_spawner_throwables",
+  "loot_tables_to_eject": [
+    {
+      "data": "archaion:spawner/deepslate_spawner_key",
+      "weight": 2
+    },
+    {
+      "data": "archaion:spawner/deepslate_spawner_misc",
+      "weight": 3
+    }
+  ],
+  "simultaneous_mobs_added_per_player": 0.5,
+  "spawn_potentials": [
+    {
+      "data": {
+        "entity": {
+          "id": "archaion:haunter"
+        }
+      },
+      "weight": 1
+    }
+  ],
+  "ticks_between_spawn": 200,
+  "total_mobs_added_per_player": 1.0
+}

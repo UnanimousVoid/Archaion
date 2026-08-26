@@ -17,5 +17,6 @@ public class ACCommonSetup {
         event.put(ACEntityTypes.WIGHT.get(), Wight.createAttributes().build());
         event.put(ACEntityTypes.DEEPSLATE_SENTINEL.get(), DeepslateSentinel.createAttributes().build());
         event.put(ACEntityTypes.GRIMORAY.get(), Grimoray.createAttributes().build());
+        event.put(ACEntityTypes.HAUNTER.get(), Haunter.createAttributes().build());
     }
 }

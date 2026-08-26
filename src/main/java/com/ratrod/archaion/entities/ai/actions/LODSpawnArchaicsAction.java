@@ -177,10 +177,11 @@ public class LODSpawnArchaicsAction extends ManagedAction<LastOfDeepslate> {
     private EntityType<? extends Monster> pickArchaicType() {
         boolean phaseTwo = entity.getArchaicSystem().getPhasesTriggered() >= 2;
         WeightedList<EntityType<? extends Monster>> choices = WeightedList.<EntityType<? extends Monster>>builder()
+                .add(ACEntityTypes.HAUNTER.get(), phaseTwo ? 3 : 2)
                 .add(ACEntityTypes.BRAVE.get(), phaseTwo ? 1 : 0)
-                .add(ACEntityTypes.WIGHT.get(), 4)
+                .add(ACEntityTypes.WIGHT.get(), 3)
                 .add(ACEntityTypes.SLATED.get(), 3)
-                .add(ACEntityTypes.DEEPSLATE_SENTINEL.get(), 4)
+                .add(ACEntityTypes.DEEPSLATE_SENTINEL.get(), 3)
                 .build();
         return choices.getRandom(entity.getRandom()).orElse(ACEntityTypes.BRAVE.get());
     }

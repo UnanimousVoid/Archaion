@@ -118,8 +118,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "archaion:echos_grace_upgrade_smithing_template",
-          "weight": 2
+          "name": "archaion:echos_grace_upgrade_smithing_template"
         },
         {
           "type": "minecraft:item",

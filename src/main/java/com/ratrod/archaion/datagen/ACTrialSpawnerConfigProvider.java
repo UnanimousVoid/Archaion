@@ -107,6 +107,27 @@ public class ACTrialSpawnerConfigProvider {
                 .itemsToDropWhenOminous(ACLootTables.DEEPSLATE_SPAWNER_THROWABLES)
                 .build());
 
+        ctx.register(ACTrialSpawnerConfigs.DEEPSLATE_SPAWNER_HAUNTER, TrialSpawnerConfig.builder()
+                .spawnRange(4)
+                .totalMobs(6.0F)
+                .simultaneousMobs(2.0F)
+                .totalMobsAddedPerPlayer(1)
+                .simultaneousMobsAddedPerPlayer(0.5F)
+                .ticksBetweenSpawn(200)
+                .spawnPotentialsDefinition(
+                        WeightedList.<SpawnData>builder()
+                                .add(spawnData(ACEntityTypes.HAUNTER.get()))
+                                .build()
+                )
+                .lootTablesToEject(
+                        WeightedList.<ResourceKey<LootTable>>builder()
+                                .add(ACLootTables.DEEPSLATE_SPAWNER_KEY, 2)
+                                .add(ACLootTables.DEEPSLATE_SPAWNER_MISC, 3)
+                                .build()
+                )
+                .itemsToDropWhenOminous(ACLootTables.DEEPSLATE_SPAWNER_THROWABLES)
+                .build());
+
         ctx.register(ACTrialSpawnerConfigs.DEEPSLATE_SPAWNER_SENTINEL, TrialSpawnerConfig.builder()
                 .spawnRange(4)
                 .totalMobs(2.0F)

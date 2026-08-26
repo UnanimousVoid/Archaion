@@ -9,6 +9,7 @@ import com.ratrod.archaion.client.misc.LastOfDeepslateTooltipRenderer;
 import com.ratrod.archaion.client.models.BraveModel;
 import com.ratrod.archaion.client.models.DeepslateSentinelModel;
 import com.ratrod.archaion.client.models.GrimorayModel;
+import com.ratrod.archaion.client.models.HaunterModel;
 import com.ratrod.archaion.client.models.LastOfDeepslateModel;
 import com.ratrod.archaion.client.renderers.*;
 import com.ratrod.archaion.registry.ACBlockEntities;
@@ -59,6 +60,10 @@ public class ACClientSetup {
         ClientAnimationRegistry.register(ACEntityTypes.GRIMORAY.get(), List.of(
                 GrimorayAnimations.SHOOT
         ));
+
+        ClientAnimationRegistry.register(ACEntityTypes.HAUNTER.get(), List.of(
+                HaunterAnimations.EXPLODE
+        ));
     }
 
     @SubscribeEvent
@@ -80,6 +85,7 @@ public class ACClientSetup {
         event.registerEntityRenderer(ACEntityTypes.LOD_FALLING_BLOCK.get(), LODFallingBlockRenderer::new);
         event.registerEntityRenderer(ACEntityTypes.DEEPSLATE_SENTINEL.get(), DeepslateSentinelRenderer::new);
         event.registerEntityRenderer(ACEntityTypes.GRIMORAY.get(), GrimorayRenderer::new);
+        event.registerEntityRenderer(ACEntityTypes.HAUNTER.get(), HaunterRenderer::new);
         event.registerEntityRenderer(ACEntityTypes.GRIMORAY_SPELL.get(), GrimoraySpellProjectileRenderer::new);
 
         event.registerBlockEntityRenderer(ACBlockEntities.HOLOGRAM.get(), HologramRenderer::new);
@@ -98,6 +104,9 @@ public class ACClientSetup {
         event.registerLayerDefinition(DeepslateSentinelModel.CHARGED_LAYER_LOCATION, () -> DeepslateSentinelModel.createBodyLayer(new CubeDeformation(2.0F)));
 
         event.registerLayerDefinition(GrimorayModel.LAYER_LOCATION, GrimorayModel::createBodyLayer);
+
+        event.registerLayerDefinition(HaunterModel.LAYER_LOCATION, HaunterModel::createBodyLayer);
+        event.registerLayerDefinition(HaunterModel.CHARGED_LAYER_LOCATION, () -> HaunterModel.createBodyLayer(new CubeDeformation(2.0F)));
     }
 
     @SubscribeEvent

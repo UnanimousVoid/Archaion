@@ -46,6 +46,11 @@ public class ACSounds {
     public static final DeferredHolder<SoundEvent, SoundEvent> SENTINEL_DEATH = register("sentinel_death");
     public static final DeferredHolder<SoundEvent, SoundEvent> SENTINEL_START_CHARGING = register("sentinel_start_charging");
 
+    // Haunter
+    public static final DeferredHolder<SoundEvent, SoundEvent> HAUNTER_AMBIENT = register("haunter_ambient");
+    public static final DeferredHolder<SoundEvent, SoundEvent> HAUNTER_EXPLODE = register("haunter_explode");
+    public static final DeferredHolder<SoundEvent, SoundEvent> HAUNTER_HURT = register("haunter_hurt");
+
     private static DeferredHolder<SoundEvent, SoundEvent> register(String name) {
         return SOUND_EVENT.register(name, () -> SoundEvent.createVariableRangeEvent(Archaion.prefix(name)));
     }

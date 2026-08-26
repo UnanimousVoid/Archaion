@@ -66,6 +66,11 @@ public class ACEntityLootTables extends EntityLootSubProvider {
                 )
         );
 
+        this.add(ACEntityTypes.HAUNTER.get(), LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                )
+        );
+
         this.add(ACEntityTypes.LAST_OF_DEEPSLATE.get(), LootTable.lootTable()
                 .withPool(LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1))
@@ -89,7 +94,8 @@ public class ACEntityLootTables extends EntityLootSubProvider {
         return Stream.of(
                 ACEntityTypes.BRAVE.get(),
                 ACEntityTypes.LAST_OF_DEEPSLATE.get(),
-                ACEntityTypes.GRIMORAY.get()
+                ACEntityTypes.GRIMORAY.get(),
+                ACEntityTypes.HAUNTER.get()
         );
     }
 }
