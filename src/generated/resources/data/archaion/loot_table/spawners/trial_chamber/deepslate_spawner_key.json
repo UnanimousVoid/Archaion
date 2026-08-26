@@ -12,5 +12,5 @@
       "rolls": 1.0
     }
   ],
-  "random_sequence": "archaion:spawner/deepslate_spawner_key"
+  "random_sequence": "archaion:spawners/trial_chamber/deepslate_spawner_key"
 }

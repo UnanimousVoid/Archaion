@@ -68,5 +68,5 @@
       "rolls": 1.0
     }
   ],
-  "random_sequence": "archaion:spawner/deepslate_spawner_throwables"
+  "random_sequence": "archaion:spawners/trial_chamber/deepslate_spawner_throwables"
 }

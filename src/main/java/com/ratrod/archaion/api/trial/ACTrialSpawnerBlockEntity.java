@@ -14,6 +14,8 @@ import net.minecraft.world.level.Spawner;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.trialspawner.PlayerDetector;
 import net.minecraft.world.level.block.entity.trialspawner.TrialSpawner;
+import net.minecraft.world.level.block.entity.trialspawner.TrialSpawnerConfig;
+import net.minecraft.world.level.block.entity.trialspawner.TrialSpawnerData;
 import net.minecraft.world.level.block.entity.trialspawner.TrialSpawnerState;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -27,13 +29,23 @@ public class ACTrialSpawnerBlockEntity extends BlockEntity implements TrialSpawn
     public ACTrialSpawnerBlockEntity(BlockPos worldPosition, BlockState blockState) {
         super(ACTrialRegistry.TRIAL_SPAWNER.get(), worldPosition, blockState);
         PlayerDetector playerDetector = SharedConstants.DEBUG_TRIAL_SPAWNER_DETECTS_SHEEP_AS_PLAYERS ? PlayerDetector.SHEEP : PlayerDetector.NO_CREATIVE_PLAYERS;
-        this.trialSpawner = new TrialSpawner(this, playerDetector, PlayerDetector.EntitySelector.SELECT_FROM_LEVEL);
+        TrialSpawnerConfig config = ACTrialRegistry.configFor(blockState.getBlock());
+        this.trialSpawner = new TrialSpawner(config, config, new TrialSpawnerData(), 36000, 14, this, playerDetector, PlayerDetector.EntitySelector.SELECT_FROM_LEVEL);
+    }
+
+    private void applyVariantConfig() {
+        TrialSpawnerConfig config = ACTrialRegistry.configFor(this.getBlockState().getBlock());
+        this.trialSpawner = new TrialSpawner(
+            config, config, this.trialSpawner.getData(), this.trialSpawner.getTargetCooldownLength(), this.trialSpawner.getRequiredPlayerRange(),
+            this, this.trialSpawner.getPlayerDetector(), this.trialSpawner.getEntitySelector()
+        );
     }
 
     @Override
     protected void loadAdditional(CompoundTag input, HolderLookup.Provider registries) {
         super.loadAdditional(input, registries);
         this.trialSpawner = this.trialSpawner.codec().parse(NbtOps.INSTANCE, input).resultOrPartial(LOGGER::error).orElse(this.trialSpawner);
+        this.applyVariantConfig();
         if (this.level != null) {
             this.markUpdated();
         }

@@ -10,6 +10,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.trialspawner.TrialSpawnerConfig;
 import net.minecraft.world.level.block.entity.vault.VaultConfig;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -38,12 +39,21 @@ public final class ACTrialRegistry {
     private ACTrialRegistry() {
     }
 
-    public static TrialSpawnerVariant registerSpawner(String name, Function<BlockBehaviour.Properties, BlockBehaviour.Properties> properties) {
+    public static TrialSpawnerVariant registerSpawner(String name, Function<BlockBehaviour.Properties, BlockBehaviour.Properties> properties, TrialSpawnerConfig config) {
         DeferredBlock<ACTrialSpawnerBlock> block = ACBlocks.BLOCK.registerBlock(name, ACTrialSpawnerBlock::new, properties.apply(BlockBehaviour.Properties.of()));
         ACItems.ITEM.registerSimpleBlockItem(block);
-        TrialSpawnerVariant variant = new TrialSpawnerVariant(name, block);
+        TrialSpawnerVariant variant = new TrialSpawnerVariant(name, block, config);
         SPAWNERS.add(variant);
         return variant;
+    }
+
+    public static TrialSpawnerConfig configFor(Block block) {
+        for (TrialSpawnerVariant variant : SPAWNERS) {
+            if (variant.block().get() == block) {
+                return variant.config();
+            }
+        }
+        return TrialSpawnerConfig.DEFAULT;
     }
 
     public static TrialVaultVariant registerVault(String name, Function<BlockBehaviour.Properties, BlockBehaviour.Properties> properties, ResourceKey<LootTable> lootTable, DeferredItem<Item> keyItem, double activationRange, double deactivationRange) {
