@@ -340,6 +340,11 @@ public class LastOfDeepslate extends Monster implements ACEntity<LastOfDeepslate
     }
 
     @Override
+    public boolean fireImmune() {
+        return true;
+    }
+
+    @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
         builder.define(SLEEPING_STATE, SleepingState.SLEEPING);
