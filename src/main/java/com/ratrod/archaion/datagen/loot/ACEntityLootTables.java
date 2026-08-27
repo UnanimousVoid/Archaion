@@ -82,6 +82,11 @@ public class ACEntityLootTables extends EntityLootSubProvider {
                         .when(LootItemKilledByPlayerCondition.killedByPlayer())
                 )
         );
+
+        this.add(ACEntityTypes.HAUNTER.get(), LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                )
+        );
     }
 
     @Override
@@ -89,7 +94,8 @@ public class ACEntityLootTables extends EntityLootSubProvider {
         return Stream.of(
                 ACEntityTypes.BRAVE.get(),
                 ACEntityTypes.LAST_OF_DEEPSLATE.get(),
-                ACEntityTypes.GRIMORAY.get()
+                ACEntityTypes.GRIMORAY.get(),
+                ACEntityTypes.HAUNTER.get()
         );
     }
 }

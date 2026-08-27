@@ -295,6 +295,11 @@ public class LastOfDeepslate extends Monster implements ACEntity<LastOfDeepslate
     }
 
     @Override
+    public boolean fireImmune() {
+        return true;
+    }
+
+    @Override
     public boolean hurt(DamageSource source, float damage) {
 
         if (this.getSleepingState() != SleepingState.AWAKE) return false;

@@ -83,4 +83,10 @@ public class ACEntityTypes {
                     .noSave()
                     .noSummon()
                     .build("lod_falling_block"));
+
+    public static final DeferredHolder<EntityType<?>, EntityType<Haunter>> HAUNTER = ENTITY_TYPE.register("haunter",
+            () -> EntityType.Builder.of(Haunter::new, MobCategory.MONSTER)
+                    .sized(0.8F, 2.6F)
+                    .eyeHeight(2.2F).clientTrackingRange(8)
+                    .build("haunter"));
 }

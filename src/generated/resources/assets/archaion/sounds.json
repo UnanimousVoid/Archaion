@@ -35,6 +35,24 @@
     ],
     "subtitle": "subtitle.archaion.echo_star_blast"
   },
+  "haunter_ambient": {
+    "sounds": [
+      "archaion:haunter_ambient"
+    ],
+    "subtitle": "subtitle.archaion.haunter_ambient"
+  },
+  "haunter_explode": {
+    "sounds": [
+      "archaion:haunter_explode"
+    ],
+    "subtitle": "subtitle.archaion.haunter_explode"
+  },
+  "haunter_hurt": {
+    "sounds": [
+      "archaion:haunter_hurt"
+    ],
+    "subtitle": "subtitle.archaion.haunter_hurt"
+  },
   "lod_action_start": {
     "sounds": [
       "archaion:lod_action_start"
