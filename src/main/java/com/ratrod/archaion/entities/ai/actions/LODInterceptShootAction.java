@@ -47,7 +47,6 @@ public class LODInterceptShootAction extends ManagedAction<LastOfDeepslate> {
             if (entity.level() instanceof ServerLevel serverLevel) {
                 LODInterceptBlast blast = ACEntityTypes.LOD_INTERCEPT_BLAST.get().create(serverLevel, EntitySpawnReason.TRIGGERED);
                 blast.moveOrInterpolateTo(center);
-                blast.source = this.entity;
                 blast.setOwner(this.entity);
                 blast.setDeltaMovement(0, 3.0, 0);
                 serverLevel.addFreshEntity(blast);

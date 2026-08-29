@@ -4,8 +4,8 @@ import net.minecraft.world.entity.Entity;
 
 public abstract class ManagedAction<T extends Entity> {
 
-    protected final T entity;
-    protected int timer;
+    public final T entity;
+    public int timer;
 
     public ManagedAction(T entity) {
         this.entity = entity;

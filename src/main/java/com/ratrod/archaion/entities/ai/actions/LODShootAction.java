@@ -4,6 +4,7 @@ import com.ratrod.archaion.Archaion;
 import com.ratrod.archaion.api.entity.ManagedAction;
 import com.ratrod.archaion.entities.LastOfDeepslate;
 import com.ratrod.archaion.entities.projectile.EchoStarProjectile;
+import com.ratrod.archaion.entities.projectile.LODInterceptBlast;
 import com.ratrod.archaion.registry.ACEntityTypes;
 import com.ratrod.archaion.registry.ACSounds;
 import mod.chloeprime.aaaparticles.api.common.AAALevel;
@@ -15,6 +16,8 @@ import net.minecraft.world.phys.Vec3;
 
 public class LODShootAction extends ManagedAction<LastOfDeepslate> {
 
+    public boolean isBlast = false;
+
     public LODShootAction(LastOfDeepslate entity) {
         super(entity);
     }
@@ -22,6 +25,7 @@ public class LODShootAction extends ManagedAction<LastOfDeepslate> {
     @Override
     public boolean canStart() {
         LivingEntity target = entity.getTarget();
+        if (entity.shootingCooldown > 0) return false;
         if (target == null || !target.isAlive()) return false;
         if (!entity.hasLineOfSight(target)) return false;
         if (entity.getY() + entity.getBbHeight() < target.getY()) return false;
@@ -33,30 +37,52 @@ public class LODShootAction extends ManagedAction<LastOfDeepslate> {
         this.timer = 0;
         entity.shootAnim.start();
         entity.playSound(ACSounds.LOD_ACTION_START.get(), 3.0F, 1.0F);
+        this.isBlast = entity.getRandom().nextBoolean();
     }
 
     @Override
     public boolean onTick() {
         timer++;
 
-        if (timer == 21 || timer == 23 || timer == 25) {
-            entity.playSound(ACSounds.LOD_SHOOT.get(), 5.0F, 1.0F);
+        if (isBlast) {
 
-            float yaw = entity.getYHeadRot() * Mth.DEG_TO_RAD;
-            Vec3 flatLook = new Vec3(-Mth.sin(yaw), 0, Mth.cos(yaw));
-            Vec3 center = entity.position().add(flatLook.yRot(-25F * Mth.DEG_TO_RAD).scale(6).add(0, 5.5, 0));
+            if (timer == 21) {
 
-            ParticleEmitterInfo info = new ParticleEmitterInfo(Archaion.prefix("echo_blast"));
-            AAALevel.addParticle(entity.level(), info.position(center).scale(6.0F));
+                entity.playSound(ACSounds.LOD_SHOOT.get(), 5.0F, 0.6F);
 
-            for (int i = 0; i < 3; i++) {
-                EchoStarProjectile projectile = ACEntityTypes.ECHO_STAR.get().create(entity.level(), EntitySpawnReason.TRIGGERED);
-                projectile.moveOrInterpolateTo(center);
-                projectile.setOwner(entity);
-                float xR = -22.5F + (-1 + entity.getRandom().nextFloat() * 2) * 45;
-                float yR = (-1 + entity.getRandom().nextFloat() * 2) * 65;
-                projectile.shootFromRotation(entity, entity.getXRot() + xR, entity.getYRot() + yR, 0, 0.85F, 0.0F);
-                entity.level().addFreshEntity(projectile);
+                float yaw = entity.getYHeadRot() * Mth.DEG_TO_RAD;
+                Vec3 flatLook = new Vec3(-Mth.sin(yaw), 0, Mth.cos(yaw));
+                Vec3 center = entity.position().add(flatLook.yRot(-25F * Mth.DEG_TO_RAD).scale(6).add(0, 5.5, 0));
+
+                LODInterceptBlast blast = ACEntityTypes.LOD_INTERCEPT_BLAST.get().create(entity.level(), EntitySpawnReason.TRIGGERED);
+                blast.moveOrInterpolateTo(center);
+                blast.size = 0.55F;
+                blast.setOwner(this.entity);
+                blast.shootFromRotation(entity, 0, entity.getYRot(), 0, 1F, 0.0F);
+                entity.level().addFreshEntity(blast);
+            }
+
+        } else {
+
+            if (timer == 21 || timer == 23 || timer == 25) {
+                entity.playSound(ACSounds.LOD_SHOOT.get(), 5.0F, 1.0F);
+
+                float yaw = entity.getYHeadRot() * Mth.DEG_TO_RAD;
+                Vec3 flatLook = new Vec3(-Mth.sin(yaw), 0, Mth.cos(yaw));
+                Vec3 center = entity.position().add(flatLook.yRot(-25F * Mth.DEG_TO_RAD).scale(6).add(0, 5.5, 0));
+
+                ParticleEmitterInfo info = new ParticleEmitterInfo(Archaion.prefix("echo_blast"));
+                AAALevel.addParticle(entity.level(), info.position(center).scale(6.0F));
+
+                for (int i = 0; i < 3; i++) {
+                    EchoStarProjectile projectile = ACEntityTypes.ECHO_STAR.get().create(entity.level(), EntitySpawnReason.TRIGGERED);
+                    projectile.moveOrInterpolateTo(center);
+                    projectile.setOwner(entity);
+                    float xR = -30F + (-1 + entity.getRandom().nextFloat() * 2) * 30;
+                    float yR = (-1 + entity.getRandom().nextFloat() * 2) * 65;
+                    projectile.shootFromRotation(entity, entity.getXRot() + xR, entity.getYRot() + yR, 0, 0.9F, 0.0F);
+                    entity.level().addFreshEntity(projectile);
+                }
             }
         }
 
@@ -65,6 +91,11 @@ public class LODShootAction extends ManagedAction<LastOfDeepslate> {
 
     @Override
     public void onStop() {
+        entity.shootingCooldown = switch (entity.getArchaicSystem().getPhasesTriggered()) {
+            case 2 -> 0;
+            case 1 -> 30 + entity.getRandom().nextInt(10);
+            default -> 60 + entity.getRandom().nextInt(20);
+        };
         entity.shootAnim.stop();
     }
 }

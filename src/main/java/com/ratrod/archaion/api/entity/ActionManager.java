@@ -1,18 +1,18 @@
 package com.ratrod.archaion.api.entity;
 
+import com.ratrod.archaion.misc.DynamicWeightedList;
 import net.minecraft.util.RandomSource;
-import net.minecraft.util.random.Weighted;
-import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.entity.Entity;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.function.ToIntFunction;
 
 public class ActionManager<T extends Entity> {
 
     private final T entity;
-    private final WeightedList.Builder<ManagedAction<T>> actionBuilder = WeightedList.builder();
-    private @Nullable WeightedList<ManagedAction<T>> action;
+    private final DynamicWeightedList.Builder<ManagedAction<T>> actionBuilder = DynamicWeightedList.builder();
+    private @Nullable DynamicWeightedList<ManagedAction<T>> action;
     private boolean dirty = true;
 
     private @Nullable ManagedAction<T> currentAction;
@@ -28,6 +28,11 @@ public class ActionManager<T extends Entity> {
         } else {
             throw new IllegalStateException("Weight of a ManagedAction cannot be 0 or below.");
         }
+    }
+
+    public final void addAction(ManagedAction<T> task, ToIntFunction<ManagedAction<T>> weight) {
+        this.actionBuilder.add(task, weight);
+        this.dirty = true;
     }
 
     public void tick() {
@@ -47,7 +52,7 @@ public class ActionManager<T extends Entity> {
         }
     }
 
-    private WeightedList<ManagedAction<T>> getActions() {
+    private DynamicWeightedList<ManagedAction<T>> getActions() {
         if (this.action == null || this.dirty) {
             this.action = this.actionBuilder.build();
             this.dirty = false;
@@ -56,8 +61,8 @@ public class ActionManager<T extends Entity> {
     }
 
     private void tryStartNewTask() {
-        List<Weighted<ManagedAction<T>>> availableActions = this.getActions().unwrap().stream()
-                .filter(weighted -> weighted.value().canStart())
+        List<DynamicWeightedList.Entry<ManagedAction<T>>> availableActions = this.getActions().unwrap().stream()
+                .filter(entry -> entry.value().canStart())
                 .toList();
 
         if (availableActions.isEmpty()) {
@@ -65,7 +70,7 @@ public class ActionManager<T extends Entity> {
         }
 
         RandomSource random = this.entity.getRandom();
-        WeightedList.of(availableActions).getRandom(random).ifPresent(this::startAction);
+        DynamicWeightedList.of(availableActions).getRandom(random).ifPresent(this::startAction);
     }
 
     private void startAction(ManagedAction<T> action) {

@@ -115,4 +115,9 @@ public class EchoStarProjectile extends ThrowableProjectile {
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
     }
+
+    @Override
+    protected double getDefaultGravity() {
+        return 0.02;
+    }
 }
