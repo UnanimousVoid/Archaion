@@ -84,6 +84,7 @@ public class LastOfDeepslate extends Monster implements ACEntity<LastOfDeepslate
     public final ServerBossEvent bossEvent;
     public final ArchaicRaid archaicSystem = new ArchaicRaid(this);
 
+    public int shootingCooldown = 0;
     public int wakingStartTick = 0;
     public boolean deathAnimationPlayed = false;
     public LODTheme musicPhase = LODTheme.PHASE_1;
@@ -99,7 +100,7 @@ public class LastOfDeepslate extends Monster implements ACEntity<LastOfDeepslate
         this.attackManager.addAction(new LODSwingSpinAction(this), 150);
         this.attackManager.addAction(new LODShootAction(this), 150);
         this.attackManager.addAction(new LODInterceptShootAction(this), 500);
-        this.attackManager.addAction(new LODRollAction(this), 40);
+        this.attackManager.addAction(new LODRollAction(this), action -> action.entity.getArchaicSystem().getPhasesTriggered() < 2 ? 40 : 70);
         this.attackManager.setPriorityAction(new LODSpawnArchaicsAction(this));
         this.attackManager.addAction(new LODBodySlamAction(this), 100);
     }
@@ -184,6 +185,7 @@ public class LastOfDeepslate extends Monster implements ACEntity<LastOfDeepslate
             this.bossEvent.setProgress(this.getHealth() / this.getMaxHealth());
 
             this.archaicSystem.tick();
+            if (shootingCooldown > 0) shootingCooldown --;
 
             SleepingState currentState = this.getSleepingState();
             int curWakingTick = this.tickCount - this.wakingStartTick;

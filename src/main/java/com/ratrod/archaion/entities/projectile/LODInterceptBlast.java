@@ -16,13 +16,12 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 public class LODInterceptBlast extends ThrowableProjectile {
 
-    @Nullable public Entity source;
+    public float size = 1.0F;
 
     public LODInterceptBlast(EntityType<? extends ThrowableProjectile> entityType, Level level) {
         super(entityType, level);
@@ -64,17 +63,16 @@ public class LODInterceptBlast extends ThrowableProjectile {
         if (this.level().isClientSide()) return;
         ServerLevel serverLevel = (ServerLevel) this.level();
 
-        this.playSound(ACSounds.ECHO_STAR_BLAST.get(), 5.0F, 0.5F + random.nextFloat() * 0.2F);
+        this.playSound(ACSounds.ECHO_STAR_BLAST.get(), 5.0F, (0.5F + random.nextFloat() * 0.2F) * (1.8F - size));
 
-        float sizeMult = 1.0F;
         ParticleEmitterInfo info = new ParticleEmitterInfo(Archaion.prefix("echo_blast_intercept"));
-        AAALevel.addParticle(serverLevel, true, info.position(this.position()).rotation(0, random.nextFloat() * 90, 0).scale(3.0F * sizeMult));
+        AAALevel.addParticle(serverLevel, true, info.position(this.position()).rotation(0, random.nextFloat() * 90, 0).scale(3.0F * size));
 
-        Entity cause = this.source != null ? this.source : this;
-        AABB area = AABB.ofSize(this.position(), 14 * sizeMult, 14 * sizeMult, 14 * sizeMult);
+        Entity cause = this.getOwner() != null ? this.getOwner() : this;
+        AABB area = AABB.ofSize(this.position(), 14 * size, 14 * size, 14 * size);
         List<LivingEntity> targets = serverLevel.getEntitiesOfClass(LivingEntity.class, area, e -> e != cause && e.isAlive() && canTarget(e));
         for (LivingEntity target : targets) {
-            target.hurt(serverLevel.damageSources().explosion(cause, cause), 55.0F);
+            target.hurt(serverLevel.damageSources().explosion(cause, cause), 55.0F * size);
             Vec3 knockback = target.position().subtract(this.position()).normalize().scale(3.0).add(0, 0.35, 0);
             target.setDeltaMovement(target.getDeltaMovement().add(knockback));
             target.hurtMarked = true;
@@ -82,7 +80,7 @@ public class LODInterceptBlast extends ThrowableProjectile {
     }
 
     private boolean canTarget(LivingEntity target) {
-        if (this.source instanceof Mob mob) {
+        if (this.getOwner() instanceof Mob mob) {
             return mob.canAttack(target);
         }
         return true;
