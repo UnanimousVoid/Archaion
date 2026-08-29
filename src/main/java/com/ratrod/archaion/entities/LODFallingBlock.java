@@ -2,6 +2,7 @@ package com.ratrod.archaion.entities;
 
 import com.ratrod.archaion.Archaion;
 import com.ratrod.archaion.registry.ACEntityTypes;
+import com.ratrod.archaion.registry.ACSounds;
 import mod.chloeprime.aaaparticles.api.common.AAALevel;
 import mod.chloeprime.aaaparticles.api.common.ParticleEmitterInfo;
 import net.minecraft.nbt.CompoundTag;
@@ -113,11 +114,11 @@ public class LODFallingBlock extends Entity {
         if (!(this.level() instanceof ServerLevel serverLevel)) return;
 
         Entity cause = this.owner != null ? this.owner : this;
-        this.playSound(SoundEvents.ANVIL_LAND, 1.0F, 0.4F + random.nextFloat() * 0.2F);
+        this.playSound(ACSounds.LOD_BLOCK_FALL.get(), 1.0F, 0.4F + random.nextFloat() * 0.2F);
 
         AABB area = this.getBoundingBox().inflate(2, 1.0, 2);
         for (LivingEntity target : serverLevel.getEntitiesOfClass(LivingEntity.class, area, e -> e != cause && e.isAlive() && canTarget(e))) {
-            target.hurt(serverLevel.damageSources().explosion(cause, cause), 12.0F);
+            target.hurt(serverLevel.damageSources().explosion(cause, cause), 25.0F);
         }
 
         ParticleEmitterInfo info = new ParticleEmitterInfo(Archaion.prefix("lod_falling_block"));

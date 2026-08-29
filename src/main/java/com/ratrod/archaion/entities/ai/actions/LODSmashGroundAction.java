@@ -9,6 +9,7 @@ import com.ratrod.archaion.registry.ACSounds;
 import mod.chloeprime.aaaparticles.api.common.AAALevel;
 import mod.chloeprime.aaaparticles.api.common.ParticleEmitterInfo;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
@@ -64,18 +65,36 @@ public class LODSmashGroundAction extends ManagedAction<LastOfDeepslate> {
 
     private void applyBlockFalling() {
         Level level = entity.level();
-        BlockPos blockPos = BlockPos.containing(entity.position().add(0, 30, 0));
-        int hRad = 48;
-        int vRad = 4;
+        BlockPos basePos = entity.blockPosition();
+        int hRad = 32;
+        int scanRange = 64;
+
         for (int xx = -hRad; xx <= hRad; xx++) {
             for (int zz = -hRad; zz <= hRad; zz++) {
-                for (int yy = -vRad; yy <= vRad; yy++) {
-                    BlockPos pos = blockPos.offset(xx, yy, zz);
-                    if (level.getRandom().nextFloat() < 0.015) {
-                        if (!level.isEmptyBlock(pos) && level.isEmptyBlock(pos.below())) {
-                            LODFallingBlock.spawn((ServerLevel) level, entity.level().getBlockState(pos), new Vec3(pos.getX() + 0.5, pos.getY() - 0.5, pos.getZ() + 0.5), entity);
-                        }
+                int x = basePos.getX() + xx;
+                int z = basePos.getZ() + zz;
+                BlockPos.MutableBlockPos scanPos = new BlockPos.MutableBlockPos(x, basePos.getY(), z);
+                boolean found = false;
+
+                for (int i = 0; i < scanRange; i++) {
+                    scanPos.move(Direction.UP);
+                    if (!level.isEmptyBlock(scanPos)) {
+                        found = true;
+                        break;
                     }
+                }
+
+                if (found && level.getRandom().nextFloat() < 0.01) {
+                    BlockPos fallingPos = scanPos.immutable();
+                    LODFallingBlock.spawn((ServerLevel) level, level.getBlockState(fallingPos), new Vec3(fallingPos.getX() + 0.5, fallingPos.getY() - 0.5, fallingPos.getZ() + 0.5), entity);
+
+                    BlockPos.MutableBlockPos groundPos = new BlockPos.MutableBlockPos(x, basePos.getY(), z);
+                    while (level.isEmptyBlock(groundPos) && groundPos.getY() > level.getMinBuildHeight()) {
+                        groundPos.move(Direction.DOWN);
+                    }
+
+                    ParticleEmitterInfo info = new ParticleEmitterInfo(Archaion.prefix("lod_falling_block_indicator"));
+                    AAALevel.addParticle(level, info.position(Vec3.atBottomCenterOf(groundPos)).scale(1.5F));
                 }
             }
         }
