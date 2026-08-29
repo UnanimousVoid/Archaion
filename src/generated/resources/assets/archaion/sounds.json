@@ -77,6 +77,12 @@
     ],
     "subtitle": "subtitle.archaion.lod_ambient"
   },
+  "lod_block_fall": {
+    "sounds": [
+      "archaion:lod_block_fall"
+    ],
+    "subtitle": "subtitle.archaion.lod_block_fall"
+  },
   "lod_boss_theme_phase_1": {
     "sounds": [
       {

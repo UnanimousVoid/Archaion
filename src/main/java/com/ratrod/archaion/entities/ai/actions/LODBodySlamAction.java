@@ -80,7 +80,7 @@ public class LODBodySlamAction extends ManagedAction<LastOfDeepslate> {
         entity.playSound(ACSounds.LOD_SMASH.get(), 4.0F, 0.8F);
 
         ParticleEmitterInfo info = new ParticleEmitterInfo(Archaion.prefix("lod_boom_ground"));
-        AAALevel.addParticle(serverLevel, info.position(entity.position()).scale(4.0F));
+        AAALevel.addParticle(serverLevel, info.position(entity.position().add(0, 0.1, 0)).scale(4.0F));
 
         if (entity.getArchaicSystem().getPhasesTriggered() >= 2) {
             LODSlamEffect.summonRing(serverLevel, entity.position(), entity);

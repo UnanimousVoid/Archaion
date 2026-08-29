@@ -135,6 +135,7 @@ public class ACLanguageProvider extends LanguageProvider {
                 Map.entry("lod_smash", "Last of Deepslate smashes"),
                 Map.entry("lod_spin", "Last of Deepslate spins"),
                 Map.entry("lod_step", "Last of Deepslate steps"),
+                Map.entry("lod_block_fall", "Solid block falls"),
                 Map.entry("lod_boss_theme_phase_1", "Last of Deepslate theme"),
                 Map.entry("lod_boss_theme_phase_2", "Last of Deepslate theme"),
                 Map.entry("lod_boss_theme_phase_3", "Last of Deepslate theme"),

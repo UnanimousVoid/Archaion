@@ -2,6 +2,7 @@ package com.ratrod.archaion.entities;
 
 import com.ratrod.archaion.Archaion;
 import com.ratrod.archaion.registry.ACEntityTypes;
+import com.ratrod.archaion.registry.ACSounds;
 import mod.chloeprime.aaaparticles.api.common.AAALevel;
 import mod.chloeprime.aaaparticles.api.common.ParticleEmitterInfo;
 import net.minecraft.network.protocol.Packet;
@@ -10,7 +11,6 @@ import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerEntity;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.level.Level;
@@ -115,11 +115,11 @@ public class LODFallingBlock extends Entity {
         if (!(this.level() instanceof ServerLevel serverLevel)) return;
 
         Entity cause = this.owner != null ? this.owner : this;
-        this.playSound(SoundEvents.ANVIL_LAND, 1.0F, 0.4F + random.nextFloat() * 0.2F);
+        this.playSound(ACSounds.LOD_BLOCK_FALL.get(), 1.0F, 0.4F + random.nextFloat() * 0.2F);
 
         AABB area = this.getBoundingBox().inflate(2, 1.0, 2);
         for (LivingEntity target : serverLevel.getEntitiesOfClass(LivingEntity.class, area, e -> e != cause && e.isAlive() && canTarget(e))) {
-            target.hurtServer(serverLevel, serverLevel.damageSources().explosion(cause, cause), 12.0F);
+            target.hurtServer(serverLevel, serverLevel.damageSources().explosion(cause, cause), 25.0F);
         }
 
         ParticleEmitterInfo info = new ParticleEmitterInfo(Archaion.prefix("lod_falling_block"));
