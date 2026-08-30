@@ -3,6 +3,7 @@ package com.ratrod.archaion.registry;
 import com.ratrod.archaion.Archaion;
 import com.ratrod.archaion.block.HologramBlock;
 import com.ratrod.archaion.block.ReinforcedBarBlock;
+import com.ratrod.archaion.block.TeleporterBlock;
 
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -44,6 +45,8 @@ public class ACBlocks {
     public static final DeferredBlock<ReinforcedBarBlock> REINFORCED_BARS = registerBlock("reinforced_bars", () -> new ReinforcedBarBlock(BlockBehaviour.Properties.of().mapColor(MapColor.DEEPSLATE).instrument(NoteBlockInstrument.BASEDRUM).sound(SoundType.DEEPSLATE).strength(55.0F, 1200.0F)));
 
     public static final DeferredBlock<HologramBlock> DEEPSLATE_HOLOGRAM = registerBlock("deepslate_hologram", () -> new HologramBlock(BlockBehaviour.Properties.of().mapColor(MapColor.DEEPSLATE).instrument(NoteBlockInstrument.BASEDRUM).sound(SoundType.DEEPSLATE).noOcclusion().strength(4.5F, 1200.0F)));
+
+    public static final DeferredBlock<TeleporterBlock> DEEPSLATE_TELEPORTER = registerBlock("deepslate_teleporter", () -> new TeleporterBlock(BlockBehaviour.Properties.of().mapColor(MapColor.DEEPSLATE).instrument(NoteBlockInstrument.BASEDRUM).sound(SoundType.DEEPSLATE).noOcclusion().strength(4.5F, 1200.0F)));
 
     public static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
         return registerBlock(name, block, new Item.Properties());

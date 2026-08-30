@@ -91,6 +91,7 @@ public class ACClientSetup {
 
         event.registerBlockEntityRenderer(ACBlockEntities.HOLOGRAM.get(), HologramRenderer::new);
         event.registerBlockEntityRenderer(ACTrialRegistry.TRIAL_SPAWNER.get(), TrialSpawnerRenderer::new);
+        event.registerBlockEntityRenderer(ACBlockEntities.TELEPORTER.get(), TeleporterRenderer::new);
     }
 
     @SubscribeEvent

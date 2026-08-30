@@ -8,6 +8,7 @@ import com.ratrod.archaion.entities.LastOfDeepslate;
 import com.ratrod.archaion.entities.ai.SleepingState;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
@@ -51,5 +52,10 @@ public class LastOfDeepslateRenderer extends MobRenderer<LastOfDeepslate, LastOf
             case 1 -> TEXTURE_P1;
             default -> TEXTURE;
         };
+    }
+
+    @Override
+    protected int getBlockLightLevel(LastOfDeepslate entity, BlockPos blockPos) {
+        return entity.getSleepingState() == SleepingState.SLEEPING ? 5 : 10;
     }
 }

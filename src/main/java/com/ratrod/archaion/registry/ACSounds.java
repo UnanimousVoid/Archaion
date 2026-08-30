@@ -52,6 +52,9 @@ public class ACSounds {
     public static final DeferredHolder<SoundEvent, SoundEvent> HAUNTER_EXPLODE = register("haunter_explode");
     public static final DeferredHolder<SoundEvent, SoundEvent> HAUNTER_HURT = register("haunter_hurt");
 
+    // Misc
+    public static final DeferredHolder<SoundEvent, SoundEvent> TELEPORTER_WARPS = register("teleporter_warps");
+
     private static DeferredHolder<SoundEvent, SoundEvent> register(String name) {
         return SOUND_EVENT.register(name, () -> SoundEvent.createVariableRangeEvent(Archaion.prefix(name)));
     }

@@ -54,6 +54,7 @@ public class HologramRenderer implements BlockEntityRenderer<HologramBlockEntity
             float scale = 0.02F;
             float yRot = Minecraft.getInstance().gameRenderer.getMainCamera().getYRot();
 
+            // Render Text
             poseStack.pushPose();
             poseStack.translate(0.5D, height, 0.5D);
             poseStack.mulPose(Axis.YP.rotationDegrees(-yRot + 180));
@@ -75,6 +76,7 @@ public class HologramRenderer implements BlockEntityRenderer<HologramBlockEntity
             }
             poseStack.popPose();
 
+            // Render Fan
             poseStack.pushPose();
             poseStack.translate(0.5D, 0.5D, 0.5D);
             poseStack.mulPose(Axis.YP.rotationDegrees(-yRot));

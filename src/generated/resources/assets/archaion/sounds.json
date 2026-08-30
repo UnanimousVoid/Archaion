@@ -187,5 +187,11 @@
       "archaion:sentinel_start_charging"
     ],
     "subtitle": "subtitle.archaion.sentinel_start_charging"
+  },
+  "teleporter_warps": {
+    "sounds": [
+      "archaion:teleporter_warps"
+    ],
+    "subtitle": "subtitle.archaion.teleporter_warps"
   }
 }

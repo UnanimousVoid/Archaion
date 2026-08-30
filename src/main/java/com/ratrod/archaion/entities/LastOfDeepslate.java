@@ -122,7 +122,7 @@ public class LastOfDeepslate extends Monster implements ACEntity<LastOfDeepslate
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new GoToTargetGoal(this, 1.2F, this.getBbWidth() * 1.5F));
+        this.goalSelector.addGoal(1, new GoToTargetGoal(this, 1.25F, this.getBbWidth() * 1.5F));
         this.goalSelector.addGoal(2, new LookAtPlayerGoal(this, Player.class, 0.0F));
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new LODAttackableRandomTargetGoal(this));
@@ -131,8 +131,8 @@ public class LastOfDeepslate extends Monster implements ACEntity<LastOfDeepslate
     public static AttributeSupplier.Builder createAttributes() {
         return Monster.createMonsterAttributes()
                 .add(Attributes.MAX_HEALTH, 600.0D)
-                .add(Attributes.MOVEMENT_SPEED, 0.22D)
-                .add(Attributes.ATTACK_DAMAGE, 40.0D)
+                .add(Attributes.MOVEMENT_SPEED, 0.25D)
+                .add(Attributes.ATTACK_DAMAGE, 35.0D)
                 .add(Attributes.FOLLOW_RANGE, 64.0D)
                 .add(Attributes.ARMOR, 15.0D)
                 .add(Attributes.STEP_HEIGHT, 1.5D)
