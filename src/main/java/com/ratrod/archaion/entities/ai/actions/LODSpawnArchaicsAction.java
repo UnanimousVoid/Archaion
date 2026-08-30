@@ -146,7 +146,7 @@ public class LODSpawnArchaicsAction extends ManagedAction<LastOfDeepslate> {
             center = entity.position().add(flatLook.scale(7.5));
         }
 
-        float scaleMult = smashIdx == 2 ? 1.5F : 1.0F;
+        float scaleMult = smashIdx == 2 ? 1.2F : 1.0F;
         ParticleEmitterInfo info = new ParticleEmitterInfo(Archaion.prefix("lod_boom_ground"));
         AAALevel.addParticle(serverLevel, info.position(center.add(0, 0.2, 0)).scale(3.0F * scaleMult));
 
@@ -155,7 +155,7 @@ public class LODSpawnArchaicsAction extends ManagedAction<LastOfDeepslate> {
         List<LivingEntity> targets = entity.level().getEntitiesOfClass(LivingEntity.class, area, e -> e != entity && e.isAlive() && entity.canAttack(e));
 
         for (LivingEntity target : targets) {
-            entity.attackTarget(serverLevel, target, 1.2F * scaleMult, ACEntity.Operation.MULTIPLY);
+            entity.attackTarget(serverLevel, target, scaleMult, ACEntity.Operation.MULTIPLY);
             Vec3 knockback = target.position().subtract(center).normalize().scale(1.5 * scaleMult).add(0, 0.35, 0);
             target.setDeltaMovement(target.getDeltaMovement().add(knockback));
             target.hurtMarked = true;

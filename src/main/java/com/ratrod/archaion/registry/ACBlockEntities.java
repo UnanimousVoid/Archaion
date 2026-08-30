@@ -2,6 +2,7 @@ package com.ratrod.archaion.registry;
 
 import com.ratrod.archaion.Archaion;
 import com.ratrod.archaion.block.HologramBlockEntity;
+import com.ratrod.archaion.block.TeleporterBlockEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -14,5 +15,9 @@ public class ACBlockEntities {
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<HologramBlockEntity>> HOLOGRAM = BLOCK_ENTITIES.register("hologram",
             () -> new BlockEntityType<>(HologramBlockEntity::new, Set.of(ACBlocks.DEEPSLATE_HOLOGRAM.get()))
+    );
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TeleporterBlockEntity>> TELEPORTER = BLOCK_ENTITIES.register("teleporter",
+            () -> new BlockEntityType<>(TeleporterBlockEntity::new, Set.of(ACBlocks.DEEPSLATE_TELEPORTER.get()))
     );
 }

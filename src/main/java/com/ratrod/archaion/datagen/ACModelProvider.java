@@ -6,6 +6,7 @@ import com.ratrod.archaion.api.trial.TrialSpawnerVariant;
 import com.ratrod.archaion.api.trial.TrialVaultBlock;
 import com.ratrod.archaion.api.trial.TrialVaultVariant;
 import com.ratrod.archaion.block.ReinforcedBarBlock;
+import com.ratrod.archaion.block.TeleporterBlock;
 import com.ratrod.archaion.client.item.EchosGracePull;
 import com.ratrod.archaion.registry.ACBlocks;
 import com.ratrod.archaion.registry.ACTrialVariants;
@@ -79,6 +80,8 @@ public class ACModelProvider extends ModelProvider {
         blockModels.family(ACBlocks.REINFORCED_DEEPSLATE_BRICKS.get()).stairs(ACBlocks.REINFORCED_DEEPSLATE_BRICK_STAIRS.get()).slab(ACBlocks.REINFORCED_DEEPSLATE_BRICK_SLAB.get()).wall(ACBlocks.REINFORCED_DEEPSLATE_BRICK_WALL.get());
         blockModels.family(ACBlocks.REINFORCED_DEEPSLATE_TILES.get()).stairs(ACBlocks.REINFORCED_DEEPSLATE_TILE_STAIRS.get()).slab(ACBlocks.REINFORCED_DEEPSLATE_TILE_SLAB.get()).wall(ACBlocks.REINFORCED_DEEPSLATE_TILE_WALL.get());
 
+        createDeepslateTeleporter(blockModels);
+
         createDeepslateHologram(blockModels);
 
         for (TrialSpawnerVariant variant : ACTrialVariants.spawners()) {
@@ -87,6 +90,18 @@ public class ACModelProvider extends ModelProvider {
         for (TrialVaultVariant variant : ACTrialVariants.vaults()) {
             createTrialVault(blockModels, variant.block().get());
         }
+    }
+
+    private void createDeepslateTeleporter(BlockModelGenerators blockModels) {
+        // Register every TeleporterColor blockstate value through the blockstate generator,
+        // dispatching each color to the teleporter's base model. The live color glow is drawn
+        // by TeleporterRenderer; the base model is the neutral deepslate frame.
+        Identifier model = ModelLocationUtils.getModelLocation(ACBlocks.DEEPSLATE_TELEPORTER.get());
+        blockModels.blockStateOutput.accept(
+                MultiVariantGenerator.dispatch(ACBlocks.DEEPSLATE_TELEPORTER.get())
+                        .with(PropertyDispatch.initial(TeleporterBlock.COLOR).generate(color -> BlockModelGenerators.plainVariant(model)))
+        );
+        blockModels.registerSimpleItemModel(ACBlocks.DEEPSLATE_TELEPORTER.get(), model);
     }
 
     private void createDeepslateHologram(BlockModelGenerators blockModels) {

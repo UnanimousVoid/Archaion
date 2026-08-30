@@ -22,6 +22,7 @@
   "block.archaion.deepslate_hologram": "Deepslate Hologram",
   "block.archaion.deepslate_pillar": "Deepslate Pillar",
   "block.archaion.deepslate_spawner": "Deepslate Spawner",
+  "block.archaion.deepslate_teleporter": "Deepslate Teleporter",
   "block.archaion.deepslate_vault": "Deepslate Vault",
   "block.archaion.reinforced_bars": "Reinforced Bars",
   "block.archaion.reinforced_chain": "Reinforced Chain",
@@ -118,5 +119,6 @@
   "subtitle.archaion.sentinel_ambient": "Deepslate Sentinel hums",
   "subtitle.archaion.sentinel_death": "Deepslate Sentinel dies",
   "subtitle.archaion.sentinel_hurt": "Deepslate Sentinel hurts",
-  "subtitle.archaion.sentinel_start_charging": "Deepslate Sentinel starts charging"
+  "subtitle.archaion.sentinel_start_charging": "Deepslate Sentinel starts charging",
+  "subtitle.archaion.teleporter_warps": "Teleporter warps"
 }

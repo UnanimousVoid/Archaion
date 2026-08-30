@@ -146,7 +146,8 @@ public class ACLanguageProvider extends LanguageProvider {
                 Map.entry("sentinel_start_charging", "Deepslate Sentinel starts charging"),
                 Map.entry("haunter_ambient", "Haunter whispers"),
                 Map.entry("haunter_explode", "Haunter explodes"),
-                Map.entry("haunter_hurt", "Haunter hurts")
+                Map.entry("haunter_hurt", "Haunter hurts"),
+                Map.entry("teleporter_warp", "Teleporter warps")
         );
 
         for (DeferredHolder<SoundEvent, ? extends SoundEvent> sound : ACSounds.SOUND_EVENT.getEntries()) {

@@ -1,6 +1,7 @@
 package com.ratrod.archaion.registry;
 
 import com.ratrod.archaion.Archaion;
+import com.ratrod.archaion.block.TeleporterBlock;
 import com.ratrod.archaion.block.HologramBlock;
 import com.ratrod.archaion.block.ReinforcedBarBlock;
 
@@ -41,6 +42,8 @@ public class ACBlocks {
     public static final DeferredBlock<ReinforcedBarBlock> REINFORCED_BARS = registerBlock("reinforced_bars", ReinforcedBarBlock::new, properties -> properties.mapColor(MapColor.DEEPSLATE).instrument(NoteBlockInstrument.BASEDRUM).sound(SoundType.DEEPSLATE).strength(55.0F, 1200.0F));
 
     public static final DeferredBlock<HologramBlock> DEEPSLATE_HOLOGRAM = registerBlock("deepslate_hologram", HologramBlock::new, properties -> properties.mapColor(MapColor.DEEPSLATE).instrument(NoteBlockInstrument.BASEDRUM).sound(SoundType.DEEPSLATE).noOcclusion().strength(4.5F, 1200.0F));
+
+    public static final DeferredBlock<TeleporterBlock> DEEPSLATE_TELEPORTER = registerBlock("deepslate_teleporter", TeleporterBlock::new, properties -> properties.mapColor(MapColor.DEEPSLATE).instrument(NoteBlockInstrument.BASEDRUM).sound(SoundType.DEEPSLATE).noOcclusion().strength(4.5F, 1200.0F));
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Function<BlockBehaviour.Properties, T> factory, Function<BlockBehaviour.Properties, BlockBehaviour.Properties> properties) {
         DeferredBlock<T> registeredBlock = BLOCK.registerBlock(name, factory, properties::apply);

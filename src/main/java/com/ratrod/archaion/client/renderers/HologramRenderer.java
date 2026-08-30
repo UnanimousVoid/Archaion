@@ -68,6 +68,7 @@ public class HologramRenderer implements BlockEntityRenderer<HologramBlockEntity
         if (alpha > 0.0F) {
             float scale = 0.02F;
 
+            // Render Text
             poseStack.pushPose();
             poseStack.translate(0.5D, height, 0.5D);
             poseStack.mulPose(Axis.YP.rotationDegrees(-camera.yRot + 180));
@@ -89,6 +90,7 @@ public class HologramRenderer implements BlockEntityRenderer<HologramBlockEntity
             }
             poseStack.popPose();
 
+            // Render Fan
             poseStack.pushPose();
             poseStack.translate(0.5D, 0.5D, 0.5D);
             poseStack.mulPose(Axis.YP.rotationDegrees(-camera.yRot));
