@@ -20,7 +20,7 @@ public class LODSoundInstance extends AbstractTickableSoundInstance {
     private boolean fadingOut;
 
     private LODSoundInstance(SoundEvent sound) {
-        super(sound, SoundSource.MUSIC, SoundInstance.createUnseededRandom());
+        super(sound, SoundSource.RECORDS, SoundInstance.createUnseededRandom());
         this.looping = true;
         this.delay = 0;
         this.volume = 1.0F;
