@@ -1,6 +1,6 @@
 {
   "criteria": {
-    "ticck": {
+    "tick": {
       "trigger": "minecraft:tick"
     }
   },
@@ -19,7 +19,7 @@
   },
   "requirements": [
     [
-      "ticck"
+      "tick"
     ]
   ],
   "sends_telemetry_event": true

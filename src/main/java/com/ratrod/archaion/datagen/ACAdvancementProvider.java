@@ -38,7 +38,7 @@ public class ACAdvancementProvider extends AdvancementProvider {
 
             AdvancementHolder root = Advancement.Builder.advancement()
                     .display(ACBlocks.REINFORCED_DEEPSLATE_BRICKS.get(), Component.translatable("advancements.root.title"), Component.translatable("advancements.root.description"), Archaion.prefix("block/reinforced_deepslate_bricks"), AdvancementType.TASK, true, false, false)
-                    .addCriterion("ticck", PlayerTrigger.TriggerInstance.tick())
+                    .addCriterion("tick", PlayerTrigger.TriggerInstance.tick())
                     .save(writer, Archaion.prefix("root").toString());
 
             AdvancementHolder obtainMap = Advancement.Builder.advancement()
