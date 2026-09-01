@@ -1,5 +1,5 @@
 {
-  "parent": "archaion:enter_ancient_keep",
+  "parent": "archaion:open_deepslate_vault",
   "criteria": {
     "kill_last_of_deepslate": {
       "conditions": {

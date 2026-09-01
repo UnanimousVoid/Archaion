@@ -38,7 +38,7 @@ public class ACAdvancementProvider extends AdvancementProvider {
 
             AdvancementHolder root = Advancement.Builder.advancement()
                     .display(ACBlocks.REINFORCED_DEEPSLATE_BRICKS.get(), Component.translatable("advancements.root.title"), Component.translatable("advancements.root.description"), Archaion.prefix("block/reinforced_deepslate_bricks"), AdvancementType.TASK, true, false, false)
-                    .addCriterion("impossible", CriteriaTriggers.IMPOSSIBLE.createCriterion(new ImpossibleTrigger.TriggerInstance()))
+                    .addCriterion("ticck", PlayerTrigger.TriggerInstance.tick())
                     .save(writer, Archaion.prefix("root").toString());
 
             AdvancementHolder obtainMap = Advancement.Builder.advancement()
@@ -86,7 +86,7 @@ public class ACAdvancementProvider extends AdvancementProvider {
                     .save(writer, Archaion.prefix("craft_echos_grace").toString());
 
             AdvancementHolder killLastOfDeepslate = Advancement.Builder.advancement()
-                    .parent(enterAncientKeep)
+                    .parent(openDeepslateVault)
                     .display(ACItems.LAST_OF_DEEPSLATE_SPAWN_EGG.get(), Component.translatable("advancements.kill_last_of_deepslate.title"), Component.translatable("advancements.kill_last_of_deepslate.description"), null, AdvancementType.CHALLENGE, true, true, false)
                     .addCriterion("kill_last_of_deepslate", KilledTrigger.TriggerInstance.playerKilledEntity(EntityPredicate.Builder.entity().of(entities, ACEntityTypes.LAST_OF_DEEPSLATE.get())))
                     .rewards(AdvancementRewards.Builder.experience(100).addRecipe(recipe("echo_mace_upgrade_smithing")))

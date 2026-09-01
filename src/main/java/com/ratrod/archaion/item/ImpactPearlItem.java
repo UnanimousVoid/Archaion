@@ -1,6 +1,9 @@
 package com.ratrod.archaion.item;
 
 import com.ratrod.archaion.entities.projectile.ThrownImpactPearl;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.CommonComponents;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -11,7 +14,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
+
+import java.util.function.Consumer;
 
 public class ImpactPearlItem extends Item {
 
@@ -29,5 +36,13 @@ public class ImpactPearlItem extends Item {
         player.awardStat(Stats.ITEM_USED.get(this));
         itemStack.consume(1, player);
         return InteractionResult.SUCCESS;
+    }
+
+    @Override
+    public void appendHoverText(ItemStack itemStack, TooltipContext context, TooltipDisplay display, Consumer<Component> builder, TooltipFlag tooltipFlag) {
+        builder.accept(Component.translatable("item.archaion.impact_pearl.desc",
+                Component.translatable("item.archaion.impact_pearl.keyword.ender_pearl").withStyle(ChatFormatting.YELLOW))
+                .withStyle(ChatFormatting.DARK_GRAY));
+        builder.accept(CommonComponents.EMPTY);
     }
 }

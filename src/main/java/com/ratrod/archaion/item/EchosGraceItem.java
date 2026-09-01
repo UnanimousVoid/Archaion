@@ -3,8 +3,11 @@ package com.ratrod.archaion.item;
 import com.ratrod.archaion.entities.projectile.EchoStarProjectile;
 import com.ratrod.archaion.registry.ACItems;
 import com.ratrod.archaion.registry.ACSounds;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.CommonComponents;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -13,10 +16,8 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemUseAnimation;
-import net.minecraft.world.item.ProjectileWeaponItem;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -25,6 +26,7 @@ import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class EchosGraceItem extends ProjectileWeaponItem {
@@ -118,5 +120,13 @@ public class EchosGraceItem extends ProjectileWeaponItem {
     @Override
     public ItemStack getDefaultCreativeAmmo(@Nullable Player player, ItemStack projectileWeaponItem) {
         return ACItems.ECHO_CHARGE.get().getDefaultInstance();
+    }
+
+    @Override
+    public void appendHoverText(ItemStack itemStack, TooltipContext context, TooltipDisplay display, Consumer<Component> builder, TooltipFlag tooltipFlag) {
+        builder.accept(Component.translatable("item.archaion.echos_grace.desc",
+                Component.translatable("item.archaion.echos_grace.keyword.echo_charges").withStyle(ChatFormatting.AQUA))
+                .withStyle(ChatFormatting.DARK_GRAY));
+        builder.accept(CommonComponents.EMPTY);
     }
 }

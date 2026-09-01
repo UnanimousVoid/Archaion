@@ -1,7 +1,7 @@
 {
   "criteria": {
-    "impossible": {
-      "trigger": "minecraft:impossible"
+    "ticck": {
+      "trigger": "minecraft:tick"
     }
   },
   "display": {
@@ -19,7 +19,7 @@
   },
   "requirements": [
     [
-      "impossible"
+      "ticck"
     ]
   ],
   "sends_telemetry_event": true

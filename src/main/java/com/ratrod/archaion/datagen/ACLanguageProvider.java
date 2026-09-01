@@ -44,6 +44,16 @@ public class ACLanguageProvider extends LanguageProvider {
         this.advancement("kill_last_of_deepslate", "The Last of Deepslate", "Defeat the Last of Deepslate, guardian of the Ancient Keep.");
         this.advancement("craft_echo_mace", "Echoing Wrath", "Forge the Echo Mace from a Mace, an Echo Shard, and its template.");
 
+        this.add("item.archaion.echo_charge.desc", "Launches an explosive projectile. Can awaken the %s or be forged into a %s.");
+        this.add("item.archaion.echo_charge.keyword.slumbering_titan", "slumbering titan");
+        this.add("item.archaion.echo_charge.keyword.special_weapon", "special weapon");
+        this.add("item.archaion.echos_grace.desc", "Fires %s without consuming ammunition. Can be enchanted with Multishot and Quick Charge.");
+        this.add("item.archaion.echos_grace.keyword.echo_charges", "Echo Charges");
+        this.add("item.archaion.impact_pearl.desc", "Launches an %s that damages nearby enemies. Damage increases with landing distance.");
+        this.add("item.archaion.impact_pearl.keyword.ender_pearl", "Ender Pearl");
+        this.add("item.archaion.echo_mace.desc", "Launches an %s that ricochets off terrain and mobs up to 4 times, growing stronger with each hit. Allows off-hand items to be used while sneaking.");
+        this.add("item.archaion.echo_mace.keyword.echo_mace", "Echo Mace");
+
         this.add(ACItems.ECHOS_GRACE.get(), "Echo's Grace");
 
         this.add(ACItems.ECHO_MACE_UPGRADE_SMITHING_TEMPLATE.get(), "Echo Mace Upgrade");

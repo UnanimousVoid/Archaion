@@ -2,6 +2,9 @@ package com.ratrod.archaion.item;
 
 import com.ratrod.archaion.entities.projectile.ThrownEchoMace;
 import com.ratrod.archaion.registry.ACSounds;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.CommonComponents;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -13,13 +16,13 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemUseAnimation;
-import net.minecraft.world.item.MaceItem;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
 import org.jspecify.annotations.NonNull;
+
+import java.util.function.Consumer;
 
 public class EchoMaceItem extends MaceItem {
 
@@ -70,5 +73,13 @@ public class EchoMaceItem extends MaceItem {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void appendHoverText(ItemStack itemStack, TooltipContext context, TooltipDisplay display, Consumer<Component> builder, TooltipFlag tooltipFlag) {
+        builder.accept(Component.translatable("item.archaion.echo_mace.desc",
+                Component.translatable("item.archaion.echo_mace.keyword.echo_mace").withStyle(ChatFormatting.AQUA))
+                .withStyle(ChatFormatting.DARK_GRAY));
+        builder.accept(CommonComponents.EMPTY);
     }
 }
